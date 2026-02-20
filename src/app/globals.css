@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Colors — derived from Izvrstna mascot */
+  --color-river-blue: #2AABE0;
+  --color-river-blue-light: #7DD3F0;
+  --color-river-blue-dark: #1A7BA3;
+  --color-forest-green: #4A7C59;
+  --color-forest-green-light: #6B9E78;
+  --color-sage-green: #8BAA7A;
+  --color-sage-green-light: #B5CEAA;
+  --color-amber: #D4A843;
+  --color-amber-light: #E8C86E;
+  --color-deep-navy: #0D1B2A;
+  --color-slate-dark: #1E293B;
+  --color-cream: #F5E6C8;
+  --color-cream-light: #FFF8ED;
+  --color-danger: #C0392B;
+  --color-success: #27AE60;
+
+  /* Extra design tokens */
+  --color-river-teal: #1B8EA0;
+  --color-sand: #E6D5B8;
+  --color-warm-white: #FEFCF6;
+
+  /* Typography */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-deep-navy);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-river-blue);
+  border-radius: 4px;
+}
+
+/* ─── Keyframes ─── */
+
+@keyframes wave-slow {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-25%); }
+}
+
+@keyframes wave-slow-reverse {
+  0%, 100% { transform: translateX(-25%); }
+  50% { transform: translateX(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-8px) rotate(2deg); }
+  66% { transform: translateY(4px) rotate(-1deg); }
+}
+
+@keyframes drift-right {
+  0% { transform: translateX(-10%); }
+  100% { transform: translateX(110%); }
+}
+
+@keyframes bubble-rise {
+  0% { transform: translateY(0) scale(1); opacity: 0.6; }
+  100% { transform: translateY(-120px) scale(0.3); opacity: 0; }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes pulse-ring {
+  0%, 100% { r: 14; opacity: 0.25; }
+  50% { r: 20; opacity: 0; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+
+/* ─── Animation utilities ─── */
+
+.animate-wave-slow { animation: wave-slow 8s ease-in-out infinite; }
+.animate-wave-slow-reverse { animation: wave-slow-reverse 10s ease-in-out infinite; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+.animate-pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+.animate-pulse-ring { animation: pulse-ring 2s ease-in-out infinite; }
+.animate-drift { animation: drift-right 18s linear infinite; }
+.animate-bubble { animation: bubble-rise 4s ease-out infinite; }
+.animate-shimmer {
+  animation: shimmer 3s linear infinite;
+  background-size: 200% 100%;
+}
+.animate-wiggle { animation: wiggle 2s ease-in-out infinite; }
+
+/* ─── Glass card ─── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+/* ─── Gradient text ─── */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-river-blue), var(--color-forest-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Organic blob shape ─── */
+.blob {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+.blob-2 {
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+}
+
+/* ─── Leaflet overrides ─── */
+.leaflet-container {
+  border-radius: 12px;
+  z-index: 1;
+}
