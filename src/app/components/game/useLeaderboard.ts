@@ -44,36 +44,35 @@ async function fetchSupabaseLeaderboard(): Promise<LeaderboardEntry[] | null> {
   }
 }
 
-async function insertSupabaseScore(name: string, score: number): Promise<boolean> {
+async function upsertSupabaseScore(name: string, score: number): Promise<boolean> {
   if (!supabase) return false;
   try {
-    const { error } = await supabase
-      .from("leaderboard")
-      .insert({ name, score });
+    const { error } = await supabase.rpc("upsert_score", {
+      p_name: name,
+      p_score: score,
+    });
     if (error) throw error;
     return true;
   } catch (err) {
-    console.warn("[Leaderboard] Supabase insert failed:", err);
+    console.warn("[Leaderboard] Supabase upsert failed:", err);
     return false;
   }
 }
 
-async function insertSupabasePrizeEntry(
+async function upsertSupabasePrizeEntry(
   entry: Omit<PrizeEntry, "timestamp">
 ): Promise<boolean> {
   if (!supabase) return false;
   try {
-    const { error } = await supabase
-      .from("prize_entries")
-      .insert({
-        nickname: entry.nickname,
-        email: entry.email,
-        score: entry.score,
-      });
+    const { error } = await supabase.rpc("upsert_prize_entry", {
+      p_nickname: entry.nickname,
+      p_email: entry.email,
+      p_score: entry.score,
+    });
     if (error) throw error;
     return true;
   } catch (err) {
-    console.warn("[PrizeEntry] Supabase insert failed:", err);
+    console.warn("[PrizeEntry] Supabase upsert failed:", err);
     return false;
   }
 }
@@ -97,16 +96,24 @@ export function useLeaderboard() {
 
   const addScore = useCallback(
     (name: string, score: number): number => {
-      // 1. Optimistic local update (instant UX)
-      const next = [...leaderboard, { name, score }]
-        .sort((a, b) => b.score - a.score)
-        .slice(0, MAX_ENTRIES);
+      // 1. Optimistic local update — upsert logic (keep best score per name)
+      const existing = leaderboard.find((e) => e.name === name);
+      let next: LeaderboardEntry[];
+      if (existing) {
+        next = leaderboard.map((e) =>
+          e.name === name ? { ...e, score: Math.max(e.score, score) } : e
+        );
+      } else {
+        next = [...leaderboard, { name, score }];
+      }
+      next = next.sort((a, b) => b.score - a.score).slice(0, MAX_ENTRIES);
       setLeaderboard(next);
       saveLocalLeaderboard(next);
-      const rank = next.findIndex((e) => e.name === name && e.score === score) + 1;
+      const bestScore = existing ? Math.max(existing.score, score) : score;
+      const rank = next.findIndex((e) => e.name === name && e.score === bestScore) + 1;
 
-      // 2. Background Supabase insert + re-fetch for global state
-      insertSupabaseScore(name, score).then((ok) => {
+      // 2. Background Supabase upsert + re-fetch
+      upsertSupabaseScore(name, score).then((ok) => {
         if (ok) {
           fetchSupabaseLeaderboard().then((remote) => {
             if (remote && remote.length > 0) {
@@ -129,15 +136,40 @@ export function useLeaderboard() {
 
 /* ─── Prize entries ─── */
 
+const PLAYER_KEY = "cistaSocaPlayer";
+
+/** Remember player nickname + email for pre-fill on replay */
+export function getSavedPlayer(): { nickname: string; email: string } | null {
+  try {
+    const raw = localStorage.getItem(PLAYER_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch { /* ignore */ }
+  return null;
+}
+
 export function savePrizeEntry(entry: PrizeEntry) {
-  // 1. Always save to localStorage as fallback
+  // 1. Remember player for next time
+  try {
+    localStorage.setItem(PLAYER_KEY, JSON.stringify({
+      nickname: entry.nickname,
+      email: entry.email,
+    }));
+  } catch { /* quota */ }
+
+  // 2. Save to localStorage as fallback
   try {
     const raw = localStorage.getItem(PRIZE_KEY);
     const entries: PrizeEntry[] = raw ? JSON.parse(raw) : [];
-    entries.push(entry);
+    // Upsert locally: replace if same email exists
+    const idx = entries.findIndex((e) => e.email === entry.email);
+    if (idx >= 0) {
+      entries[idx] = { ...entry, score: Math.max(entries[idx].score, entry.score) };
+    } else {
+      entries.push(entry);
+    }
     localStorage.setItem(PRIZE_KEY, JSON.stringify(entries));
   } catch { /* quota */ }
 
-  // 2. Background Supabase insert (fire-and-forget)
-  insertSupabasePrizeEntry(entry);
+  // 3. Background Supabase upsert (fire-and-forget)
+  upsertSupabasePrizeEntry(entry);
 }

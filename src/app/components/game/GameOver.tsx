@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import type { GameState } from "./types";
 import { EMOTION_IMAGE } from "./constants";
-import { savePrizeEntry } from "./useLeaderboard";
+import { savePrizeEntry, getSavedPlayer } from "./useLeaderboard";
 
 interface Props {
   state: GameState;
@@ -42,9 +42,12 @@ function PrizeForm({
   score: number;
   onSubmit: (nickname: string, email: string) => void;
 }) {
-  const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState("");
-  const [termsOk, setTermsOk] = useState(false);
+  const savedPlayer = getSavedPlayer();
+  const isReturning = !!savedPlayer;
+
+  const [nickname, setNickname] = useState(savedPlayer?.nickname ?? "");
+  const [email, setEmail] = useState(savedPlayer?.email ?? "");
+  const [termsOk, setTermsOk] = useState(isReturning);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showTerms, setShowTerms] = useState(false);
@@ -92,10 +95,12 @@ function PrizeForm({
     return (
       <div className="w-full max-w-[320px] text-center">
         <p className="text-white text-sm">
-          {"✅ Uspešno si se prijavil/a v nagradno igro! Srečno! 🍀"}
+          {isReturning
+            ? "✅ Rezultat posodobljen! Srečno! 🍀"
+            : "✅ Uspešno si se prijavil/a v nagradno igro! Srečno! 🍀"}
         </p>
         <p className="text-white/50 text-xs mt-1">
-          {"Igrate lahko neomejeno krat, v nagradni igri pa lahko sodelujete samo enkrat."}
+          {"Igrate lahko neomejeno krat. Shrani se vaš najboljši rezultat."}
         </p>
       </div>
     );
@@ -104,7 +109,7 @@ function PrizeForm({
   return (
     <div className="w-full max-w-[320px] rounded-xl bg-gradient-to-br from-amber/15 to-amber-light/5 border border-amber/40 p-3">
       <h4 className="text-xs font-bold text-amber mb-2">
-        {"🎁 Sodeluj v nagradni igri!"}
+        {isReturning ? "🎁 Posodobi rezultat!" : "🎁 Sodeluj v nagradni igri!"}
       </h4>
 
       <div className="space-y-2">
@@ -152,10 +157,10 @@ function PrizeForm({
           onClick={handleSubmit}
           className="w-full py-1.5 bg-gradient-to-br from-success to-forest-green text-white font-bold rounded-full text-xs shadow-lg hover:-translate-y-0.5 transition-all"
         >
-          SODELUJ
+          {isReturning ? "POSODOBI" : "SODELUJ"}
         </button>
         <p className="text-white/40 text-center" style={{ fontSize: "10px" }}>
-          {"Igrate lahko neomejeno krat, v nagradni igri pa lahko sodelujete samo enkrat."}
+          {"Igrate lahko neomejeno krat. Shrani se vaš najboljši rezultat."}
         </p>
       </div>
     </div>
