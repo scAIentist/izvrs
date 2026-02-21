@@ -39,8 +39,8 @@ export default function RiverGame() {
     setPhase("lobby");
   }, []);
 
-  const handlePrizeSubmit = useCallback((nickname: string, _email: string) => {
-    addScore(nickname, finalState?.score ?? 0);
+  const handlePrizeSubmit = useCallback((nickname: string, email: string) => {
+    addScore(nickname, email, finalState?.score ?? 0);
     setSubmittedName(nickname);
   }, [addScore, finalState]);
 

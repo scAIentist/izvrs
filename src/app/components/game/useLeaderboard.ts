@@ -1,4 +1,4 @@
-/* ─── Supabase-backed leaderboard + prize entries (localStorage fallback) ─── */
+/* ─── Single-table leaderboard (prize_entries) + localStorage fallback ─── */
 
 import { useState, useCallback, useEffect } from "react";
 import type { LeaderboardEntry, PrizeEntry } from "./types";
@@ -7,9 +7,10 @@ import { supabase } from "@/lib/supabase";
 
 const LB_KEY = "cistaSocaLeaderboard";
 const PRIZE_KEY = "cistaSocaPrizeEntries";
+const PLAYER_KEY = "cistaSocaPlayer";
 const MAX_ENTRIES = 20;
 
-/* ─── localStorage helpers (kept for offline fallback) ─── */
+/* ─── localStorage helpers ─── */
 
 function loadLocalLeaderboard(): LeaderboardEntry[] {
   if (typeof window === "undefined") return DEFAULT_LEADERBOARD;
@@ -28,37 +29,23 @@ function saveLocalLeaderboard(lb: LeaderboardEntry[]) {
 
 /* ─── Supabase helpers ─── */
 
+/** Fetch leaderboard via RPC (returns nickname+score only, emails stay hidden) */
 async function fetchSupabaseLeaderboard(): Promise<LeaderboardEntry[] | null> {
   if (!supabase) return null;
   try {
-    const { data, error } = await supabase
-      .from("leaderboard")
-      .select("name, score")
-      .order("score", { ascending: false })
-      .limit(MAX_ENTRIES);
+    const { data, error } = await supabase.rpc("get_leaderboard");
     if (error) throw error;
-    return data as LeaderboardEntry[];
+    return (data ?? []).map((r: { nickname: string; score: number }) => ({
+      name: r.nickname,
+      score: r.score,
+    }));
   } catch (err) {
     console.warn("[Leaderboard] Supabase fetch failed:", err);
     return null;
   }
 }
 
-async function upsertSupabaseScore(name: string, score: number): Promise<boolean> {
-  if (!supabase) return false;
-  try {
-    const { error } = await supabase.rpc("upsert_score", {
-      p_name: name,
-      p_score: score,
-    });
-    if (error) throw error;
-    return true;
-  } catch (err) {
-    console.warn("[Leaderboard] Supabase upsert failed:", err);
-    return false;
-  }
-}
-
+/** Upsert a player into prize_entries (keeps best score per email) */
 async function upsertSupabasePrizeEntry(
   entry: Omit<PrizeEntry, "timestamp">
 ): Promise<boolean> {
@@ -95,25 +82,25 @@ export function useLeaderboard() {
   }, []);
 
   const addScore = useCallback(
-    (name: string, score: number): number => {
-      // 1. Optimistic local update — upsert logic (keep best score per name)
-      const existing = leaderboard.find((e) => e.name === name);
+    (nickname: string, email: string, score: number): number => {
+      // 1. Optimistic local update — upsert by nickname (keep best score)
+      const existing = leaderboard.find((e) => e.name === nickname);
       let next: LeaderboardEntry[];
       if (existing) {
         next = leaderboard.map((e) =>
-          e.name === name ? { ...e, score: Math.max(e.score, score) } : e
+          e.name === nickname ? { ...e, score: Math.max(e.score, score) } : e
         );
       } else {
-        next = [...leaderboard, { name, score }];
+        next = [...leaderboard, { name: nickname, score }];
       }
       next = next.sort((a, b) => b.score - a.score).slice(0, MAX_ENTRIES);
       setLeaderboard(next);
       saveLocalLeaderboard(next);
       const bestScore = existing ? Math.max(existing.score, score) : score;
-      const rank = next.findIndex((e) => e.name === name && e.score === bestScore) + 1;
+      const rank = next.findIndex((e) => e.name === nickname && e.score === bestScore) + 1;
 
-      // 2. Background Supabase upsert + re-fetch
-      upsertSupabaseScore(name, score).then((ok) => {
+      // 2. Supabase upsert to prize_entries + re-fetch for global state
+      upsertSupabasePrizeEntry({ nickname, email, score }).then((ok) => {
         if (ok) {
           fetchSupabaseLeaderboard().then((remote) => {
             if (remote && remote.length > 0) {
@@ -134,11 +121,8 @@ export function useLeaderboard() {
   return { leaderboard, addScore, topScore };
 }
 
-/* ─── Prize entries ─── */
+/* ─── Player memory (for pre-fill on replay) ─── */
 
-const PLAYER_KEY = "cistaSocaPlayer";
-
-/** Remember player nickname + email for pre-fill on replay */
 export function getSavedPlayer(): { nickname: string; email: string } | null {
   try {
     const raw = localStorage.getItem(PLAYER_KEY);
@@ -147,6 +131,7 @@ export function getSavedPlayer(): { nickname: string; email: string } | null {
   return null;
 }
 
+/** Save prize entry to localStorage (Supabase handled by addScore) */
 export function savePrizeEntry(entry: PrizeEntry) {
   // 1. Remember player for next time
   try {
@@ -169,7 +154,4 @@ export function savePrizeEntry(entry: PrizeEntry) {
     }
     localStorage.setItem(PRIZE_KEY, JSON.stringify(entries));
   } catch { /* quota */ }
-
-  // 3. Background Supabase upsert (fire-and-forget)
-  upsertSupabasePrizeEntry(entry);
 }
