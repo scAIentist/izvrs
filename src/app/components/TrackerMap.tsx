@@ -14,13 +14,13 @@ const MapContent = dynamic(() => import("./MapContent"), {
 
 export default function TrackerMap() {
   return (
-    <section id="sledilci" className="py-20 bg-deep-navy">
+    <section id="sledilci" className="py-20 bg-deep-navy scroll-mt-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
             GPS Sledilci v Soči
           </h2>
-          <div className="w-20 h-1 bg-forest-green mx-auto rounded-full mb-4" />
+          <div className="w-16 h-1 bg-forest-green mx-auto rounded-full mt-3" />
           <p className="text-white/60 max-w-2xl mx-auto">
             Spremljanje potovanja 12 GPS sledilnikov po reki Soči v živo. Vsak
             sledilnik nosi risbo enega od učencev, ki sodelujejo v projektu.

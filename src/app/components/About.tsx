@@ -10,7 +10,7 @@ export default function About() {
       {/* ═══════════════════════════════════════════════
           SCREEN 1: O projektu
           ═══════════════════════════════════════════════ */}
-      <section id="o-projektu" className="relative bg-warm-white overflow-hidden">
+      <section id="o-projektu" className="relative bg-warm-white overflow-hidden scroll-mt-20">
         {/* Decorative blobs */}
         <div className="absolute top-20 right-[-200px] w-[500px] h-[500px] bg-river-blue/5 blob pointer-events-none" />
         <div className="absolute bottom-40 left-[-150px] w-[400px] h-[400px] bg-sage-green/5 blob-2 pointer-events-none" />
@@ -29,7 +29,7 @@ export default function About() {
               <div className="absolute -bottom-2 -right-3 w-28 h-28 sm:w-36 sm:h-36 opacity-20 pointer-events-none select-none">
                 <Image
                   src="/mascot-opt/satisfied.webp"
-                  alt=""
+                  alt="Izvrstna maskota"
                   width={144}
                   height={144}
                   className="object-contain"

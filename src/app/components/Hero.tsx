@@ -65,7 +65,7 @@ export default function Hero() {
   return (
     <section
       id="domov"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 lg:pt-0"
     >
       {/* ── Multi-layer background ── */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#061424] via-[#0A2540] to-[#0E3155]" />
@@ -172,7 +172,7 @@ export default function Hero() {
                 width={380}
                 height={380}
                 priority
-                className="drop-shadow-[0_20px_40px_rgba(42,171,224,0.3)]"
+                className="drop-shadow-[0_20px_40px_rgba(42,171,224,0.3)] max-w-[240px] sm:max-w-[300px] lg:max-w-none"
               />
             </div>
           </motion.div>

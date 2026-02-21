@@ -27,6 +27,9 @@ const gradeFolders: Record<number, string> = {
 export default function Gallery() {
   const [activeFilter, setActiveFilter] = useState<number | null>(null);
   const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null);
+  const INITIAL_COUNT = 15;   // 3 rows on desktop — fills ~1 screen
+  const LOAD_MORE = 20;       // each click loads 20 more
+  const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
   const filtered = useMemo(
     () =>
@@ -35,6 +38,9 @@ export default function Gallery() {
         : galleryItems,
     [activeFilter]
   );
+
+  const visibleItems = filtered.slice(0, visibleCount);
+  const hasMore = visibleCount < filtered.length;
 
   const navigateLightbox = (direction: 1 | -1) => {
     if (!lightboxItem) return;
@@ -45,14 +51,14 @@ export default function Gallery() {
   };
 
   return (
-    <section id="galerija" className="py-20 bg-sage-green-light/20">
+    <section id="galerija" className="py-20 bg-sage-green-light/20 scroll-mt-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Title */}
         <ScrollReveal className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-deep-navy mb-4">
             Galerija risb
           </h2>
-          <div className="w-20 h-1 bg-sage-green mx-auto rounded-full mb-4" />
+          <div className="w-16 h-1 bg-sage-green mx-auto rounded-full mt-3" />
           <p className="text-slate-dark/60 max-w-lg mx-auto">
             Risbe učencev, ki sodelujejo v projektu TETHYS4ADRION. Skupaj
             ozaveščamo o odpadkih v naših rekah.
@@ -64,7 +70,7 @@ export default function Gallery() {
           {filters.map((filter) => (
             <button
               key={filter.label}
-              onClick={() => setActiveFilter(filter.value)}
+              onClick={() => { setActiveFilter(filter.value); setVisibleCount(INITIAL_COUNT); }}
               className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
                 activeFilter === filter.value
                   ? "bg-sage-green text-white shadow-md"
@@ -83,16 +89,17 @@ export default function Gallery() {
           ))}
         </div>
 
-        {/* Grid — plain divs, no Framer Motion */}
+        {/* Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-          {filtered.map((item) => (
-            <div
+          {visibleItems.map((item) => (
+            <button
               key={item.id}
-              className="group cursor-pointer"
+              type="button"
+              className="group cursor-pointer text-left"
               onClick={() => setLightboxItem(item)}
+              aria-label={`Odpri risbo #${item.id}`}
             >
               <div className="relative aspect-square rounded-xl overflow-hidden bg-white shadow-sm group-hover:shadow-lg transition-shadow">
-                {/* Native img with pre-optimized 300px thumbnail */}
                 <img
                   src={`/gallery-thumbs/${gradeFolders[item.grade]}/${item.id}.webp`}
                   alt={`Risba #${item.id}`}
@@ -113,8 +120,28 @@ export default function Gallery() {
                   </span>
                 </div>
               </div>
-            </div>
+            </button>
           ))}
+        </div>
+
+        {/* Load more / Collapse */}
+        <div className="text-center mt-8 flex justify-center gap-3">
+          {hasMore && (
+            <button
+              onClick={() => setVisibleCount((c) => c + LOAD_MORE)}
+              className="px-8 py-3 bg-sage-green text-white font-semibold rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
+            >
+              {`Poglej več (${filtered.length - visibleCount})`}
+            </button>
+          )}
+          {visibleCount > INITIAL_COUNT && (
+            <button
+              onClick={() => setVisibleCount(INITIAL_COUNT)}
+              className="px-6 py-3 bg-white text-slate-dark/70 font-semibold rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all border border-slate-dark/10"
+            >
+              Prikaži manj
+            </button>
+          )}
         </div>
       </div>
 
