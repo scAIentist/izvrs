@@ -33,6 +33,19 @@ const Gallery = dynamic(() => import("./components/Gallery"), {
   ),
 });
 
+const RiverGame = dynamic(() => import("./components/RiverGame"), {
+  ssr: false,
+  loading: () => (
+    <section className="py-20 bg-deep-navy">
+      <div className="mx-auto max-w-4xl px-4 text-center">
+        <div className="h-96 flex items-center justify-center">
+          <p className="text-white/40">Nalaganje igre...</p>
+        </div>
+      </div>
+    </section>
+  ),
+});
+
 export default function Home() {
   return (
     <>
@@ -42,6 +55,7 @@ export default function Home() {
         <About />
         <TrackerMap />
         <Gallery />
+        <RiverGame />
       </main>
       <Footer />
     </>

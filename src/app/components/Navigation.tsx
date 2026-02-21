@@ -7,6 +7,7 @@ const sections = [
   { id: "domov", label: "Domov", color: "bg-river-blue", hoverGlow: "hover:shadow-river-blue/30" },
   { id: "sledilci", label: "GPS Sledilci", color: "bg-forest-green", hoverGlow: "hover:shadow-forest-green/30" },
   { id: "galerija", label: "Galerija", color: "bg-amber", hoverGlow: "hover:shadow-amber/30" },
+  { id: "igra", label: "Igra", color: "bg-danger", hoverGlow: "hover:shadow-danger/30" },
   { id: "o-projektu", label: "O projektu", color: "bg-river-blue-dark", hoverGlow: "hover:shadow-river-blue-dark/30" },
 ];
 
