@@ -203,7 +203,7 @@ export const sl = {
     mascotComments: {
       start: ["Gremo! 💪", "Očistimo Sočo!", "Pomagaj mi!"],
       trashCollected: ["Super! ♻️", "Odlično!", "Tako je!", "Bravo! 👏", "Hvala! 💚"],
-      combo: ["COMBO! 🔥", "Neustavljiv/a!", "Na ognju! 🔥", "Fantastično!"],
+      combo: ["COMBO! 🔥", "Neustavljiv/a!", "Gor gre! 🔥", "Fantastično!"],
       fishCaught: ["Ojoj! Ribe so moji prijatelji, ne pa smeti! 😢", "To je moj prijatelj!", "Ribe ne!", "Pazi na ribe!"],
       obstacleHit: ["Avč! 😵", "Pazi! ⚠️", "Ovira!", "Ouch!"],
       trashMissed: ["Ušla je smeti!", "Škoda! 😕", "Poberi vse!"],
