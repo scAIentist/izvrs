@@ -9,7 +9,7 @@ export const en: Translations = {
   },
   nav: {
     home: "Home",
-    trackers: "GPS Trackers",
+    trackers: "GPS trackers",
     gallery: "Gallery",
     game: "Game",
     about: "About",
@@ -36,10 +36,10 @@ export const en: Translations = {
     euText: "Co-funded by the EU — Interreg IPA ADRION",
     projectLink: "Project website →",
     mascotAlt: "Izvrstna mascot",
-    mapTitle: "Region Map",
+    mapTitle: "Region map",
     mapSubtitle:
       "Adriatic-Ionian region with marked pilot rivers. Click on a river for details.",
-    partnersTitle: "Project Partners",
+    partnersTitle: "Project partners",
     pilotPartner: "Pilot partner:",
     leadPartner: "LP",
   },
@@ -99,7 +99,7 @@ export const en: Translations = {
     ionian: "IONIAN SEA",
   },
   trackers: {
-    title: "GPS Trackers in the Soča",
+    title: "GPS trackers in the Soča",
     subtitle:
       "Live tracking of 12 GPS trackers along the Soča River. Each tracker carries a drawing by one of the students participating in the project.",
     active: "Active",
@@ -109,9 +109,9 @@ export const en: Translations = {
     loadingMap: "Loading map...",
   },
   gallery: {
-    title: "Drawing Gallery",
+    title: "Drawing gallery",
     subtitle:
-      "Drawings by students participating in the TETHYS4ADRION project. Together we raise awareness about waste in our rivers.",
+      "The Institute for Water of the Republic of Slovenia (IzVRS), in cooperation with France Bevk Primary School Tolmin, the Municipality of Tolmin and the Tolmin Fishing Association, organized an art competition for 3rd, 4th and 5th grade students. The competition took place within the international project TETHYS4ADRION, which aims to reduce the amount of waste flowing through rivers into the Adriatic and Ionian Sea. During a workshop with an IzVRS representative, students learned about waste issues and different types of plastic. In their art class works, they presented proposals and solutions for reducing waste in rivers, responsible waste management, good habits in relation to water, and protection of rivers and aquatic ecosystems. After evaluation by an expert committee, the 12 best artworks were used on GPS tracker stickers, which allow us to track the journey of waste along the Soča River.",
     filterAll: "All",
     filterGrade: "grade",
     loadMore: "Load more",
@@ -131,7 +131,7 @@ export const en: Translations = {
   game: {
     title: "Game: Clean Soča",
     subtitle:
-      "Help Izvrstna clean the Soča River! Collect trash and avoid obstacles.",
+      "Test yourself in a virtual world of catching waste on the river.",
     controls: "A/← | D/→ | Touch left/right",
     canvasAria: "Clean Soča game — move the kayaker left and right",
     loadingGame: "Loading game...",
@@ -214,6 +214,5 @@ export const en: Translations = {
   footer: {
     mascotSubtitle: "TETHYS4ADRION mascot",
     euText: "Co-funded by the EU — Interreg IPA ADRION",
-    chemInstitute: "National Institute of Chemistry",
   },
 } as const;

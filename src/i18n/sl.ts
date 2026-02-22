@@ -7,7 +7,7 @@ export const sl = {
   },
   nav: {
     home: "Domov",
-    trackers: "GPS Sledilci",
+    trackers: "GPS sledilniki",
     gallery: "Galerija",
     game: "Igra",
     about: "O projektu",
@@ -20,7 +20,7 @@ export const sl = {
     speechBubble:
       "Pozdravljeni! Jaz sem Izvrstna, soška postrv. Živim v najlepši reki na svetu — reki Soči. Pomagajte mi raziskovati, kam potujejo odpadki po naših rekah!",
     btnProject: "Spoznaj projekt",
-    btnTrackers: "GPS sledilci",
+    btnTrackers: "GPS sledilniki",
     btnGallery: "Galerija risb",
     mascotAlt: "Izvrstna — soška postrv",
   },
@@ -45,7 +45,7 @@ export const sl = {
     soca: {
       countries: ["Slovenija", "Italija"],
       description:
-        "Smaragdno zelena reka, ki izvira v Julijskih Alpah in se izliva v Jadransko morje. V njej bo nameščenih 12 GPS sledilnikov.",
+        "Smaragdno zelena reka, ki izvira v Julijskih Alpah in se izliva v Jadransko morje. V njej je nameščenih 12 GPS sledilnikov.",
       pilotLead: "Inštitut za vode RS",
     },
     reno: {
@@ -97,7 +97,7 @@ export const sl = {
     ionian: "JONSKO MORJE",
   },
   trackers: {
-    title: "GPS Sledilci v Soči",
+    title: "GPS sledilniki v Soči",
     subtitle:
       "Spremljanje potovanja 12 GPS sledilnikov po reki Soči v živo. Vsak sledilnik nosi risbo enega od učencev, ki sodelujejo v projektu.",
     active: "Aktiven",
@@ -109,7 +109,7 @@ export const sl = {
   gallery: {
     title: "Galerija risb",
     subtitle:
-      "Risbe učencev, ki sodelujejo v projektu TETHYS4ADRION. Skupaj ozaveščamo o odpadkih v naših rekah.",
+      "Inštitut za vode Republike Slovenije (IzVRS) je v sodelovanju z OŠ Franceta Bevka Tolmin, občino Tolmin in Ribiško družino Tolmin, organiziral likovni natečaj za učence 3., 4. in 5. razreda. Natečaj je potekal v okviru mednarodnega projekta TETHYS4ADRION, katerega cilj je zmanjšati količino odpadkov, ki po rekah pritekajo v Jadransko in Jonsko morje. Učenci so se na delavnici s predstavnico IzVRS seznanili s problematiko odpadkov in spoznali različne vrste plastike. Po delavnici so pri likovnem pouku v svojih delih prikazali predloge in rešitve za zmanjševanje odpadkov v rekah, odgovorno ravnanje z odpadki, dobre navade ljudi v odnosu do voda ter varovanje rek in vodnih ekosistemov. Po oceni strokovne komisije je bilo 12 najboljših likovnih del uporabljenih na nalepkah GPS sledilnikov, s katerimi lahko spremljamo potovanje odpadkov po reki Soči.",
     filterAll: "Vsi",
     filterGrade: "razred",
     loadMore: "Poglej več",
@@ -129,7 +129,7 @@ export const sl = {
   game: {
     title: "Igra: Čista Soča",
     subtitle:
-      "Pomagaj Izvrstni očistiti reko Sočo! Poberi smeti in se izogni oviram.",
+      "Preizkusi se v virtualnem svetu lovljenja odpadkov na reki.",
     controls: "A/← | D/→ | Dotik levo/desno",
     canvasAria: "Igra Čista Soča — premikaj kajakarja levo in desno",
     loadingGame: "Nalaganje igre...",
@@ -212,7 +212,6 @@ export const sl = {
   footer: {
     mascotSubtitle: "TETHYS4ADRION maskota",
     euText: "Sofinancirano s strani EU — Interreg IPA ADRION",
-    chemInstitute: "Kemijski inštitut",
   },
 } as const;
 

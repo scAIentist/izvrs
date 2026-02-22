@@ -54,14 +54,8 @@ export default function Footer() {
             >
               IzVRS
             </a>
-            <a
-              href="https://www.ki.si/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/40 hover:text-river-blue text-sm transition-colors duration-200"
-            >
-              {t.footer.chemInstitute}
-            </a>
+
+
           </div>
         </div>
 
@@ -73,7 +67,7 @@ export default function Footer() {
               <span>{t.footer.euText}</span>
             </div>
             <p className="text-white/20 text-xs">
-              &copy; {new Date().getFullYear()} TETHYS4ADRION
+              &copy; {new Date().getFullYear()} IzVRS
             </p>
           </div>
         </div>
