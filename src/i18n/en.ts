@@ -20,7 +20,7 @@ export const en: Translations = {
     heading: "Meet",
     headingHighlight: "Izvrstna",
     speechBubble:
-      "Hello! I'm Izvrstna, a marble trout. I live in the most beautiful river in the world — the Soča River. Help me explore where waste travels through our rivers!",
+      "Hello! I'm Izvrstna, a marble trout. I live in the most beautiful river in the world – the Soča River. Help me explore where waste travels through our rivers!",
     btnProject: "About the project",
     btnTrackers: "GPS trackers",
     btnGallery: "Artwork gallery",
@@ -104,7 +104,7 @@ export const en: Translations = {
   trackers: {
     title: "GPS trackers in the Soča",
     subtitle:
-      "Live tracking of 12 GPS trackers along the Soča River. Each tracker carries a drawing by one of the students participating in the project.",
+      "Live tracking of 12 GPS trackers along the Soča River. Each tracker carries a selected drawing by one of the students participating in the project.",
     active: "Active",
     inactive: "Inactive",
     stopped: "Stopped",

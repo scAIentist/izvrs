@@ -18,7 +18,7 @@ export const sl = {
     heading: "Spoznajte",
     headingHighlight: "Izvrstno",
     speechBubble:
-      "Pozdravljeni! Jaz sem Izvrstna, soška postrv. Živim v najlepši reki na svetu — reki Soči. Pomagajte mi raziskovati, kam potujejo odpadki po naših rekah!",
+      "Pozdravljeni! Sem Izvrstna, soška postrv. Živim v najlepši reki na svetu – reki Soči. Pomagajte mi raziskovati, kam potujejo odpadki po naših rekah!",
     btnProject: "Spoznaj projekt",
     btnTrackers: "GPS sledilniki",
     btnGallery: "Galerija slik",
@@ -102,7 +102,7 @@ export const sl = {
   trackers: {
     title: "GPS sledilniki v Soči",
     subtitle:
-      "Spremljanje potovanja 12 GPS sledilnikov po reki Soči v živo. Vsak sledilnik nosi risbo enega od učencev, ki sodelujejo v projektu.",
+      "V živo spremljanje potovanja 12-ih GPS sledilnikov po reki Soči. Vsak sledilnik nosi izbrano risbo enega od učencev, ki sodelujejo v projektu.",
     active: "Aktiven",
     inactive: "Neaktiven",
     stopped: "Ustavljen",
