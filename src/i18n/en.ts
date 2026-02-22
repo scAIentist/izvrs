@@ -139,7 +139,7 @@ export const en: Translations = {
     canvasAria: "Clean Soča game — move the kayaker left and right",
     loadingGame: "Loading game...",
     lobby: {
-      greeting: "Hi! I'm Izvrstna 🐟",
+      greeting: "Hi! I'm Izvrstna!",
       description:
         "I need help — my Soča River is full of trash! Help me clean it up!",
       playButton: "PLAY",
@@ -203,10 +203,10 @@ export const en: Translations = {
       termsClose: "CLOSE",
     },
     mascotComments: {
-      start: ["Let's go! 💪", "Clean the Soča!", "Help me! 🐟"],
+      start: ["Let's go! 💪", "Clean the Soča!", "Help me!"],
       trashCollected: ["Great! ♻️", "Excellent!", "That's right!", "Bravo! 👏", "Thanks! 💚"],
       combo: ["COMBO! 🔥", "Unstoppable!", "On fire! 🔥", "Fantastic!"],
-      fishCaught: ["Oh no, a fish! 😢", "That's my friend!", "Not fish! 🐟", "Watch the fish!"],
+      fishCaught: ["Oh no! Fish are my friends, not trash! 😢", "That's my friend!", "Not the fish!", "Watch the fish!"],
       obstacleHit: ["Ouch! 😵", "Watch out! ⚠️", "Obstacle!", "Ouch!"],
       trashMissed: ["Trash got away!", "Too bad! 😕", "Get them all!"],
       encouragement: ["Keep going!", "You're doing great!", "Keep it up! 💪", "Excellent work!"],

@@ -137,7 +137,7 @@ export const sl = {
     canvasAria: "Igra Čista Soča — premikaj kajakarja levo in desno",
     loadingGame: "Nalaganje igre...",
     lobby: {
-      greeting: "Živjo! Jaz sem Izvrstna 🐟",
+      greeting: "Živjo! Sem Izvrstna!",
       description:
         "Pomoč potrebujem — v moji reki Soči je polno smeti! Pomagaj mi jo očistiti!",
       playButton: "IGRAJ",
@@ -201,10 +201,10 @@ export const sl = {
       termsClose: "ZAPRI",
     },
     mascotComments: {
-      start: ["Gremo! 💪", "Očistimo Sočo!", "Pomagaj mi! 🐟"],
+      start: ["Gremo! 💪", "Očistimo Sočo!", "Pomagaj mi!"],
       trashCollected: ["Super! ♻️", "Odlično!", "Tako je!", "Bravo! 👏", "Hvala! 💚"],
       combo: ["COMBO! 🔥", "Neustavljiv/a!", "Na ognju! 🔥", "Fantastično!"],
-      fishCaught: ["Oj ne, ribica! 😢", "To je moj prijatelj!", "Ribe ne! 🐟", "Pazi na ribe!"],
+      fishCaught: ["Ojoj! Ribe so moji prijatelji, ne pa smeti! 😢", "To je moj prijatelj!", "Ribe ne!", "Pazi na ribe!"],
       obstacleHit: ["Avč! 😵", "Pazi! ⚠️", "Ovira!", "Ouch!"],
       trashMissed: ["Ušla je smeti!", "Škoda! 😕", "Poberi vse!"],
       encouragement: ["Samo naprej!", "Gre ti dobro!", "Še naprej! 💪", "Odlično greš!"],

@@ -29,6 +29,7 @@ export default function GameCanvas({
   const lastCommentRef = useRef(0);
   const commentsRef = useRef(t.game.mascotComments);
   commentsRef.current = t.game.mascotComments;
+  const tempEmotionUntilRef = useRef(0);
 
   const triggerComment = useCallback(
     (type: CommentType) => {
@@ -42,6 +43,21 @@ export default function GameCanvas({
     },
     [onMascotComment]
   );
+
+  // Temporarily flash a reaction emotion, then revert to lives-based emotion
+  const flashEmotion = useCallback(
+    (emotion: MascotEmotion) => {
+      onEmotionChange(emotion);
+      tempEmotionUntilRef.current = Date.now() + 800;
+    },
+    [onEmotionChange]
+  );
+
+  const getBaseEmotion = (lives: number): MascotEmotion => {
+    if (lives >= 3) return "happy";
+    if (lives === 2) return "satisfied";
+    return "angry";
+  };
 
   // Game loop
   useEffect(() => {
@@ -60,9 +76,11 @@ export default function GameCanvas({
         return;
       }
 
-      const events = tick(state, keysRef.current, Date.now(), topScore);
+      const now = Date.now();
+      const events = tick(state, keysRef.current, now, topScore);
 
-      // Process events for mascot
+      // Process events for mascot — trigger comments AND temporary emotions
+      let hadReaction = false;
       for (const ev of events) {
         if (ev.type === "died") {
           onGameOver(state);
@@ -71,12 +89,28 @@ export default function GameCanvas({
         if (ev.type in commentsRef.current) {
           triggerComment(ev.type as CommentType);
         }
+        // Flash emotion based on event type
+        if (!hadReaction) {
+          if (ev.type === "fishCaught") {
+            flashEmotion("sad");
+            hadReaction = true;
+          } else if (ev.type === "obstacleHit" || ev.type === "lowHealth") {
+            flashEmotion("surprised");
+            hadReaction = true;
+          } else if (ev.type === "combo" || ev.type === "highScore") {
+            flashEmotion("happy");
+            hadReaction = true;
+          } else if (ev.type === "trashMissed") {
+            flashEmotion("sad");
+            hadReaction = true;
+          }
+        }
       }
 
-      // Update mascot emotion based on lives
-      if (state.lives >= 3) onEmotionChange("happy");
-      else if (state.lives === 2) onEmotionChange("satisfied");
-      else if (state.lives === 1) onEmotionChange("angry");
+      // Revert to lives-based emotion after temporary reaction expires
+      if (!hadReaction && now > tempEmotionUntilRef.current) {
+        onEmotionChange(getBaseEmotion(state.lives));
+      }
 
       renderFrame(ctx, state);
       rafRef.current = requestAnimationFrame(loop);
@@ -84,7 +118,7 @@ export default function GameCanvas({
 
     rafRef.current = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [topScore, onGameOver, triggerComment, onEmotionChange]);
+  }, [topScore, onGameOver, triggerComment, onEmotionChange, flashEmotion]);
 
   // Keyboard input
   useEffect(() => {

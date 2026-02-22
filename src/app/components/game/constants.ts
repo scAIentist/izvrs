@@ -33,9 +33,9 @@ export const FISH_ITEMS: ItemDef[] = [
 ];
 
 export const OBSTACLE_ITEMS: ItemDef[] = [
-  { emoji: "\u{1F6A3}", name: "raft", damage: 1 },
-  { emoji: "\u{1F6F6}", name: "kanu", damage: 1 },
-  { emoji: "\u{1FAA8}", name: "skala", damage: 1 },
+  { emoji: "\u{1FAB5}", name: "deblo", damage: 1 },
+  { emoji: "\u{1F300}", name: "vrtinec", damage: 1 },
+  { emoji: "\u{1F30A}", name: "val", damage: 1 },
 ];
 
 /* ─── Mascot comments ─── */

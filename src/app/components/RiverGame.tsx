@@ -54,12 +54,8 @@ export default function RiverGame() {
   return (
     <section
       id="igra"
-      className="relative bg-gradient-to-b from-deep-navy via-deep-navy to-forest-green/30 overflow-hidden min-h-screen"
+      className="relative bg-deep-navy overflow-hidden min-h-screen"
     >
-      {/* Decorative blobs */}
-      <div className="absolute top-[-100px] right-[-200px] w-[500px] h-[500px] bg-river-blue/5 blob pointer-events-none" />
-      <div className="absolute bottom-[-80px] left-[-150px] w-[400px] h-[400px] bg-sage-green/5 blob-2 pointer-events-none" />
-
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-24 pb-16">
         {/* Title */}
         <ScrollReveal className="text-center mb-8">

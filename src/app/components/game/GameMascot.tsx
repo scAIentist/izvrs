@@ -26,7 +26,7 @@ export default function GameMascot({ emotion, comment, visible }: Props) {
   if (!visible) return null;
 
   return (
-    <div className="absolute bottom-20 left-2 z-20 flex items-end gap-1 pointer-events-none">
+    <div className="absolute top-2 left-2 z-20 flex items-start gap-1 pointer-events-none">
       {/* Mascot image */}
       <motion.div
         key={emotion}
@@ -54,7 +54,7 @@ export default function GameMascot({ emotion, comment, visible }: Props) {
             transition={{ duration: 0.2 }}
             className="relative bg-white text-slate-dark px-3 py-2 rounded-xl text-xs sm:text-sm max-w-[140px] shadow-lg"
           >
-            <div className="absolute -left-1.5 bottom-2.5 w-3 h-3 bg-white rotate-45" />
+            <div className="absolute -left-1.5 top-2.5 w-3 h-3 bg-white rotate-45" />
             <span className="relative z-10">{comment}</span>
           </motion.div>
         )}
