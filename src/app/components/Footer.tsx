@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
+import { useTranslation } from "@/i18n";
 
 export default function Footer() {
+  const { t } = useTranslation();
   return (
     <footer className="relative bg-deep-navy overflow-hidden">
       {/* Subtle top accent */}
@@ -27,7 +31,7 @@ export default function Footer() {
                 Izvrstna
               </span>
               <span className="text-white/30 text-xs">
-                TETHYS4ADRION maskota
+                {t.footer.mascotSubtitle}
               </span>
             </div>
           </div>
@@ -56,7 +60,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="text-white/40 hover:text-river-blue text-sm transition-colors duration-200"
             >
-              Kemijski inštitut
+              {t.footer.chemInstitute}
             </a>
           </div>
         </div>
@@ -66,7 +70,7 @@ export default function Footer() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3 text-white/25 text-xs">
               <span className="text-lg">🇪🇺</span>
-              <span>Sofinancirano s strani EU — Interreg IPA ADRION</span>
+              <span>{t.footer.euText}</span>
             </div>
             <p className="text-white/20 text-xs">
               &copy; {new Date().getFullYear()} TETHYS4ADRION

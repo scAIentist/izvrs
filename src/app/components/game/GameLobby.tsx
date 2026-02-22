@@ -2,12 +2,14 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useTranslation } from "@/i18n";
 
 interface Props {
   onStart: () => void;
 }
 
 export default function GameLobby({ onStart }: Props) {
+  const { t } = useTranslation();
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -29,10 +31,10 @@ export default function GameLobby({ onStart }: Props) {
       {/* Short greeting */}
       <div className="text-center max-w-[280px]">
         <h3 className="text-lg font-bold text-sage-green-light mb-2">
-          {"Živjo! Jaz sem Izvrstna 🐟"}
+          {t.game.lobby.greeting}
         </h3>
         <p className="text-sm text-white/70 leading-relaxed">
-          {"Pomoč potrebujem — v moji reki Soči je polno smeti! Pomagaj mi jo očistiti!"}
+          {t.game.lobby.description}
         </p>
       </div>
 
@@ -41,7 +43,7 @@ export default function GameLobby({ onStart }: Props) {
         onClick={onStart}
         className="px-12 py-4 bg-gradient-to-br from-success to-forest-green text-white text-xl font-bold rounded-full uppercase tracking-widest shadow-xl shadow-success/30 hover:-translate-y-1 hover:shadow-2xl hover:shadow-success/40 transition-all active:scale-95"
       >
-        IGRAJ
+        {t.game.lobby.playButton}
       </button>
     </motion.div>
   );

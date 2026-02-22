@@ -1,0 +1,219 @@
+import type { Translations } from "./sl";
+
+export const en: Translations = {
+  meta: {
+    title: "Izvrstna | TETHYS4ADRION",
+    description:
+      "Meet Izvrstna, a marble trout raising awareness about plastic pollution in rivers. TETHYS4ADRION project — tracking waste in 5 rivers of the Adriatic-Ionian region.",
+    ogLocale: "en_US",
+  },
+  nav: {
+    home: "Home",
+    trackers: "GPS Trackers",
+    gallery: "Gallery",
+    game: "Game",
+    about: "About",
+    menuOpen: "Open menu",
+    menuClose: "Close menu",
+  },
+  hero: {
+    heading: "Meet",
+    headingHighlight: "Izvrstna",
+    speechBubble:
+      "Hello! I'm Izvrstna, a marble trout. I live in the most beautiful river in the world — the Soča River. Help me explore where waste travels through our rivers!",
+    btnProject: "About the project",
+    btnTrackers: "GPS trackers",
+    btnGallery: "Drawing gallery",
+    mascotAlt: "Izvrstna — marble trout",
+  },
+  about: {
+    title: "About TETHYS4ADRION",
+    subtitle:
+      "Strengthening cross-border cooperation to reduce plastic waste in rivers of the Adriatic and Ionian Sea region",
+    p1: "The TETHYS4ADRION project addresses the pressing challenges of climate change and plastic pollution, focusing on rivers as transport routes connecting land-based waste sources to the sea.",
+    p2: "The Adriatic-Ionian Sea is highly sensitive to river pollution due to urbanization, tourism, agriculture and industry. The ultimate goal is to obtain information on river pollution and contribute to biodiversity protection and improved waste management.",
+    p3: "10 institutions from 8 countries around the Adriatic and Ionian Sea will collect data on the presence and transport of waste and microplastics toward the sea across 5 pilot rivers.",
+    euText: "Co-funded by the EU — Interreg IPA ADRION",
+    projectLink: "Project website →",
+    mascotAlt: "Izvrstna mascot",
+    mapTitle: "Region Map",
+    mapSubtitle:
+      "Adriatic-Ionian region with marked pilot rivers. Click on a river for details.",
+    partnersTitle: "Project Partners",
+    pilotPartner: "Pilot partner:",
+    leadPartner: "LP",
+  },
+  rivers: {
+    soca: {
+      countries: ["Slovenia", "Italy"],
+      description:
+        "An emerald-green river originating in the Julian Alps, flowing into the Adriatic Sea. 12 GPS trackers will be deployed in it.",
+      pilotLead: "Institute for Water of the Republic of Slovenia",
+    },
+    reno: {
+      countries: ["Italy"],
+      description:
+        "A river in northern Italy flowing through Emilia-Romagna into the Adriatic Sea.",
+      pilotLead: "ISPRA",
+    },
+    alfeios: {
+      countries: ["Greece"],
+      description:
+        "The longest river in the Peloponnese, flowing into the Ionian Sea. An important freshwater source in the region.",
+      pilotLead: "HCMR",
+    },
+    "buna-bojana": {
+      countries: ["Albania", "Montenegro"],
+      description:
+        "A transboundary river between Albania and Montenegro, flowing into the Adriatic Sea near the town of Ulcinj.",
+      pilotLead: "University of Tirana",
+    },
+    neretva: {
+      countries: ["Croatia", "Bosnia and Herzegovina"],
+      description:
+        "The longest river on the eastern Adriatic coast. Its delta is one of the most important wetlands in the Mediterranean.",
+      pilotLead: "City of Metković",
+    },
+  },
+  map: {
+    countries: {
+      IT: "ITALY",
+      SI: "SLOVENIA",
+      HR: "CROATIA",
+      BA: "B&H",
+      ME: "MONTENEGRO",
+      AL: "ALBANIA",
+      GR: "GREECE",
+    },
+    countryFull: {
+      SI: "Slovenia",
+      IT: "Italy",
+      HR: "Croatia",
+      BA: "Bosnia and Herzegovina",
+      ME: "Montenegro",
+      AL: "Albania",
+      GR: "Greece",
+    },
+    adriatic1: "ADRIATIC",
+    adriatic2: "SEA",
+    ionian: "IONIAN SEA",
+  },
+  trackers: {
+    title: "GPS Trackers in the Soča",
+    subtitle:
+      "Live tracking of 12 GPS trackers along the Soča River. Each tracker carries a drawing by one of the students participating in the project.",
+    active: "Active",
+    inactive: "Inactive",
+    stopped: "Stopped",
+    distance: "Distance traveled:",
+    loadingMap: "Loading map...",
+  },
+  gallery: {
+    title: "Drawing Gallery",
+    subtitle:
+      "Drawings by students participating in the TETHYS4ADRION project. Together we raise awareness about waste in our rivers.",
+    filterAll: "All",
+    filterGrade: "grade",
+    loadMore: "Load more",
+    showLess: "Show less",
+    openDrawing: "Open drawing",
+    drawingAlt: "Drawing",
+    gradeShort: "g",
+    loadingGallery: "Loading gallery...",
+  },
+  lightbox: {
+    close: "Close",
+    prev: "Previous drawing",
+    next: "Next drawing",
+    drawing: "Drawing",
+    grade: "grade",
+  },
+  game: {
+    title: "Game: Clean Soča",
+    subtitle:
+      "Help Izvrstna clean the Soča River! Collect trash and avoid obstacles.",
+    controls: "A/← | D/→ | Touch left/right",
+    canvasAria: "Clean Soča game — move the kayaker left and right",
+    loadingGame: "Loading game...",
+    lobby: {
+      greeting: "Hi! I'm Izvrstna 🐟",
+      description:
+        "I need help — my Soča River is full of trash! Help me clean it up!",
+      playButton: "PLAY",
+    },
+    sidebar: {
+      rulesTitle: "📋 How to play",
+      collectTrash: "✅ Collect trash (+points)",
+      dontCatchFish: "❌ Don't catch fish!",
+      watchObstacles: "⚠️ Watch out for obstacles!",
+      controlsLabel:
+        "🕹️ Controls: ← → arrows or A/D  •  📱 Touch left/right",
+      leaderboardTitle: "🏆 Best Soča Cleaners",
+    },
+    over: {
+      yourScore: "Your score:",
+      rank1: "1st place!",
+      rank2: "2nd place!",
+      rank3: "3rd place!",
+      rankN: "place",
+      playAgain: "PLAY AGAIN",
+      back: "BACK",
+      reactions: {
+        score400: "INCREDIBLE! You're a true Soča hero!",
+        score250: "Excellent work! The Soča is much cleaner!",
+        score150: "Great! My river is more beautiful!",
+        score50: "Thanks for the help! Try again?",
+        score0: "Could be better… Don't give up!",
+        scoreNeg: "Oh no! Fish are my friends, not trash!",
+      },
+    },
+    prize: {
+      title: "🎁 Enter the prize draw!",
+      titleReturning: "🎁 Update your score!",
+      nicknameLabel: "Nickname *",
+      nicknamePlaceholder: "Enter nickname",
+      emailLabel: "Email *",
+      emailPlaceholder: "your@gmail.com",
+      termsAgree: "I agree to the ",
+      termsLink: "prize draw terms",
+      termsEnd: " and data processing *",
+      submitButton: "ENTER",
+      updateButton: "UPDATE",
+      successNew:
+        "✅ Successfully entered the prize draw! Good luck! 🍀",
+      successReturning: "✅ Score updated! Good luck! 🍀",
+      unlimitedPlays:
+        "You can play unlimited times. Your best score is saved.",
+      errorNickname: "Please enter a nickname",
+      errorEmail: "Please enter a valid email",
+      errorTerms: "Please accept the terms",
+      termsTitle: "📋 Prize Draw Terms",
+      termsOrganizer: "Institute for Water of the Republic of Slovenia (IzVRS)",
+      termsPurpose:
+        "Promotion of the TETHYS4ADRION project and awareness about plastic pollution in rivers.",
+      termsConditions:
+        "Successfully completed game, entered nickname and email address, agreement with terms.",
+      termsPrizes:
+        "Prizes will be drawn among all participants. Winners will be notified by email.",
+      termsPrivacy:
+        "Your data will be used exclusively for the purpose of the prize draw and will not be shared with third parties.",
+      termsClose: "CLOSE",
+    },
+    mascotComments: {
+      start: ["Let's go! 💪", "Clean the Soča!", "Help me! 🐟"],
+      trashCollected: ["Great! ♻️", "Excellent!", "That's right!", "Bravo! 👏", "Thanks! 💚"],
+      combo: ["COMBO! 🔥", "Unstoppable!", "On fire! 🔥", "Fantastic!"],
+      fishCaught: ["Oh no, a fish! 😢", "That's my friend!", "Not fish! 🐟", "Watch the fish!"],
+      obstacleHit: ["Ouch! 😵", "Watch out! ⚠️", "Obstacle!", "Ouch!"],
+      trashMissed: ["Trash got away!", "Too bad! 😕", "Get them all!"],
+      encouragement: ["Keep going!", "You're doing great!", "Keep it up! 💪", "Excellent work!"],
+      lowHealth: ["Watch out, low hearts!", "One life left!", "Be careful!"],
+      highScore: ["WOW! 🌟", "Incredible!", "Record?! 🏆"],
+    },
+  },
+  footer: {
+    mascotSubtitle: "TETHYS4ADRION mascot",
+    euText: "Co-funded by the EU — Interreg IPA ADRION",
+    chemInstitute: "National Institute of Chemistry",
+  },
+} as const;

@@ -4,6 +4,7 @@ import { useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { type GalleryItem } from "../data/gallery";
+import { useTranslation } from "@/i18n";
 
 interface LightboxProps {
   item: GalleryItem | null;
@@ -18,6 +19,8 @@ export default function Lightbox({
   onPrev,
   onNext,
 }: LightboxProps) {
+  const { t } = useTranslation();
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (!item) return;
@@ -54,7 +57,7 @@ export default function Lightbox({
           <button
             onClick={onClose}
             className="absolute top-4 right-4 text-white/70 hover:text-white text-3xl z-10 w-10 h-10 flex items-center justify-center"
-            aria-label="Zapri"
+            aria-label={t.lightbox.close}
           >
             &times;
           </button>
@@ -66,7 +69,7 @@ export default function Lightbox({
               onPrev();
             }}
             className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-4xl z-10 w-12 h-12 flex items-center justify-center"
-            aria-label="Prejšnja risba"
+            aria-label={t.lightbox.prev}
           >
             &#8249;
           </button>
@@ -78,7 +81,7 @@ export default function Lightbox({
               onNext();
             }}
             className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-4xl z-10 w-12 h-12 flex items-center justify-center"
-            aria-label="Naslednja risba"
+            aria-label={t.lightbox.next}
           >
             &#8250;
           </button>
@@ -95,7 +98,7 @@ export default function Lightbox({
           >
             <Image
               src={item.file}
-              alt={`Risba #${item.id}`}
+              alt={`${t.lightbox.drawing} #${item.id}`}
               fill
               className="object-contain"
               sizes="90vw"
@@ -105,7 +108,7 @@ export default function Lightbox({
 
           {/* Info bar */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-md rounded-full px-5 py-2 text-white text-sm">
-            Risba #{item.id} &middot; {item.grade}. razred
+            {t.lightbox.drawing} #{item.id} &middot; {item.grade}. {t.lightbox.grade}
           </div>
         </motion.div>
       )}

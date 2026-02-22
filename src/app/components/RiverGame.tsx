@@ -10,8 +10,10 @@ import GameMascot from "./game/GameMascot";
 import GameLobby from "./game/GameLobby";
 import GameOver from "./game/GameOver";
 import GameSidebar from "./game/GameSidebar";
+import { useTranslation } from "@/i18n";
 
 export default function RiverGame() {
+  const { t } = useTranslation();
   const [phase, setPhase] = useState<GamePhase>("lobby");
   const [finalState, setFinalState] = useState<GameState | null>(null);
   const [mascotEmotion, setMascotEmotion] = useState<MascotEmotion>("happy");
@@ -62,10 +64,10 @@ export default function RiverGame() {
         {/* Title */}
         <ScrollReveal className="text-center mb-8">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
-            {"Igra: \u010Cista So\u010Da"}
+            {t.game.title}
           </h2>
           <p className="text-white/60 text-sm max-w-md mx-auto">
-            {"Pomagaj Izvrstni očistiti reko Sočo! Poberi smeti in se izogni oviram."}
+            {t.game.subtitle}
           </p>
           <div className="w-16 h-1 bg-gradient-to-r from-river-blue to-forest-green mx-auto rounded-full mt-3" />
         </ScrollReveal>
@@ -118,7 +120,7 @@ export default function RiverGame() {
             {/* Controls hint (visible during play) */}
             {phase === "playing" && (
               <p className="text-center text-sage-green-light/60 text-xs mt-3">
-                {"\u2B05\uFE0F A/\u2190  |  \u27A1\uFE0F D/\u2192  |  \u{1F4F1} Dotik levo/desno"}
+                {t.game.controls}
               </p>
             )}
           </div>

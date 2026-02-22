@@ -1,6 +1,7 @@
 "use client";
 
 import type { GamePhase, LeaderboardEntry } from "./types";
+import { useTranslation } from "@/i18n";
 
 interface Props {
   phase: GamePhase;
@@ -10,15 +11,17 @@ interface Props {
 
 /* ─── Rules Section ─── */
 function RulesSection() {
+  const { t } = useTranslation();
+
   return (
     <div className="rounded-xl bg-white/8 border border-white/10 p-4">
       <h3 className="text-sm font-bold text-amber mb-3">
-        {"📋 Kako igrati"}
+        {t.game.sidebar.rulesTitle}
       </h3>
 
       {/* Collect trash */}
       <div className="mb-3">
-        <p className="text-xs font-semibold text-success mb-1.5">{"✅ Poberi smeti (+točke)"}</p>
+        <p className="text-xs font-semibold text-success mb-1.5">{t.game.sidebar.collectTrash}</p>
         <div className="flex flex-wrap gap-1.5">
           {[
             ["🍾", "10"], ["🧴", "10"], ["🔋", "20"], ["🛞", "25"],
@@ -33,7 +36,7 @@ function RulesSection() {
 
       {/* Don't catch fish */}
       <div className="mb-3">
-        <p className="text-xs font-semibold text-danger mb-1.5">{"❌ Ne lovi rib!"}</p>
+        <p className="text-xs font-semibold text-danger mb-1.5">{t.game.sidebar.dontCatchFish}</p>
         <div className="flex gap-1.5">
           {["🐟", "🐠", "🐡"].map((e) => (
             <span key={e} className="bg-black/20 px-2 py-0.5 rounded text-xs text-white">
@@ -45,7 +48,7 @@ function RulesSection() {
 
       {/* Obstacles */}
       <div className="mb-3">
-        <p className="text-xs font-semibold text-amber mb-1.5">{"⚠️ Pazi na ovire!"}</p>
+        <p className="text-xs font-semibold text-amber mb-1.5">{t.game.sidebar.watchObstacles}</p>
         <div className="flex gap-1.5">
           {["🚣", "🛶", "🪨"].map((e) => (
             <span key={e} className="bg-black/20 px-2 py-0.5 rounded text-xs text-white">
@@ -58,7 +61,7 @@ function RulesSection() {
       {/* Controls */}
       <div className="pt-2 border-t border-white/10">
         <p className="text-xs text-white/50">
-          {"🕹️ Kontrole: ← → puščice ali A/D  •  📱 Dotik levo/desno"}
+          {t.game.sidebar.controlsLabel}
         </p>
       </div>
     </div>
@@ -73,10 +76,12 @@ function LeaderboardSection({
   leaderboard: LeaderboardEntry[];
   highlightName: string | null;
 }) {
+  const { t } = useTranslation();
+
   return (
     <div className="rounded-xl bg-white/8 border border-white/10 p-4">
       <h3 className="text-sm font-bold text-amber mb-3">
-        {"🏆 Najboljši čistilci Soče"}
+        {t.game.sidebar.leaderboardTitle}
       </h3>
       <ul className="space-y-1 max-h-72 overflow-y-auto">
         {leaderboard.slice(0, 10).map((entry, i) => {

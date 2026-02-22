@@ -5,17 +5,12 @@ import L from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { trackers } from "../data/trackers";
+import { useTranslation } from "@/i18n";
 
 const statusColors: Record<string, string> = {
   active: "#27AE60",
   inactive: "#888888",
   stopped: "#C0392B",
-};
-
-const statusLabels: Record<string, string> = {
-  active: "Aktiven",
-  inactive: "Neaktiven",
-  stopped: "Ustavljen",
 };
 
 function createIcon(tracker: (typeof trackers)[0]) {
@@ -42,6 +37,14 @@ function createIcon(tracker: (typeof trackers)[0]) {
 }
 
 export default function MapContent() {
+  const { t } = useTranslation();
+
+  const statusLabels: Record<string, string> = {
+    active: t.trackers.active,
+    inactive: t.trackers.inactive,
+    stopped: t.trackers.stopped,
+  };
+
   useEffect(() => {
     // Fix Leaflet default icon paths
     delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
@@ -111,7 +114,7 @@ export default function MapContent() {
                 }}
               >
                 <span>
-                  <strong>Prepotovano:</strong> {tracker.distanceKm} km
+                  <strong>{t.trackers.distance}</strong> {tracker.distanceKm} km
                 </span>
               </div>
               <div

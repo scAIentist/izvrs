@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import SpeechBubble from "./SpeechBubble";
+import { useTranslation } from "@/i18n";
 
 /* ── Decorative SVG components ── */
 
@@ -58,6 +59,7 @@ function FloatingFish() {
 }
 
 export default function Hero() {
+  const { t } = useTranslation();
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
@@ -107,9 +109,9 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.5 }}
             >
-              Spoznajte{" "}
+              {t.hero.heading}{" "}
               <span className="relative inline-block">
-                <span className="text-gradient">Izvrstno</span>
+                <span className="text-gradient">{t.hero.headingHighlight}</span>
                 <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none" preserveAspectRatio="none">
                   <path d="M2 8 Q50 2 100 7 T198 5" stroke="#2AABE0" strokeWidth="3" strokeLinecap="round" fill="none" opacity="0.5" />
                 </svg>
@@ -117,7 +119,7 @@ export default function Hero() {
             </motion.h1>
 
             <SpeechBubble
-              text="Pozdravljeni! Jaz sem Izvrstna, soška postrv. Živim v najlepši reki na svetu — reki Soči. Pomagajte mi raziskovati, kam potujejo odpadki po naših rekah!"
+              text={t.hero.speechBubble}
               delay={1200}
               speed={28}
               className="mb-10 lg:max-w-lg"
@@ -133,21 +135,21 @@ export default function Hero() {
                 onClick={() => scrollTo("o-projektu")}
                 className="group relative px-7 py-3.5 bg-river-blue text-white font-semibold rounded-full overflow-hidden transition-all hover:shadow-xl hover:shadow-river-blue/30 hover:-translate-y-0.5"
               >
-                <span className="relative z-10">Spoznaj projekt</span>
+                <span className="relative z-10">{t.hero.btnProject}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
               </button>
               <button
                 onClick={() => scrollTo("sledilci")}
                 className="group relative px-7 py-3.5 bg-forest-green text-white font-semibold rounded-full overflow-hidden transition-all hover:shadow-xl hover:shadow-forest-green/30 hover:-translate-y-0.5"
               >
-                <span className="relative z-10">GPS sledilci</span>
+                <span className="relative z-10">{t.hero.btnTrackers}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
               </button>
               <button
                 onClick={() => scrollTo("galerija")}
                 className="group relative px-7 py-3.5 bg-amber text-white font-semibold rounded-full overflow-hidden transition-all hover:shadow-xl hover:shadow-amber/30 hover:-translate-y-0.5"
               >
-                <span className="relative z-10">Galerija risb</span>
+                <span className="relative z-10">{t.hero.btnGallery}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
               </button>
             </motion.div>
@@ -168,7 +170,7 @@ export default function Hero() {
             <div className="relative animate-float-slow">
               <Image
                 src="/mascot-opt/happy.webp"
-                alt="Izvrstna — soška postrv"
+                alt={t.hero.mascotAlt}
                 width={380}
                 height={380}
                 priority

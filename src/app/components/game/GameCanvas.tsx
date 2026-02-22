@@ -1,11 +1,12 @@
 "use client";
 
 import { useRef, useEffect, useCallback } from "react";
-import { CANVAS_W, CANVAS_H, MASCOT_COMMENTS } from "./constants";
+import { CANVAS_W, CANVAS_H } from "./constants";
 import type { CommentType } from "./constants";
 import type { GameState, MascotEmotion } from "./types";
 import { createInitialState, tick } from "./GameEngine";
 import { renderFrame } from "./GameRenderer";
+import { useTranslation } from "@/i18n";
 
 interface Props {
   topScore: number;
@@ -20,17 +21,20 @@ export default function GameCanvas({
   onMascotComment,
   onEmotionChange,
 }: Props) {
+  const { t } = useTranslation();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stateRef = useRef<GameState>(createInitialState());
   const keysRef = useRef({ left: false, right: false });
   const rafRef = useRef<number>(0);
   const lastCommentRef = useRef(0);
+  const commentsRef = useRef(t.game.mascotComments);
+  commentsRef.current = t.game.mascotComments;
 
   const triggerComment = useCallback(
     (type: CommentType) => {
       const now = Date.now();
       if (now - lastCommentRef.current < 1500) return;
-      const pool = MASCOT_COMMENTS[type];
+      const pool = commentsRef.current[type];
       if (pool.length > 0) {
         onMascotComment(pool[Math.floor(Math.random() * pool.length)]);
         lastCommentRef.current = now;
@@ -64,7 +68,7 @@ export default function GameCanvas({
           onGameOver(state);
           return;
         }
-        if (ev.type in MASCOT_COMMENTS) {
+        if (ev.type in commentsRef.current) {
           triggerComment(ev.type as CommentType);
         }
       }
@@ -131,7 +135,7 @@ export default function GameCanvas({
       style={{ touchAction: "manipulation", maxHeight: "70vh" }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      aria-label={"Igra Čista Soča — premikaj kajakarja levo in desno"}
+      aria-label={t.game.canvasAria}
     />
   );
 }

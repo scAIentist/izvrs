@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { rivers, type River } from "../data/rivers";
 import { partners } from "../data/partners";
+import { useTranslation } from "@/i18n";
 
 /* --------------------------------------------------------
    Coordinate helper: geographic → SVG
@@ -155,14 +156,14 @@ const riverGeo: Record<string, [number, number]> = {
 };
 
 /* Country label positions [lon, lat] */
-const countryLabels: { name: string; lon: number; lat: number; code: string }[] = [
-  { name: "ITALIJA", lon: 14.5, lat: 42.8, code: "IT" },
-  { name: "SLOVENIJA", lon: 14.4, lat: 46.1, code: "SI" },
-  { name: "HRVAŠKA", lon: 16.3, lat: 44.2, code: "HR" },
-  { name: "BIH", lon: 17.8, lat: 43.8, code: "BA" },
-  { name: "ČRNA GORA", lon: 19.5, lat: 42.5, code: "ME" },
-  { name: "ALBANIJA", lon: 20.2, lat: 41.0, code: "AL" },
-  { name: "GRČIJA", lon: 22.0, lat: 38.5, code: "GR" },
+const countryLabelPositions: { lon: number; lat: number; code: string }[] = [
+  { lon: 14.5, lat: 42.8, code: "IT" },
+  { lon: 14.4, lat: 46.1, code: "SI" },
+  { lon: 16.3, lat: 44.2, code: "HR" },
+  { lon: 17.8, lat: 43.8, code: "BA" },
+  { lon: 19.5, lat: 42.5, code: "ME" },
+  { lon: 20.2, lat: 41.0, code: "AL" },
+  { lon: 22.0, lat: 38.5, code: "GR" },
 ];
 
 /* Partners grouped by country code for the legend below */
@@ -177,15 +178,7 @@ const partnersByCountry = partners.reduce(
 
 /* Country order for partner legend */
 const countryOrder = ["SI", "IT", "HR", "BA", "ME", "AL", "GR"];
-const countryNames: Record<string, string> = {
-  SI: "Slovenija",
-  IT: "Italija",
-  HR: "Hrvaška",
-  BA: "Bosna in Hercegovina",
-  ME: "Črna Gora",
-  AL: "Albanija",
-  GR: "Grčija",
-};
+/* countryNames moved to translations */
 const countryColors: Record<string, string> = {
   SI: "#2AABE0",
   IT: "#4A7C59",
@@ -197,6 +190,7 @@ const countryColors: Record<string, string> = {
 };
 
 export default function RiversMap() {
+  const { t } = useTranslation();
   const [activeRiver, setActiveRiver] = useState<River | null>(null);
 
   return (
@@ -305,7 +299,7 @@ export default function RiversMap() {
             opacity="0.25"
             letterSpacing="4"
           >
-            JADRANSKO
+            {t.map.adriatic1}
           </text>
           <text
             x={geoToSvg(15.5, 41.8)[0]}
@@ -317,7 +311,7 @@ export default function RiversMap() {
             opacity="0.25"
             letterSpacing="4"
           >
-            MORJE
+            {t.map.adriatic2}
           </text>
           <text
             x={geoToSvg(19.0, 39.0)[0]}
@@ -329,11 +323,11 @@ export default function RiversMap() {
             opacity="0.2"
             letterSpacing="3"
           >
-            JONSKO MORJE
+            {t.map.ionian}
           </text>
 
           {/* Country labels on land */}
-          {countryLabels.map((c) => {
+          {countryLabelPositions.map((c) => {
             const [cx, cy] = geoToSvg(c.lon, c.lat);
             return (
               <text
@@ -347,7 +341,7 @@ export default function RiversMap() {
                 opacity="0.55"
                 letterSpacing="2"
               >
-                {c.name}
+                {t.map.countries[c.code as keyof typeof t.map.countries]}
               </text>
             );
           })}
@@ -518,19 +512,26 @@ export default function RiversMap() {
                     &times;
                   </button>
                 </div>
-                <p className="text-[11px] text-river-blue font-semibold mb-1.5 ml-[18px]">
-                  {activeRiver.countries.join(" / ")}
-                </p>
-                <p className="text-xs text-slate-dark/70 leading-relaxed ml-[18px]">
-                  {activeRiver.description}
-                </p>
-                <div className="mt-2 ml-[18px] flex items-center gap-1.5 text-[11px] text-slate-dark/50">
-                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  Pilotni partner: <span className="font-medium text-slate-dark/70">{activeRiver.pilotLead}</span>
-                </div>
+                {(() => {
+                  const rt = t.rivers[activeRiver.id as keyof typeof t.rivers];
+                  return rt ? (
+                    <>
+                      <p className="text-[11px] text-river-blue font-semibold mb-1.5 ml-[18px]">
+                        {rt.countries.join(" / ")}
+                      </p>
+                      <p className="text-xs text-slate-dark/70 leading-relaxed ml-[18px]">
+                        {rt.description}
+                      </p>
+                      <div className="mt-2 ml-[18px] flex items-center gap-1.5 text-[11px] text-slate-dark/50">
+                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        {t.about.pilotPartner} <span className="font-medium text-slate-dark/70">{rt.pilotLead}</span>
+                      </div>
+                    </>
+                  ) : null;
+                })()}
               </div>
             </div>
           );
@@ -540,7 +541,7 @@ export default function RiversMap() {
       {/* Partners — horizontal overflow ribbon */}
       <div className="mt-6 max-w-5xl mx-auto">
         <h4 className="text-xs font-semibold text-slate-dark/40 uppercase tracking-widest mb-5 text-center">
-          Projektni partnerji
+          {t.about.partnersTitle}
         </h4>
         <div className="flex flex-wrap justify-center gap-2">
           {partners.map((p) => (
@@ -560,7 +561,7 @@ export default function RiversMap() {
               </span>
               {p.role && (
                 <span className="bg-amber/15 text-amber px-1.5 py-0.5 rounded-full text-[9px] font-bold">
-                  LP
+                  {t.about.leadPartner}
                 </span>
               )}
             </div>

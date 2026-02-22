@@ -4,13 +4,7 @@ import { useState, useMemo } from "react";
 import { galleryItems, type GalleryItem } from "../data/gallery";
 import Lightbox from "./Lightbox";
 import ScrollReveal from "./ScrollReveal";
-
-const filters = [
-  { label: "Vsi", value: null },
-  { label: "3. razred", value: 3 },
-  { label: "4. razred", value: 4 },
-  { label: "5. razred", value: 5 },
-] as const;
+import { useTranslation } from "@/i18n";
 
 const gradeColors: Record<number, string> = {
   3: "bg-river-blue text-white",
@@ -25,6 +19,7 @@ const gradeFolders: Record<number, string> = {
 };
 
 export default function Gallery() {
+  const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState<number | null>(null);
   const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null);
   const INITIAL_COUNT = 15;   // 3 rows on desktop — fills ~1 screen
@@ -56,18 +51,22 @@ export default function Gallery() {
         {/* Title */}
         <ScrollReveal className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-deep-navy mb-4">
-            Galerija risb
+            {t.gallery.title}
           </h2>
           <div className="w-16 h-1 bg-sage-green mx-auto rounded-full mt-3" />
           <p className="text-slate-dark/60 max-w-lg mx-auto">
-            Risbe učencev, ki sodelujejo v projektu TETHYS4ADRION. Skupaj
-            ozaveščamo o odpadkih v naših rekah.
+            {t.gallery.subtitle}
           </p>
         </ScrollReveal>
 
         {/* Filters */}
         <div className="flex justify-center gap-2 mb-10 flex-wrap">
-          {filters.map((filter) => (
+          {([
+            { label: t.gallery.filterAll, value: null },
+            { label: `3. ${t.gallery.filterGrade}`, value: 3 },
+            { label: `4. ${t.gallery.filterGrade}`, value: 4 },
+            { label: `5. ${t.gallery.filterGrade}`, value: 5 },
+          ] as const).map((filter) => (
             <button
               key={filter.label}
               onClick={() => { setActiveFilter(filter.value); setVisibleCount(INITIAL_COUNT); }}
@@ -97,12 +96,12 @@ export default function Gallery() {
               type="button"
               className="group cursor-pointer text-left"
               onClick={() => setLightboxItem(item)}
-              aria-label={`Odpri risbo #${item.id}`}
+              aria-label={`${t.gallery.openDrawing} #${item.id}`}
             >
               <div className="relative aspect-square rounded-xl overflow-hidden bg-white shadow-sm group-hover:shadow-lg transition-shadow">
                 <img
                   src={`/gallery-thumbs/${gradeFolders[item.grade]}/${item.id}.webp`}
-                  alt={`Risba #${item.id}`}
+                  alt={`${t.gallery.drawingAlt} #${item.id}`}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -111,7 +110,7 @@ export default function Gallery() {
                 <span
                   className={`absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold ${gradeColors[item.grade]}`}
                 >
-                  {item.grade}. r
+                  {item.grade}. {t.gallery.gradeShort}
                 </span>
                 {/* Hover overlay */}
                 <div className="absolute inset-0 bg-deep-navy/0 group-hover:bg-deep-navy/20 transition-colors flex items-center justify-center">
@@ -131,7 +130,7 @@ export default function Gallery() {
               onClick={() => setVisibleCount((c) => c + LOAD_MORE)}
               className="px-8 py-3 bg-sage-green text-white font-semibold rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
             >
-              {`Poglej več (${filtered.length - visibleCount})`}
+              {`${t.gallery.loadMore} (${filtered.length - visibleCount})`}
             </button>
           )}
           {visibleCount > INITIAL_COUNT && (
@@ -139,7 +138,7 @@ export default function Gallery() {
               onClick={() => setVisibleCount(INITIAL_COUNT)}
               className="px-6 py-3 bg-white text-slate-dark/70 font-semibold rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all border border-slate-dark/10"
             >
-              Prikaži manj
+              {t.gallery.showLess}
             </button>
           )}
         </div>
