@@ -233,21 +233,24 @@ export function drawFloatingTexts(
 /* ─── HUD (score + lives + combo) ─── */
 
 export function drawHUD(ctx: CanvasRenderingContext2D, state: GameState) {
-  ctx.fillStyle = "white";
-  ctx.font = "bold 28px Arial";
-  ctx.textAlign = "left";
   ctx.shadowColor = "rgba(0,0,0,0.5)";
   ctx.shadowBlur = 4;
-  ctx.fillText(`\u{1F3C6} ${state.score}`, 15, 80);
 
-  // Combo
+  // Score — top center
+  ctx.fillStyle = "white";
+  ctx.font = "bold 28px Arial";
+  ctx.textAlign = "center";
+  ctx.fillText(`\u{1F3C6} ${state.score}`, CANVAS_W / 2, 35);
+
+  // Combo — below score
   if (state.comboCount >= 3) {
     ctx.font = "bold 18px Arial";
     ctx.fillStyle = "#FFD700";
-    ctx.fillText(`\u{1F525} x${state.comboCount}`, 15, 105);
+    ctx.textAlign = "center";
+    ctx.fillText(`\u{1F525} x${state.comboCount}`, CANVAS_W / 2, 60);
   }
 
-  // Lives
+  // Lives — top right
   ctx.textAlign = "right";
   ctx.font = "bold 28px Arial";
   ctx.fillStyle = "white";
