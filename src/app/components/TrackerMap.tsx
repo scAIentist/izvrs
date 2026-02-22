@@ -16,7 +16,7 @@ const MapContent = dynamic(() => import("./MapContent"), {
 export default function TrackerMap() {
   const { t } = useTranslation();
   return (
-    <section id="sledilci" className="py-20 bg-deep-navy scroll-mt-20">
+    <section id="sledilci" className="pt-28 pb-20 bg-deep-navy min-h-screen">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">

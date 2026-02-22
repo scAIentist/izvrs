@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "./Providers";
+import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -38,7 +40,11 @@ export default function RootLayout({
   return (
     <html lang="sl" className="scroll-smooth">
       <body className={`${inter.variable} font-sans antialiased`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Navigation />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

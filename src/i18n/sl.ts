@@ -37,6 +37,9 @@ export const sl = {
     mapTitle: "Zemljevid območja",
     mapSubtitle:
       "Jadransko-jonska regija z označenimi pilotnimi rekami. Kliknite na reko za podrobnosti.",
+    trackersText: "V vsako od petih pilotnih rek se bo izpustilo vsaj 10 GPS sledilnikov, ki bodo služili pridobivanju podatkov o transportu odpadkov po rekah.",
+    trackersLink: "Spremljaj potovanje GPS sledilnikov po Soči v živo →",
+    gameLink: "Kako uspešen si pri lovljenju odpadkov na reki? →",
     partnersTitle: "Projektni partnerji",
     pilotPartner: "Pilotni partner:",
     leadPartner: "LP",

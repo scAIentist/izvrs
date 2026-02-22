@@ -39,6 +39,9 @@ export const en: Translations = {
     mapTitle: "Region map",
     mapSubtitle:
       "Adriatic-Ionian region with marked pilot rivers. Click on a river for details.",
+    trackersText: "At least 10 GPS trackers will be deployed in each of the five pilot rivers to collect data on the transport of waste along rivers.",
+    trackersLink: "Track GPS trackers along the Soča River live →",
+    gameLink: "How good are you at catching waste on the river? →",
     partnersTitle: "Project partners",
     pilotPartner: "Pilot partner:",
     leadPartner: "LP",

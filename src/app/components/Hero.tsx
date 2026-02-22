@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import SpeechBubble from "./SpeechBubble";
 import { useTranslation } from "@/i18n";
 
@@ -138,20 +139,20 @@ export default function Hero() {
                 <span className="relative z-10">{t.hero.btnProject}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
               </button>
-              <button
-                onClick={() => scrollTo("sledilci")}
+              <Link
+                href="/sledilniki"
                 className="group relative px-7 py-3.5 bg-forest-green text-white font-semibold rounded-full overflow-hidden transition-all hover:shadow-xl hover:shadow-forest-green/30 hover:-translate-y-0.5"
               >
                 <span className="relative z-10">{t.hero.btnTrackers}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-              </button>
-              <button
-                onClick={() => scrollTo("galerija")}
+              </Link>
+              <Link
+                href="/galerija"
                 className="group relative px-7 py-3.5 bg-amber text-white font-semibold rounded-full overflow-hidden transition-all hover:shadow-xl hover:shadow-amber/30 hover:-translate-y-0.5"
               >
                 <span className="relative z-10">{t.hero.btnGallery}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-              </button>
+              </Link>
             </motion.div>
           </motion.div>
 

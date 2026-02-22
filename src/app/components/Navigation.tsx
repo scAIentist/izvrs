@@ -2,19 +2,20 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useTranslation } from "@/i18n";
 
-const sectionDefs = [
-  { id: "domov", color: "bg-river-blue", hoverGlow: "hover:shadow-river-blue/30" },
-  { id: "sledilci", color: "bg-forest-green", hoverGlow: "hover:shadow-forest-green/30" },
-  { id: "galerija", color: "bg-amber", hoverGlow: "hover:shadow-amber/30" },
-  { id: "igra", color: "bg-danger", hoverGlow: "hover:shadow-danger/30" },
-  { id: "o-projektu", color: "bg-river-blue-dark", hoverGlow: "hover:shadow-river-blue-dark/30" },
+const navItems = [
+  { href: "/", key: "domov", color: "bg-river-blue", hoverGlow: "hover:shadow-river-blue/30" },
+  { href: "/sledilniki", key: "sledilci", color: "bg-forest-green", hoverGlow: "hover:shadow-forest-green/30" },
+  { href: "/galerija", key: "galerija", color: "bg-amber", hoverGlow: "hover:shadow-amber/30" },
+  { href: "/igra", key: "igra", color: "bg-danger", hoverGlow: "hover:shadow-danger/30" },
 ];
 
 export default function Navigation() {
   const { lang, setLang, t } = useTranslation();
-  const [activeSection, setActiveSection] = useState("domov");
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -23,7 +24,14 @@ export default function Navigation() {
     sledilci: t.nav.trackers,
     galerija: t.nav.gallery,
     igra: t.nav.game,
-    "o-projektu": t.nav.about,
+  };
+
+  // Pages with light backgrounds need a solid nav bar
+  const needsSolidNav = pathname === "/galerija";
+
+  const isActive = (item: (typeof navItems)[number]) => {
+    if (item.href === "/") return pathname === "/";
+    return pathname.startsWith(item.href);
   };
 
   useEffect(() => {
@@ -34,38 +42,15 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close mobile menu on route change
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        }
-      },
-      { threshold: 0.3, rootMargin: "-80px 0px 0px 0px" }
-    );
-
-    for (const section of sectionDefs) {
-      const el = document.getElementById(section.id);
-      if (el) observer.observe(el);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-      setMobileOpen(false);
-    }
-  };
+    setMobileOpen(false);
+  }, [pathname]);
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
+        scrolled || needsSolidNav
           ? "bg-deep-navy/90 backdrop-blur-xl shadow-2xl shadow-black/20 py-1"
           : "bg-transparent py-2"
       }`}
@@ -73,10 +58,7 @@ export default function Navigation() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-14 items-center justify-between">
           {/* Logo */}
-          <button
-            onClick={() => scrollTo("domov")}
-            className="flex items-center gap-2.5 group"
-          >
+          <Link href="/" className="flex items-center gap-2.5 group">
             <Image
               src="/mascot-opt/happy.webp"
               alt="Izvrstna"
@@ -87,23 +69,24 @@ export default function Navigation() {
             <span className="text-base font-bold text-white hidden sm:block tracking-tight">
               Izvrstna
             </span>
-          </button>
+          </Link>
 
           {/* Desktop tabs + language toggle */}
           <div className="hidden md:flex items-center gap-3">
             <div className="flex items-center gap-1.5 p-1 rounded-full bg-white/5">
-              {sectionDefs.map((section) => (
-                <button
-                  key={section.id}
-                  onClick={() => scrollTo(section.id)}
+              {navItems.map((item) => (
+                <Link
+                  key={item.key}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
                   className={`relative px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                    activeSection === section.id
-                      ? `${section.color} text-white shadow-lg ${section.hoverGlow}`
+                    isActive(item)
+                      ? `${item.color} text-white shadow-lg ${item.hoverGlow}`
                       : "text-white/60 hover:text-white hover:bg-white/8"
                   }`}
                 >
-                  {labels[section.id]}
-                </button>
+                  {labels[item.key]}
+                </Link>
               ))}
             </div>
             <div className="flex items-center gap-0.5 p-0.5 rounded-full bg-white/10 text-xs">
@@ -154,18 +137,19 @@ export default function Navigation() {
       <div className={`md:hidden overflow-hidden transition-all duration-300 ${mobileOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"}`}>
         <div className="bg-deep-navy/98 backdrop-blur-xl border-t border-white/5">
           <div className="px-4 py-4 flex flex-col gap-1.5">
-            {sectionDefs.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => scrollTo(section.id)}
-                className={`px-4 py-3 rounded-xl text-left font-medium transition-all duration-200 ${
-                  activeSection === section.id
-                    ? `${section.color} text-white shadow-md`
+            {navItems.map((item) => (
+              <Link
+                key={item.key}
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className={`px-4 py-3 rounded-xl text-left font-medium transition-all duration-200 block ${
+                  isActive(item)
+                    ? `${item.color} text-white shadow-md`
                     : "text-white/60 hover:text-white hover:bg-white/5"
                 }`}
               >
-                {labels[section.id]}
-              </button>
+                {labels[item.key]}
+              </Link>
             ))}
           </div>
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import ScrollReveal from "./ScrollReveal";
 import RiversMap from "./RiversMap";
 import { useTranslation } from "@/i18n";
@@ -89,14 +90,29 @@ export default function About() {
           <ScrollReveal delay={0.15}>
             <RiversMap />
           </ScrollReveal>
+
+          {/* Tracker info + game link */}
+          <ScrollReveal delay={0.2} className="mt-12 max-w-3xl mx-auto text-center space-y-6">
+            <p className="text-slate-dark/70 text-base leading-relaxed">
+              {t.about.trackersText}
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                href="/sledilniki"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-forest-green text-white font-semibold rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
+              >
+                {t.about.trackersLink}
+              </Link>
+              <Link
+                href="/igra"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-river-blue text-white font-semibold rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
+              >
+                {t.about.gameLink}
+              </Link>
+            </div>
+          </ScrollReveal>
         </div>
 
-        {/* Wave to dark tracker section */}
-        <div className="relative h-24 -mb-1">
-          <svg viewBox="0 0 1440 100" fill="none" className="absolute bottom-0 w-full" preserveAspectRatio="none">
-            <path d="M0 50 Q360 85 720 50 T1440 50 V100 H0Z" fill="#0D1B2A" />
-          </svg>
-        </div>
       </section>
     </>
   );

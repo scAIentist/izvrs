@@ -54,7 +54,7 @@ export default function RiverGame() {
   return (
     <section
       id="igra"
-      className="relative bg-gradient-to-b from-deep-navy via-deep-navy to-forest-green/30 overflow-hidden scroll-mt-20"
+      className="relative bg-gradient-to-b from-deep-navy via-deep-navy to-forest-green/30 overflow-hidden min-h-screen"
     >
       {/* Decorative blobs */}
       <div className="absolute top-[-100px] right-[-200px] w-[500px] h-[500px] bg-river-blue/5 blob pointer-events-none" />
