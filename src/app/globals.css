@@ -1,5 +1,28 @@
 @import "tailwindcss";
 
+/* ─── Cascadia Code — self-hosted ─── */
+@font-face {
+  font-family: "Cascadia Code";
+  src: url("/fonts/CascadiaCode-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cascadia Code";
+  src: url("/fonts/CascadiaCode-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cascadia Code";
+  src: url("/fonts/CascadiaCode-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
   /* Colors — derived from Izvrstna mascot */
   --color-river-blue: #2AABE0;
@@ -24,7 +47,13 @@
   --color-warm-white: #FEFCF6;
 
   /* Typography */
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-roboto), "Roboto", system-ui, -apple-system, sans-serif;
+  --font-heading: "Cascadia Code", monospace;
+}
+
+/* Headings use Cascadia Code */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
 }
 
 /* Smooth scrolling */
