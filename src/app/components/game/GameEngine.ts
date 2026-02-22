@@ -61,7 +61,7 @@ export function spawnItem(state: GameState): GameItem {
     damage: def.damage ?? 0,
     speed: 2 + Math.random() * 2 + state.difficulty * 0.3,
     wobble: Math.random() * Math.PI * 2,
-    size: type === "obstacle" ? 50 : 40,
+    size: 40,
   };
 }
 

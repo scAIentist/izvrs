@@ -50,7 +50,7 @@ function RulesSection() {
       <div className="mb-3">
         <p className="text-xs font-semibold text-amber mb-1.5">{t.game.sidebar.watchObstacles}</p>
         <div className="flex gap-1.5">
-          {["🚣", "🛶", "🪨"].map((e) => (
+          {["🪵", "🌀", "🌊"].map((e) => (
             <span key={e} className="bg-black/20 px-2 py-0.5 rounded text-xs text-white">
               {e} -{"❤️"}
             </span>

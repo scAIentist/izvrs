@@ -27,22 +27,16 @@ export default function GameMascot({ emotion, comment, visible }: Props) {
 
   return (
     <div className="absolute top-2 left-2 z-20 flex items-start gap-1 pointer-events-none">
-      {/* Mascot image */}
-      <motion.div
-        key={emotion}
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.3 }}
-        className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0"
-      >
+      {/* Mascot image — no key swap, just crossfade the src */}
+      <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
         <Image
           src={EMOTION_IMAGE[emotion]}
           alt="Izvrstna"
           width={48}
           height={48}
-          className="object-contain drop-shadow-lg"
+          className="object-contain drop-shadow-lg transition-opacity duration-200"
         />
-      </motion.div>
+      </div>
 
       {/* Speech bubble */}
       <AnimatePresence>
