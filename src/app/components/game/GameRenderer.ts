@@ -238,13 +238,13 @@ export function drawHUD(ctx: CanvasRenderingContext2D, state: GameState) {
   ctx.textAlign = "left";
   ctx.shadowColor = "rgba(0,0,0,0.5)";
   ctx.shadowBlur = 4;
-  ctx.fillText(`\u{1F3C6} ${state.score}`, 15, 35);
+  ctx.fillText(`\u{1F3C6} ${state.score}`, 15, 80);
 
   // Combo
   if (state.comboCount >= 3) {
     ctx.font = "bold 18px Arial";
     ctx.fillStyle = "#FFD700";
-    ctx.fillText(`\u{1F525} x${state.comboCount}`, 15, 60);
+    ctx.fillText(`\u{1F525} x${state.comboCount}`, 15, 105);
   }
 
   // Lives
