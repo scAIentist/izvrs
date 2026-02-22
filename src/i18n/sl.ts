@@ -21,7 +21,7 @@ export const sl = {
       "Pozdravljeni! Jaz sem Izvrstna, soška postrv. Živim v najlepši reki na svetu — reki Soči. Pomagajte mi raziskovati, kam potujejo odpadki po naših rekah!",
     btnProject: "Spoznaj projekt",
     btnTrackers: "GPS sledilniki",
-    btnGallery: "Galerija risb",
+    btnGallery: "Galerija slik",
     mascotAlt: "Izvrstna — soška postrv",
   },
   about: {
@@ -107,7 +107,7 @@ export const sl = {
     loadingMap: "Nalaganje zemljevida...",
   },
   gallery: {
-    title: "Galerija risb",
+    title: "Galerija slik natečaja",
     subtitle:
       "Inštitut za vode Republike Slovenije (IzVRS) je v sodelovanju z OŠ Franceta Bevka Tolmin, občino Tolmin in Ribiško družino Tolmin, organiziral likovni natečaj za učence 3., 4. in 5. razreda. Natečaj je potekal v okviru mednarodnega projekta TETHYS4ADRION, katerega cilj je zmanjšati količino odpadkov, ki po rekah pritekajo v Jadransko in Jonsko morje. Učenci so se na delavnici s predstavnico IzVRS seznanili s problematiko odpadkov in spoznali različne vrste plastike. Po delavnici so pri likovnem pouku v svojih delih prikazali predloge in rešitve za zmanjševanje odpadkov v rekah, odgovorno ravnanje z odpadki, dobre navade ljudi v odnosu do voda ter varovanje rek in vodnih ekosistemov. Po oceni strokovne komisije je bilo 12 najboljših likovnih del uporabljenih na nalepkah GPS sledilnikov, s katerimi lahko spremljamo potovanje odpadkov po reki Soči.",
     filterAll: "Vsi",

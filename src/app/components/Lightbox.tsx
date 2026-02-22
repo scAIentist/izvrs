@@ -98,7 +98,7 @@ export default function Lightbox({
           >
             <Image
               src={item.file}
-              alt={`${t.lightbox.drawing} #${item.id}`}
+              alt={`${t.lightbox.drawing} — ${item.grade}. ${t.lightbox.grade}`}
               fill
               className="object-contain"
               sizes="90vw"
@@ -108,7 +108,7 @@ export default function Lightbox({
 
           {/* Info bar */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-md rounded-full px-5 py-2 text-white text-sm">
-            {t.lightbox.drawing} #{item.id} &middot; {item.grade}. {t.lightbox.grade}
+            {item.grade}. {t.lightbox.grade}
           </div>
         </motion.div>
       )}

@@ -23,7 +23,7 @@ export const en: Translations = {
       "Hello! I'm Izvrstna, a marble trout. I live in the most beautiful river in the world — the Soča River. Help me explore where waste travels through our rivers!",
     btnProject: "About the project",
     btnTrackers: "GPS trackers",
-    btnGallery: "Drawing gallery",
+    btnGallery: "Artwork gallery",
     mascotAlt: "Izvrstna — marble trout",
   },
   about: {
@@ -109,7 +109,7 @@ export const en: Translations = {
     loadingMap: "Loading map...",
   },
   gallery: {
-    title: "Drawing gallery",
+    title: "Competition artwork gallery",
     subtitle:
       "The Institute for Water of the Republic of Slovenia (IzVRS), in cooperation with France Bevk Primary School Tolmin, the Municipality of Tolmin and the Tolmin Fishing Association, organized an art competition for 3rd, 4th and 5th grade students. The competition took place within the international project TETHYS4ADRION, which aims to reduce the amount of waste flowing through rivers into the Adriatic and Ionian Sea. During a workshop with an IzVRS representative, students learned about waste issues and different types of plastic. In their art class works, they presented proposals and solutions for reducing waste in rivers, responsible waste management, good habits in relation to water, and protection of rivers and aquatic ecosystems. After evaluation by an expert committee, the 12 best artworks were used on GPS tracker stickers, which allow us to track the journey of waste along the Soča River.",
     filterAll: "All",

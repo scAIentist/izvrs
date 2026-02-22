@@ -43,7 +43,7 @@ export default function About() {
                 {t.about.subtitle}
               </h3>
 
-              <div className="space-y-3 text-slate-dark/70 leading-relaxed text-[15px] relative z-10">
+              <div className="space-y-3 text-slate-dark/70 leading-relaxed text-base relative z-10">
                 <p>{t.about.p1}</p>
                 <p>{t.about.p2}</p>
                 <p>{t.about.p3}</p>
@@ -81,7 +81,7 @@ export default function About() {
             <h2 className="text-3xl sm:text-4xl font-bold text-deep-navy mb-3">
               {t.about.mapTitle}
             </h2>
-            <p className="text-slate-dark/60 max-w-xl mx-auto">
+            <p className="text-slate-dark/60 max-w-xl mx-auto text-base">
               {t.about.mapSubtitle}
             </p>
           </ScrollReveal>

@@ -66,7 +66,7 @@ export default function RiverGame() {
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
             {t.game.title}
           </h2>
-          <p className="text-white/60 text-sm max-w-md mx-auto">
+          <p className="text-white/60 text-base max-w-md mx-auto">
             {t.game.subtitle}
           </p>
           <div className="w-16 h-1 bg-gradient-to-r from-river-blue to-forest-green mx-auto rounded-full mt-3" />

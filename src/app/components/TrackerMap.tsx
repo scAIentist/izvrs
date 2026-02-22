@@ -23,7 +23,7 @@ export default function TrackerMap() {
             {t.trackers.title}
           </h2>
           <div className="w-16 h-1 bg-forest-green mx-auto rounded-full mt-3" />
-          <p className="text-white/60 max-w-2xl mx-auto">
+          <p className="text-white/60 text-base max-w-2xl mx-auto mt-4">
             {t.trackers.subtitle}
           </p>
         </ScrollReveal>

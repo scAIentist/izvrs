@@ -54,7 +54,7 @@ export default function Gallery() {
             {t.gallery.title}
           </h2>
           <div className="w-16 h-1 bg-sage-green mx-auto rounded-full mt-3" />
-          <p className="text-slate-dark/60 max-w-3xl mx-auto text-sm leading-relaxed text-left mt-4">
+          <p className="text-slate-dark/60 max-w-3xl mx-auto text-base leading-relaxed text-left mt-4">
             {t.gallery.subtitle}
           </p>
         </ScrollReveal>
@@ -96,12 +96,12 @@ export default function Gallery() {
               type="button"
               className="group cursor-pointer text-left"
               onClick={() => setLightboxItem(item)}
-              aria-label={`${t.gallery.openDrawing} #${item.id}`}
+              aria-label={t.gallery.openDrawing}
             >
               <div className="relative aspect-square rounded-xl overflow-hidden bg-white shadow-sm group-hover:shadow-lg transition-shadow">
                 <img
                   src={`/gallery-thumbs/${gradeFolders[item.grade]}/${item.id}.webp`}
-                  alt={`${t.gallery.drawingAlt} #${item.id}`}
+                  alt={t.gallery.drawingAlt}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -113,11 +113,7 @@ export default function Gallery() {
                   {item.grade}. {t.gallery.gradeShort}
                 </span>
                 {/* Hover overlay */}
-                <div className="absolute inset-0 bg-deep-navy/0 group-hover:bg-deep-navy/20 transition-colors flex items-center justify-center">
-                  <span className="opacity-0 group-hover:opacity-100 text-white text-sm font-medium transition-opacity">
-                    #{item.id}
-                  </span>
-                </div>
+                <div className="absolute inset-0 bg-deep-navy/0 group-hover:bg-deep-navy/10 transition-colors" />
               </div>
             </button>
           ))}
