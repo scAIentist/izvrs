@@ -165,8 +165,8 @@ export default function GameCanvas({
       ref={canvasRef}
       width={CANVAS_W}
       height={CANVAS_H}
-      className="block w-full h-auto rounded-2xl"
-      style={{ touchAction: "manipulation", maxHeight: "70vh" }}
+      className="block w-full h-full rounded-2xl"
+      style={{ touchAction: "manipulation" }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       aria-label={t.game.canvasAria}
