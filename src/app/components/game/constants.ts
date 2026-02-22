@@ -43,7 +43,7 @@ export const OBSTACLE_ITEMS: ItemDef[] = [
 export const MASCOT_COMMENTS = {
   start: ["Gremo! \u{1F4AA}", "O\u010Distimo So\u010Do!", "Pomagaj mi! \u{1F41F}"],
   trashCollected: ["Super! \u267B\uFE0F", "Odli\u010Dno!", "Tako je!", "Bravo! \u{1F44F}", "Hvala! \u{1F49A}"],
-  combo: ["COMBO! \u{1F525}", "Neustavljiv/a!", "Gor gre! \u{1F525}", "Fantasti\u010Dno!"],
+  combo: ["COMBO! \u{1F525}", "Neustavljiv/a!", "Fantasti\u010Dno!"],
   fishCaught: ["Oj ne, ribica! \u{1F622}", "To je moj prijatelj!", "Ribe ne! \u{1F41F}", "Pazi na ribe!"],
   obstacleHit: ["Av\u010D! \u{1F635}", "Pazi! \u26A0\uFE0F", "Ovira!", "Ouch!"],
   trashMissed: ["U\u0161la je smeti!", "\u0160koda! \u{1F615}", "Poberi vse!"],
