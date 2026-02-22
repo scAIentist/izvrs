@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { rivers, type River } from "../data/rivers";
 import { partners } from "../data/partners";
 import { useTranslation } from "@/i18n";
@@ -538,34 +539,30 @@ export default function RiversMap() {
         })()}
       </div>
 
-      {/* Partners — horizontal overflow ribbon */}
+      {/* Partners — infinite scrolling logo carousel */}
       <div className="mt-6 max-w-5xl mx-auto">
         <h4 className="text-xs font-semibold text-slate-dark/40 uppercase tracking-widest mb-5 text-center">
           {t.about.partnersTitle}
         </h4>
-        <div className="flex flex-wrap justify-center gap-2">
-          {partners.map((p) => (
-            <div
-              key={p.id}
-              className="inline-flex items-center gap-2 px-3.5 py-2 bg-white rounded-full border border-slate-dark/8 hover:border-river-blue/30 hover:shadow-sm transition-all text-xs"
-            >
-              <span
-                className="w-2 h-2 rounded-full flex-shrink-0"
-                style={{ backgroundColor: countryColors[p.countryCode] || "#888" }}
-              />
-              <span className="text-slate-dark/70 font-medium whitespace-nowrap">
-                {p.name}
-              </span>
-              <span className="text-slate-dark/30 text-[10px] font-semibold">
-                {p.countryCode}
-              </span>
-              {p.role && (
-                <span className="bg-amber/15 text-amber px-1.5 py-0.5 rounded-full text-[9px] font-bold">
-                  {t.about.leadPartner}
-                </span>
-              )}
-            </div>
-          ))}
+        <div className="relative overflow-hidden mask-fade">
+          <div className="flex w-max animate-scroll-logos gap-10 sm:gap-14 items-center py-4">
+            {/* Duplicate the list for seamless infinite loop */}
+            {[...partners, ...partners].map((p, i) => (
+              <div
+                key={`${p.id}-${i}`}
+                className="flex-shrink-0 flex items-center justify-center h-12 sm:h-14 grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all duration-300"
+                title={p.name}
+              >
+                <Image
+                  src={p.logo}
+                  alt={p.name}
+                  width={120}
+                  height={56}
+                  className="h-10 sm:h-12 w-auto object-contain"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
