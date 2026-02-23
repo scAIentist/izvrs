@@ -12,7 +12,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Izvrstna | TETHYS4ADRION",
+  title: "Izvrstna",
   description:
     "Spoznajte Izvrstno, soško postrv, ki ozavešča o plastičnih odpadkih v rekah. Projekt TETHYS4ADRION — sledenje odpadkom v 5 rekah Jadransko-jonske regije.",
   keywords: [
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     "energetska revščina",
   ],
   openGraph: {
-    title: "Izvrstna | TETHYS4ADRION",
+    title: "Izvrstna",
     description:
       "Spoznajte Izvrstno, soško postrv, ki ozavešča o plastičnih odpadkih v rekah.",
     type: "website",
