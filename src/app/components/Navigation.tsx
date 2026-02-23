@@ -66,8 +66,9 @@ export default function Navigation() {
               height={36}
               className="transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
             />
-            <span className="text-base font-bold text-white hidden sm:block tracking-tight">
-              Izvrstna
+            <span className="text-base font-bold hidden sm:block tracking-tight">
+              <span className="text-white">IzVRS</span>
+              <span style={{ color: "#29C3EB" }}>tna</span>
             </span>
           </Link>
 
