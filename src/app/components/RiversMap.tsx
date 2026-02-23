@@ -28,12 +28,12 @@ export default function RiversMap() {
       </div>
 
       {/* Partners — infinite scrolling logo carousel */}
-      <div className="mt-6 max-w-5xl mx-auto">
-        <h4 className="text-xs font-semibold text-slate-dark/40 uppercase tracking-widest mb-5 text-center">
+      <div className="mt-16 max-w-5xl mx-auto">
+        <h4 className="text-sm font-semibold text-slate-dark/50 uppercase tracking-widest mb-3 text-center">
           {t.about.partnersTitle}
         </h4>
         <div className="relative overflow-hidden mask-fade">
-          <div className="flex w-max animate-scroll-logos gap-12 sm:gap-16 items-center py-4">
+          <div className="flex w-max animate-scroll-logos items-center py-4">
             {/* Duplicate the list for seamless infinite loop */}
             {[...partners, ...partners].map((p, i) => {
               /* Per-logo height tweaks so all look balanced */
@@ -47,10 +47,14 @@ export default function RiversMap() {
                       : p.id === "mio"
                         ? "h-12 sm:h-14" /* MIO — a bit smaller */
                         : "h-16 sm:h-20"; /* default */
+              const widthClass =
+                p.id === "izvrs"
+                  ? "w-[230px] sm:w-[270px]"   /* wide banner — wider container */
+                  : "w-[140px] sm:w-[180px]";
               return (
                 <div
                   key={`${p.id}-${i}`}
-                  className="flex-shrink-0 flex items-center justify-center h-20 sm:h-24 grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all duration-300"
+                  className={`flex-shrink-0 ${widthClass} flex items-center justify-center h-20 sm:h-24 grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-opacity duration-300`}
                   title={p.name}
                 >
                   <Image

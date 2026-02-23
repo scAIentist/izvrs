@@ -13,10 +13,10 @@ export default function About() {
       {/* ═══════════════════════════════════════════════
           SCREEN 1: O projektu
           ═══════════════════════════════════════════════ */}
-      <section id="o-projektu" className="relative bg-warm-white overflow-hidden scroll-mt-20">
-        {/* Decorative blobs */}
+      <section id="o-projektu" className="relative bg-cream-light overflow-hidden scroll-mt-20">
         <div className="absolute top-20 right-[-200px] w-[500px] h-[500px] bg-river-blue/5 blob pointer-events-none" />
         <div className="absolute bottom-40 left-[-150px] w-[400px] h-[400px] bg-sage-green/5 blob-2 pointer-events-none" />
+
 
         <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 min-h-[70vh] flex flex-col items-center justify-center py-24">
           <ScrollReveal className="text-center mb-10">
@@ -26,32 +26,36 @@ export default function About() {
             <div className="w-16 h-1 bg-gradient-to-r from-river-blue to-forest-green mx-auto rounded-full" />
           </ScrollReveal>
 
-          <ScrollReveal delay={0.1} className="w-full max-w-3xl">
-            <div className="relative bg-white rounded-2xl p-8 sm:p-10 shadow-lg shadow-black/5 border border-slate-dark/5 overflow-hidden">
-              {/* Mascot peeking in bottom-right corner */}
-              <div className="absolute -bottom-2 -right-3 w-28 h-28 sm:w-36 sm:h-36 opacity-20 pointer-events-none select-none">
-                <Image
-                  src="/mascot-opt/satisfied.webp"
-                  alt={t.about.mascotAlt}
-                  width={144}
-                  height={144}
-                  className="object-contain"
-                  aria-hidden="true"
-                />
+          <ScrollReveal delay={0.1} className="w-full max-w-4xl">
+            <div className="rounded-2xl overflow-hidden shadow-lg shadow-black/5 border border-slate-dark/5 bg-white">
+              {/* Accent bar */}
+              <div className="h-1.5 bg-gradient-to-r from-river-blue via-forest-green to-river-blue" />
+
+              {/* Subtitle + mascot */}
+              <div className="px-8 sm:px-10 pt-8 pb-6 flex items-start gap-5 border-b border-slate-dark/5">
+                <div className="hidden sm:block flex-shrink-0 w-14 h-14 relative">
+                  <Image
+                    src="/mascot-opt/satisfied.webp"
+                    alt={t.about.mascotAlt}
+                    width={56}
+                    height={56}
+                    className="object-contain"
+                  />
+                </div>
+                <h3 className="text-base sm:text-lg font-bold text-deep-navy leading-snug pt-1">
+                  {t.about.subtitle}
+                </h3>
               </div>
 
-              <h3 className="text-lg font-bold text-deep-navy mb-4 leading-snug">
-                {t.about.subtitle}
-              </h3>
-
-              <div className="space-y-3 text-slate-dark/70 leading-relaxed text-base relative z-10">
+              {/* Body */}
+              <div className="px-8 sm:px-10 py-8 space-y-4 text-slate-dark/70 leading-relaxed text-base">
                 <p>{t.about.p1}</p>
                 <p>{t.about.p2}</p>
                 <p>{t.about.p3}</p>
               </div>
 
-              {/* EU strip */}
-              <div className="mt-6 pt-5 border-t border-slate-dark/5 flex flex-col sm:flex-row items-center justify-between gap-3 relative z-10">
+              {/* Footer strip */}
+              <div className="bg-slate-50 px-8 sm:px-10 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-dark/5">
                 <div className="flex items-center gap-2 text-xs text-slate-dark/40">
                   <span className="text-base">🇪🇺</span>
                   {t.about.euText}
@@ -74,7 +78,7 @@ export default function About() {
           SCREEN 2: Zemljevid regije
           ═══════════════════════════════════════════════ */}
       <section className="relative bg-cream-light overflow-hidden">
-        <div className="absolute top-[-100px] left-[-200px] w-[600px] h-[600px] bg-forest-green/4 blob pointer-events-none" />
+        <div className="absolute top-[30%] left-[-250px] w-[500px] h-[500px] bg-forest-green/4 blob pointer-events-none" />
         <div className="absolute bottom-[-80px] right-[-150px] w-[450px] h-[450px] bg-river-blue/5 blob-2 pointer-events-none" />
 
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16">
@@ -92,27 +96,18 @@ export default function About() {
           </ScrollReveal>
 
           {/* Tracker info + game link */}
-          <ScrollReveal delay={0.2} className="mt-12 max-w-3xl mx-auto text-center space-y-6">
+          <ScrollReveal delay={0.2} className="mt-12 max-w-3xl mx-auto text-center space-y-8">
             <p className="text-slate-dark/70 text-base leading-relaxed">
               {t.about.trackersText}
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href="/sledilniki"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-forest-green text-white font-semibold rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
-              >
-                {t.about.trackersLink}
-              </Link>
-              <Link
-                href="/igra"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-river-blue text-white font-semibold rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
-              >
-                {t.about.gameLink}
-              </Link>
-            </div>
+            <Link
+              href="/igra"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-river-blue text-white font-semibold rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
+            >
+              {t.about.gameLink}
+            </Link>
           </ScrollReveal>
         </div>
-
       </section>
     </>
   );

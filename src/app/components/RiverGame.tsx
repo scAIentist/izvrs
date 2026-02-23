@@ -69,7 +69,7 @@ export default function RiverGame() {
         </ScrollReveal>
 
         {/* ─── Desktop: two-column grid  |  Mobile: single column ─── */}
-        <div className="grid md:grid-cols-[minmax(0,450px)_1fr] gap-6 md:gap-8 items-start justify-center">
+        <div className="grid md:grid-cols-[minmax(0,450px)_1fr] gap-6 md:gap-8 items-center justify-center">
 
           {/* ─── LEFT: Game container ─── */}
           <div>

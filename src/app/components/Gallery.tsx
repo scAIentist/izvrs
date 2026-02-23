@@ -54,7 +54,7 @@ export default function Gallery() {
             {t.gallery.title}
           </h2>
           <div className="w-16 h-1 bg-sage-green mx-auto rounded-full mt-3" />
-          <p className="text-slate-dark/60 max-w-3xl mx-auto text-base leading-relaxed text-left mt-4">
+          <p className="text-slate-dark/60 max-w-4xl mx-auto text-base leading-relaxed text-justify mt-4">
             {t.gallery.subtitle}
           </p>
         </ScrollReveal>

@@ -14,7 +14,6 @@ function createRiverIcon(name: string, isActive = false) {
     className: "river-marker",
     html: `
       <div style="
-        position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -32,28 +31,46 @@ function createRiverIcon(name: string, isActive = false) {
           margin-bottom: 4px;
         ">${label}</div>
         <div style="
-          width: 14px;
-          height: 14px;
-          border-radius: 50%;
-          background: ${isActive ? "#D4A843" : "#2AABE0"};
-          border: 3px solid white;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        "></div>
-        <div style="
-          position: absolute;
-          top: calc(100% - 7px);
-          width: 28px;
-          height: 28px;
-          border-radius: 50%;
-          background: ${isActive ? "#D4A843" : "#2AABE0"};
-          opacity: 0.2;
-          animation: pulse-marker 2s ease-out infinite;
-        "></div>
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+        ">
+          <div style="
+            position: absolute;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: ${isActive ? "#D4A843" : "#2AABE0"};
+            opacity: 0.2;
+            animation: pulse-marker 2.5s ease-out infinite;
+          "></div>
+          <div style="
+            position: absolute;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: ${isActive ? "#D4A843" : "#2AABE0"};
+            opacity: 0.15;
+            animation: pulse-marker 2.5s ease-out 0.8s infinite;
+          "></div>
+          <div style="
+            position: relative;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: ${isActive ? "#D4A843" : "#2AABE0"};
+            border: 3px solid white;
+            box-shadow: 0 2px 10px rgba(42,171,224,0.5);
+          "></div>
+        </div>
       </div>
     `,
-    iconSize: [80, 50],
-    iconAnchor: [40, 50],
-    popupAnchor: [0, -45],
+    iconSize: [80, 66],
+    iconAnchor: [40, 56],
+    popupAnchor: [0, -55],
   });
 }
 
@@ -78,8 +95,8 @@ export default function RiversMapLeaflet() {
       style.id = "river-marker-style";
       style.textContent = `
         @keyframes pulse-marker {
-          0% { transform: scale(1); opacity: 0.25; }
-          100% { transform: scale(2.5); opacity: 0; }
+          0% { transform: scale(0.6); opacity: 0.3; }
+          100% { transform: scale(2.4); opacity: 0; }
         }
         .river-marker { background: transparent !important; border: none !important; }
       `;
@@ -93,11 +110,11 @@ export default function RiversMapLeaflet() {
   return (
     <MapContainer
       center={center}
-      zoom={6}
+      zoom={5}
       scrollWheelZoom={false}
       style={{ height: "450px", width: "100%", borderRadius: "16px" }}
       className="z-0"
-      minZoom={5}
+      minZoom={4}
       maxZoom={10}
     >
       <TileLayer
@@ -134,23 +151,13 @@ export default function RiversMapLeaflet() {
                       {rt.countries.join(" / ")}
                     </p>
                     <p style={{
-                      margin: "0 0 8px",
+                      margin: "0",
                       fontSize: "12px",
                       color: "#666",
                       lineHeight: "1.5",
                     }}>
                       {rt.description}
                     </p>
-                    <div style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "6px",
-                      fontSize: "11px",
-                      color: "#999",
-                    }}>
-                      <span>📍</span>
-                      <span>{t.about.pilotPartner} <strong style={{ color: "#555" }}>{rt.pilotLead}</strong></span>
-                    </div>
                   </>
                 )}
               </div>

@@ -10,15 +10,25 @@ import { useTranslation } from "@/i18n";
 
 function WaterBubbles() {
   const bubbles = [
-    { cx: "8%", delay: "0s", size: 6, dur: "4s" },
-    { cx: "15%", delay: "1.2s", size: 4, dur: "3.5s" },
-    { cx: "28%", delay: "0.6s", size: 8, dur: "5s" },
-    { cx: "42%", delay: "2s", size: 5, dur: "3.8s" },
-    { cx: "55%", delay: "0.3s", size: 7, dur: "4.5s" },
-    { cx: "68%", delay: "1.8s", size: 4, dur: "3.2s" },
-    { cx: "78%", delay: "0.9s", size: 6, dur: "4.2s" },
-    { cx: "88%", delay: "2.5s", size: 5, dur: "3.6s" },
-    { cx: "95%", delay: "1.5s", size: 3, dur: "3s" },
+    { cx: "3%", delay: "0s", size: 10, dur: "12s" },
+    { cx: "8%", delay: "3s", size: 16, dur: "15s" },
+    { cx: "12%", delay: "1.5s", size: 8, dur: "10s" },
+    { cx: "18%", delay: "5s", size: 12, dur: "13s" },
+    { cx: "22%", delay: "1s", size: 18, dur: "16s" },
+    { cx: "28%", delay: "6s", size: 8, dur: "11s" },
+    { cx: "33%", delay: "2.5s", size: 14, dur: "14s" },
+    { cx: "38%", delay: "0.5s", size: 10, dur: "12s" },
+    { cx: "44%", delay: "4s", size: 16, dur: "15s" },
+    { cx: "50%", delay: "2s", size: 12, dur: "13s" },
+    { cx: "56%", delay: "5.5s", size: 8, dur: "11s" },
+    { cx: "62%", delay: "1.2s", size: 14, dur: "14s" },
+    { cx: "67%", delay: "3.5s", size: 10, dur: "12s" },
+    { cx: "72%", delay: "6.5s", size: 16, dur: "15s" },
+    { cx: "78%", delay: "0.8s", size: 6, dur: "10s" },
+    { cx: "82%", delay: "2.5s", size: 12, dur: "13s" },
+    { cx: "87%", delay: "4.5s", size: 10, dur: "12s" },
+    { cx: "92%", delay: "0.3s", size: 14, dur: "14s" },
+    { cx: "96%", delay: "3.5s", size: 8, dur: "11s" },
   ];
 
   return (
@@ -26,13 +36,15 @@ function WaterBubbles() {
       {bubbles.map((b, i) => (
         <div
           key={i}
-          className="absolute bottom-0 rounded-full bg-white/10 animate-bubble"
+          className="absolute bottom-0 rounded-full animate-bubble"
           style={{
             left: b.cx,
-            width: b.size,
-            height: b.size,
+            width: `${b.size}px`,
+            height: `${b.size}px`,
             animationDelay: b.delay,
             animationDuration: b.dur,
+            background: "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), rgba(255,255,255,0.05))",
+            border: "1px solid rgba(255,255,255,0.2)",
           }}
         />
       ))}
@@ -43,18 +55,29 @@ function WaterBubbles() {
 function FloatingFish() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.07]">
+      {/* Left-to-right fish */}
       <svg className="absolute top-[25%] animate-drift" width="44" height="22" viewBox="0 0 40 20" style={{ animationDelay: "0s", animationDuration: "22s" }}>
         <path d="M0,10 Q10,0 20,10 Q10,20 0,10 M20,10 L30,4 L30,16 Z" fill="white" />
       </svg>
-      <svg className="absolute top-[50%] animate-drift" width="32" height="16" viewBox="0 0 40 20" style={{ animationDelay: "8s", animationDuration: "26s" }}>
+      <svg className="absolute top-[60%] animate-drift" width="20" height="10" viewBox="0 0 40 20" style={{ animationDelay: "5s", animationDuration: "30s" }}>
         <path d="M0,10 Q10,0 20,10 Q10,20 0,10 M20,10 L30,4 L30,16 Z" fill="white" />
       </svg>
-      <svg className="absolute top-[70%] animate-drift" width="26" height="13" viewBox="0 0 40 20" style={{ animationDelay: "14s", animationDuration: "20s" }}>
-        <path d="M0,10 Q10,0 20,10 Q10,20 0,10 M20,10 L30,4 L30,16 Z" fill="white" />
-      </svg>
-      <svg className="absolute top-[40%] animate-drift" width="20" height="10" viewBox="0 0 40 20" style={{ animationDelay: "5s", animationDuration: "30s" }}>
-        <path d="M0,10 Q10,0 20,10 Q10,20 0,10 M20,10 L30,4 L30,16 Z" fill="white" />
-      </svg>
+      {/* Right-to-left fish (flipped via wrapper) */}
+      <div className="absolute top-[50%] w-full h-0 animate-drift-left" style={{ animationDelay: "3s", animationDuration: "26s" }}>
+        <svg width="32" height="16" viewBox="0 0 40 20" style={{ transform: "scaleX(-1)" }}>
+          <path d="M0,10 Q10,0 20,10 Q10,20 0,10 M20,10 L30,4 L30,16 Z" fill="white" />
+        </svg>
+      </div>
+      <div className="absolute top-[35%] w-full h-0 animate-drift-left" style={{ animationDelay: "10s", animationDuration: "24s" }}>
+        <svg width="26" height="13" viewBox="0 0 40 20" style={{ transform: "scaleX(-1)" }}>
+          <path d="M0,10 Q10,0 20,10 Q10,20 0,10 M20,10 L30,4 L30,16 Z" fill="white" />
+        </svg>
+      </div>
+      <div className="absolute top-[75%] w-full h-0 animate-drift-left" style={{ animationDelay: "7s", animationDuration: "28s" }}>
+        <svg width="18" height="9" viewBox="0 0 40 20" style={{ transform: "scaleX(-1)" }}>
+          <path d="M0,10 Q10,0 20,10 Q10,20 0,10 M20,10 L30,4 L30,16 Z" fill="white" />
+        </svg>
+      </div>
     </div>
   );
 }
@@ -87,12 +110,11 @@ export default function Hero() {
         }}
       />
 
-      {/* Decorative blob shapes — like O projektu section but for dark bg */}
-      <div className="absolute top-[10%] left-[-8%] w-[350px] h-[350px] bg-river-blue/6 blob pointer-events-none blur-[60px]" />
-      <div className="absolute bottom-[15%] right-[-5%] w-[280px] h-[280px] bg-forest-green/5 blob-2 pointer-events-none blur-[50px]" />
+      {/* Decorative blob shapes */}
+      <div className="absolute top-[10%] left-[-8%] w-[350px] h-[350px] bg-river-blue/6 blob pointer-events-none" />
+      <div className="absolute bottom-[15%] right-[-5%] w-[280px] h-[280px] bg-forest-green/5 blob-2 pointer-events-none" />
 
       <WaterBubbles />
-      <FloatingFish />
 
       {/* ── Main content — vertically centered in viewport ── */}
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -164,10 +186,6 @@ export default function Hero() {
             transition={{ type: "spring", stiffness: 180, damping: 18, delay: 0.2 }}
           >
             <div className="absolute inset-0 -m-8 bg-river-blue/10 rounded-full blur-3xl animate-pulse" />
-            <div className="absolute inset-0 -m-6 rounded-full border-2 border-dashed border-white/10 animate-[spin_30s_linear_infinite]" />
-            <div className="absolute -top-2 left-1/2 w-3 h-3 bg-amber rounded-full animate-float" style={{ animationDelay: "0s" }} />
-            <div className="absolute top-1/2 -right-2 w-2 h-2 bg-forest-green rounded-full animate-float" style={{ animationDelay: "1s" }} />
-            <div className="absolute -bottom-1 left-1/4 w-2.5 h-2.5 bg-river-blue-light rounded-full animate-float" style={{ animationDelay: "2s" }} />
             <div className="relative animate-float-slow">
               <Image
                 src="/mascot-opt/happy.webp"
