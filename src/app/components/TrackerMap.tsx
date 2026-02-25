@@ -40,8 +40,8 @@ export default function TrackerMap() {
               <span className="text-white/60 text-sm">{t.trackers.inactive}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-[#C0392B]" />
-              <span className="text-white/60 text-sm">{t.trackers.stopped}</span>
+              <span className="w-4 border-t-2 border-dashed border-[#2AABE0]" />
+              <span className="text-white/60 text-sm">{t.trackers.path}</span>
             </div>
           </div>
 

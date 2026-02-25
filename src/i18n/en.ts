@@ -107,12 +107,21 @@ export const en: Translations = {
   trackers: {
     title: "GPS trackers in the Soča",
     subtitle:
-      "Live tracking of 12 GPS trackers along the Soča River. Each tracker carries a selected drawing by one of the students participating in the project.",
+      "Live tracking of GPS trackers along the Soča River. Each tracker carries a selected drawing by one of the students participating in the project.",
     active: "Active",
     inactive: "Inactive",
     stopped: "Stopped",
     distance: "Distance traveled:",
     loadingMap: "Loading map...",
+    speed: "Speed:",
+    updated: "Updated:",
+    points: "Points:",
+    path: "Tracker path",
+    noData: "No tracker data available",
+    liveData: "Live",
+    cachedData: "Cached data",
+    fallbackData: "Fallback data",
+    tracker: "Tracker",
   },
   gallery: {
     title: "Competition artwork gallery",
