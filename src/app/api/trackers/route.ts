@@ -11,10 +11,10 @@ const WFS_AUTH_TOKEN = process.env.WFS_AUTH_TOKEN!;
 
 // In-memory cache (persists across requests within the same serverless instance)
 let cache: { data: TrackersAPIResponse; expires: number } | null = null;
-const CACHE_TTL_MS = 60_000; // 1 minute
+const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 // Tracker is "active" if latest fix is within this window
-const ACTIVE_THRESHOLD_MS = 2 * 60 * 60 * 1000; // 2 hours
+const ACTIVE_THRESHOLD_MS = 48 * 60 * 60 * 1000; // 48 hours (updates once/day)
 
 function buildWFSUrl(): string {
   const params = new URLSearchParams({
@@ -78,7 +78,7 @@ export async function GET() {
   if (cache && Date.now() < cache.expires) {
     return NextResponse.json(cache.data, {
       headers: {
-        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120",
+        "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=3600",
       },
     });
   }
@@ -112,7 +112,7 @@ export async function GET() {
 
     return NextResponse.json(result, {
       headers: {
-        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120",
+        "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=3600",
       },
     });
   } catch (error) {
@@ -124,7 +124,7 @@ export async function GET() {
         { ...cache.data, source: "cache" as const },
         {
           status: 200,
-          headers: { "Cache-Control": "public, s-maxage=30" },
+          headers: { "Cache-Control": "public, s-maxage=3600" },
         }
       );
     }
