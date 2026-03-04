@@ -105,12 +105,21 @@ export const sl = {
   trackers: {
     title: "GPS sledilniki v Soči",
     subtitle:
-      "V živo spremljanje potovanja 12-ih GPS sledilnikov po reki Soči. Vsak sledilnik nosi izbrano risbo enega od učencev, ki sodelujejo v projektu.",
+      "V živo spremljanje potovanja GPS sledilnikov po reki Soči. Vsak sledilnik nosi izbrano risbo enega od učencev, ki sodelujejo v projektu.",
     active: "Aktiven",
     inactive: "Neaktiven",
     stopped: "Ustavljen",
     distance: "Prepotovano:",
     loadingMap: "Nalaganje zemljevida...",
+    speed: "Hitrost:",
+    updated: "Posodobljeno:",
+    points: "Točk:",
+    path: "Pot sledilnika",
+    noData: "Ni podatkov o sledilnikih",
+    liveData: "V živo",
+    cachedData: "Predpomnjeni podatki",
+    fallbackData: "Nadomestni podatki",
+    tracker: "Sledilec",
   },
   gallery: {
     title: "Galerija slik natečaja",
