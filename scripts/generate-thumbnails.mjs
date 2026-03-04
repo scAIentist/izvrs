@@ -1,5 +1,5 @@
 import sharp from "sharp";
-import { readdir, mkdir } from "fs/promises";
+import { readdir, mkdir, access } from "fs/promises";
 import { join, basename } from "path";
 
 const PUBLIC = join(process.cwd(), "public");
@@ -10,6 +10,7 @@ async function processGallery() {
 
   for (const grade of grades) {
     const srcDir = join(PUBLIC, "gallery", grade);
+    try { await access(srcDir); } catch { console.log(`  ${grade}: skipped (source missing)`); continue; }
     const outDir = join(PUBLIC, "gallery-thumbs", grade);
     await mkdir(outDir, { recursive: true });
 
@@ -33,6 +34,7 @@ async function processGallery() {
 
 async function processMascot() {
   const srcDir = join(PUBLIC, "mascot");
+  try { await access(srcDir); } catch { console.log("  Skipped (source missing)"); return; }
   const outDir = join(PUBLIC, "mascot-opt");
   await mkdir(outDir, { recursive: true });
 
