@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import L from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -117,6 +117,7 @@ interface Props {
 
 export default function RiversMapLeaflet({ selectedRiver, onSelectRiver }: Props) {
   const { t } = useTranslation();
+  const clickCount = useRef<Record<string, number>>({});
 
   useEffect(() => {
     delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
@@ -189,10 +190,20 @@ export default function RiversMapLeaflet({ selectedRiver, onSelectRiver }: Props
             eventHandlers={{
               click: () => {
                 if (selectedRiver !== river.id) {
-                  // First click: select river (line shows, no popup yet)
+                  // 1st click: select river (line shows, no popup yet)
+                  clickCount.current = { [river.id]: 1 };
                   onSelectRiver(river.id);
+                } else {
+                  const count = (clickCount.current[river.id] || 1) + 1;
+                  if (count >= 3) {
+                    // 3rd click: deselect → zoom out
+                    clickCount.current = {};
+                    onSelectRiver(null);
+                  } else {
+                    // 2nd click: popup opens naturally
+                    clickCount.current[river.id] = count;
+                  }
                 }
-                // If already selected: do nothing here, popup opens naturally
               },
             }}
           >
