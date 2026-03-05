@@ -4,6 +4,7 @@ import "./globals.css";
 import Providers from "./Providers";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -45,6 +46,7 @@ export default function RootLayout({
           <Navigation />
           {children}
           <Footer />
+          <ScrollToTop />
         </Providers>
       </body>
     </html>

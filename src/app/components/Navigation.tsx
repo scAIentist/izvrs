@@ -57,8 +57,11 @@ export default function Navigation() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-14 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
+          {/* Logo — scroll to top */}
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="flex items-center gap-2.5 group cursor-pointer"
+          >
             <Image
               src="/mascot-opt/happy.webp"
               alt="Izvrstna"
@@ -70,7 +73,7 @@ export default function Navigation() {
               <span className="text-white">IzVRS</span>
               <span style={{ color: "#29C3EB" }}>tna</span>
             </span>
-          </Link>
+          </button>
 
           {/* Desktop tabs + language toggle */}
           <div className="hidden md:flex items-center gap-3">
