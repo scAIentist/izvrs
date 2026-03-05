@@ -88,7 +88,7 @@ export default function Tips() {
         </ScrollReveal>
 
         {/* 3. "Kaj lahko naredim?" — big section heading */}
-        <ScrollReveal playful delay={0.15} className="text-center mt-8 mb-8">
+        <ScrollReveal playful delay={0.15} className="text-center mt-16 mb-8">
           <h2 className="text-3xl sm:text-4xl font-bold text-forest-green">
             {t.tips.heading}
           </h2>

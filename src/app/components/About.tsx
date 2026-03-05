@@ -17,7 +17,7 @@ export default function About() {
         <div className="absolute top-20 right-[-200px] w-[500px] h-[500px] bg-river-blue/12 blob pointer-events-none" />
         <div className="absolute bottom-40 left-[-150px] w-[400px] h-[400px] bg-sage-green/12 blob-2 pointer-events-none" />
 
-        <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center py-16">
+        <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center pt-6 pb-16">
           <ScrollReveal playful className="text-center mb-10">
             <h2 className="text-3xl sm:text-4xl font-bold text-forest-green mb-4">
               {t.about.title}
