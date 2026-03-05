@@ -99,6 +99,7 @@ export default function MapContent() {
   const { t } = useTranslation();
   const { trackers, loading, error, fetchedAt, source } = useTrackers();
   const [selectedDrawing, setSelectedDrawing] = useState<{ name: string; src: string } | null>(null);
+  const [selectedTracker, setSelectedTracker] = useState<string | null>(null);
 
   const closeDrawing = useCallback(() => setSelectedDrawing(null), []);
 
@@ -175,22 +176,25 @@ export default function MapContent() {
 
         <FitBounds trackers={trackers} />
 
-        {/* Polylines for tracker paths */}
-        {trackerPaths.map(
-          (positions, i) =>
-            positions.length > 1 && (
-              <Polyline
-                key={`path-${trackers[i].tracker_id}`}
-                positions={positions}
-                pathOptions={{
-                  color: PATH_COLORS[i % PATH_COLORS.length],
-                  weight: 3,
-                  opacity: 0.6,
-                  dashArray: "8 4",
-                }}
-              />
-            )
-        )}
+        {/* Polyline for selected tracker path (shown on marker click) */}
+        {selectedTracker && (() => {
+          const idx = trackers.findIndex(t => t.tracker_id === selectedTracker);
+          if (idx === -1) return null;
+          const positions = trackerPaths[idx];
+          if (!positions || positions.length <= 1) return null;
+          return (
+            <Polyline
+              key={`path-${selectedTracker}`}
+              positions={positions}
+              pathOptions={{
+                color: PATH_COLORS[idx % PATH_COLORS.length],
+                weight: 3,
+                opacity: 0.6,
+                dashArray: "8 4",
+              }}
+            />
+          );
+        })()}
 
         {/* Markers at latest positions */}
         {trackers.map((tracker, i) => (
@@ -198,6 +202,10 @@ export default function MapContent() {
             key={tracker.tracker_id}
             position={[tracker.latest.lat, tracker.latest.lon]}
             icon={createIcon(tracker, i)}
+            eventHandlers={{
+              popupopen: () => setSelectedTracker(tracker.tracker_id),
+              popupclose: () => setSelectedTracker(null),
+            }}
           >
             <Popup autoPan autoPanPadding={[60, 60]} maxWidth={280}>
               <div style={{ minWidth: "200px", maxWidth: "260px" }}>
