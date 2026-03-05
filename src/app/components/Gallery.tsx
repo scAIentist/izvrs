@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { galleryItems, type GalleryItem } from "../data/gallery";
+import { galleryItems, winnerItems, type GalleryItem } from "../data/gallery";
 import Lightbox from "./Lightbox";
 import ScrollReveal from "./ScrollReveal";
 import { useTranslation } from "@/i18n";
@@ -18,24 +18,18 @@ const gradeFolders: Record<number, string> = {
   5: "5-razred",
 };
 
+type FilterValue = "winners" | 3 | 4 | 5 | null;
+
 export default function Gallery() {
   const { t } = useTranslation();
-  const [activeFilter, setActiveFilter] = useState<number | null>(null);
+  const [activeFilter, setActiveFilter] = useState<FilterValue>(null);
   const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null);
-  const INITIAL_COUNT = 15;   // 3 rows on desktop — fills ~1 screen
-  const LOAD_MORE = 20;       // each click loads 20 more
-  const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
-  const filtered = useMemo(
-    () =>
-      activeFilter
-        ? galleryItems.filter((item) => item.grade === activeFilter)
-        : galleryItems,
-    [activeFilter]
-  );
-
-  const visibleItems = filtered.slice(0, visibleCount);
-  const hasMore = visibleCount < filtered.length;
+  const filtered = useMemo(() => {
+    if (activeFilter === "winners") return winnerItems;
+    if (activeFilter) return galleryItems.filter((item) => item.grade === activeFilter);
+    return galleryItems;
+  }, [activeFilter]);
 
   const navigateLightbox = (direction: 1 | -1) => {
     if (!lightboxItem) return;
@@ -62,26 +56,31 @@ export default function Gallery() {
         {/* Filters */}
         <div className="flex justify-center gap-2 mb-10 flex-wrap">
           {([
+            { label: t.gallery.filterWinners, value: "winners" as FilterValue },
             { label: t.gallery.filterAll, value: null },
-            { label: `3. ${t.gallery.filterGrade}`, value: 3 },
-            { label: `4. ${t.gallery.filterGrade}`, value: 4 },
-            { label: `5. ${t.gallery.filterGrade}`, value: 5 },
-          ] as const).map((filter) => (
+            { label: `3. ${t.gallery.filterGrade}`, value: 3 as FilterValue },
+            { label: `4. ${t.gallery.filterGrade}`, value: 4 as FilterValue },
+            { label: `5. ${t.gallery.filterGrade}`, value: 5 as FilterValue },
+          ]).map((filter) => (
             <button
-              key={filter.label}
-              onClick={() => { setActiveFilter(filter.value); setVisibleCount(INITIAL_COUNT); }}
+              key={String(filter.value)}
+              onClick={() => setActiveFilter(filter.value)}
               className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
                 activeFilter === filter.value
-                  ? "bg-sage-green text-white shadow-md"
+                  ? filter.value === "winners"
+                    ? "bg-amber text-white shadow-md"
+                    : "bg-sage-green text-white shadow-md"
                   : "bg-white text-slate-dark/60 hover:bg-sage-green/10 border border-slate-dark/10"
               }`}
             >
               {filter.label}
               <span className="ml-1.5 text-xs opacity-60">
                 (
-                {filter.value
-                  ? galleryItems.filter((i) => i.grade === filter.value).length
-                  : galleryItems.length}
+                {filter.value === "winners"
+                  ? winnerItems.length
+                  : filter.value
+                    ? galleryItems.filter((i) => i.grade === filter.value).length
+                    : galleryItems.length}
                 )
               </span>
             </button>
@@ -90,7 +89,7 @@ export default function Gallery() {
 
         {/* Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-          {visibleItems.map((item) => (
+          {filtered.map((item) => (
             <button
               key={item.id}
               type="button"
@@ -100,12 +99,22 @@ export default function Gallery() {
             >
               <div className="relative aspect-square rounded-xl overflow-hidden bg-white shadow-sm group-hover:shadow-lg transition-shadow">
                 <img
-                  src={`/gallery-thumbs/${gradeFolders[item.grade]}/${item.id}.webp`}
-                  alt={t.gallery.drawingAlt}
+                  src={
+                    item.thumb
+                      ? item.thumb
+                      : `/gallery-thumbs/${gradeFolders[item.grade]}/${item.id}.webp`
+                  }
+                  alt={item.name ? `${item.name} — ${t.gallery.drawingAlt}` : t.gallery.drawingAlt}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
+                {/* Winner name badge */}
+                {item.winner && item.name && (
+                  <span className="absolute bottom-2 left-2 right-2 text-center bg-black/50 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-lg truncate">
+                    {item.name}
+                  </span>
+                )}
                 {/* Grade badge */}
                 <span
                   className={`absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold ${gradeColors[item.grade]}`}
@@ -118,29 +127,9 @@ export default function Gallery() {
             </button>
           ))}
         </div>
-
-        {/* Load more / Collapse */}
-        <div className="text-center mt-8 flex justify-center gap-3">
-          {hasMore && (
-            <button
-              onClick={() => setVisibleCount((c) => c + LOAD_MORE)}
-              className="px-8 py-3 bg-sage-green text-white font-semibold rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
-            >
-              {`${t.gallery.loadMore} (${filtered.length - visibleCount})`}
-            </button>
-          )}
-          {visibleCount > INITIAL_COUNT && (
-            <button
-              onClick={() => setVisibleCount(INITIAL_COUNT)}
-              className="px-6 py-3 bg-white text-slate-dark/70 font-semibold rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all border border-slate-dark/10"
-            >
-              {t.gallery.showLess}
-            </button>
-          )}
-        </div>
       </div>
 
-      {/* Lightbox — keeps AnimatePresence (only 1 item, fine) */}
+      {/* Lightbox */}
       <Lightbox
         item={lightboxItem}
         onClose={() => setLightboxItem(null)}
