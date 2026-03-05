@@ -52,16 +52,27 @@ export default function Tips() {
           </div>
         </ScrollReveal>
 
-        {/* 2. Image */}
+        {/* 2. Images */}
         <ScrollReveal playful delay={0.1} className="w-full max-w-3xl mx-auto mb-12">
-          <div className="rounded-2xl overflow-hidden shadow-xl shadow-black/10">
-            <Image
-              src="/smeti.png"
-              alt="Odpadki v vodnih ekosistemih"
-              width={900}
-              height={500}
-              className="w-full h-auto"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="rounded-2xl overflow-hidden shadow-xl shadow-black/10">
+              <Image
+                src="/smeti.png"
+                alt="Odpadki v vodnih ekosistemih"
+                width={600}
+                height={400}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="rounded-2xl overflow-hidden shadow-xl shadow-black/10">
+              <Image
+                src="/smeti2.png"
+                alt="Posledice plastike v naravi"
+                width={600}
+                height={400}
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </ScrollReveal>
 
