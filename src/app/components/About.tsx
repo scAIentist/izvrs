@@ -13,7 +13,7 @@ export default function About() {
       {/* ═══════════════════════════════════════════════
           SCREEN 1: O projektu
           ═══════════════════════════════════════════════ */}
-      <section id="o-projektu" className="relative overflow-hidden scroll-mt-20" style={{ background: "linear-gradient(180deg, #d4e8d4 0%, #c4f5f7 100%)" }}>
+      <section id="o-projektu" className="relative overflow-hidden scroll-mt-20" style={{ background: "linear-gradient(180deg, #d4e8d4 0%, #c4f5f7 60%, #fff4dc 100%)" }}>
         <div className="absolute top-20 right-[-200px] w-[500px] h-[500px] bg-river-blue/12 blob pointer-events-none" />
         <div className="absolute bottom-40 left-[-150px] w-[400px] h-[400px] bg-sage-green/12 blob-2 pointer-events-none" />
 
@@ -76,7 +76,7 @@ export default function About() {
       {/* ═══════════════════════════════════════════════
           SCREEN 2: Zemljevid regije
           ═══════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden" style={{ background: "linear-gradient(180deg, #fff4dc 0%, #fce8a5 50%, #fff4dc 100%)" }}>
+      <section className="relative overflow-hidden" style={{ background: "linear-gradient(180deg, #fff4dc 0%, #fce8a5 50%, #ffffff 100%)" }}>
         <div className="absolute top-[30%] left-[-250px] w-[500px] h-[500px] bg-amber/10 blob pointer-events-none" />
         <div className="absolute bottom-[-80px] right-[-150px] w-[450px] h-[450px] bg-river-blue/10 blob-2 pointer-events-none" />
 

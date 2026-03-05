@@ -31,7 +31,7 @@ export default function Tips() {
       <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-24">
         {/* Alert banner */}
         <ScrollReveal playful className="w-full max-w-4xl mx-auto mb-10">
-          <div className="relative rounded-2xl overflow-hidden bg-gradient-to-r from-red-600 via-red-500 to-rose-500 shadow-xl shadow-red-500/25 px-6 sm:px-10 py-8 text-center">
+          <div className="relative rounded-2xl overflow-hidden bg-gradient-to-r from-rose-400 via-red-400 to-rose-400 shadow-xl shadow-rose-400/20 px-6 sm:px-10 py-8 text-center">
             <span className="absolute top-3 left-4 text-3xl opacity-40 select-none animate-float-slow">🌊</span>
             <span className="absolute bottom-3 right-4 text-3xl opacity-40 select-none animate-float">🌊</span>
             <span className="absolute top-4 right-10 text-2xl opacity-30 select-none animate-wiggle-slow">🐟</span>
