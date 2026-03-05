@@ -9,9 +9,8 @@ import { riverPaths, riverColors } from "../data/riverPaths";
 import { useTranslation } from "@/i18n";
 
 /* ── Marker icon factory ── */
-function createRiverIcon(name: string, isActive = false, showLabel = true) {
+function createRiverIcon(name: string, color: string, showLabel = true) {
   const label = name.split("/")[0].trim();
-  const color = isActive ? "#D4A843" : "#2AABE0";
 
   return L.divIcon({
     className: "river-marker",
@@ -23,7 +22,7 @@ function createRiverIcon(name: string, isActive = false, showLabel = true) {
       ">
         ${showLabel ? `
         <div style="
-          background: ${isActive ? "#D4A843" : "#0D1B2A"};
+          background: ${color};
           color: white;
           font-size: 11px;
           font-weight: 700;
@@ -68,7 +67,7 @@ function createRiverIcon(name: string, isActive = false, showLabel = true) {
             border-radius: 50%;
             background: ${color};
             border: 3px solid white;
-            box-shadow: 0 2px 10px ${isActive ? "rgba(212,168,67,0.5)" : "rgba(42,171,224,0.5)"};
+            box-shadow: 0 2px 10px ${color}80;
           "></div>
         </div>
       </div>
@@ -98,12 +97,11 @@ function FlyToRiver({ riverId }: { riverId: string | null }) {
   return null;
 }
 
-/* ── Compute marker positions at the midpoint of each river path ── */
+/* ── Marker at the source (first point) of each river path ── */
 function getMarkerPosition(riverId: string, fallbackLat: number, fallbackLng: number): [number, number] {
   const path = riverPaths[riverId];
   if (path && path.length > 0) {
-    const mid = Math.floor(path.length / 2);
-    return path[mid];
+    return path[0];
   }
   return [fallbackLat, fallbackLng];
 }
@@ -177,12 +175,13 @@ export default function RiversMapLeaflet({ selectedRiver, onSelectRiver }: Props
         const rt = t.rivers[river.id as keyof typeof t.rivers];
         const isActive = selectedRiver === river.id;
         const position = getMarkerPosition(river.id, river.lat, river.lng);
+        const color = riverColors[river.id] || "#2AABE0";
 
         return (
           <Marker
             key={river.id}
             position={position}
-            icon={createRiverIcon(river.name, isActive, !isActive)}
+            icon={createRiverIcon(river.name, color, !isActive)}
             eventHandlers={{
               click: () => {
                 if (selectedRiver !== river.id) {
