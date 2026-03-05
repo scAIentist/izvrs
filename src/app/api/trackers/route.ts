@@ -36,7 +36,7 @@ const DATA_CUTOFF = new Date("2026-03-06T09:00:00Z").getTime(); // 10:00 CET
 // Exact drop location: 46°10'24.4"N 13°44'26.4"E (Soča near Tolmin)
 const SEED_POSITIONS: Record<string, { lat: number; lon: number; timestamp: string }> = {
   "863738070362752": { lat: 46.173436, lon: 13.740657, timestamp: "2026-03-06T09:00:00Z" }, // Sunflower
-  "863738070405031": { lat: 46.178436, lon: 13.740657, timestamp: "2026-03-06T09:00:00Z" }, // Proxima (~550m north)
+  "863738070405031": { lat: 46.178750, lon: 13.737667, timestamp: "2026-03-06T09:00:00Z" }, // Proxima (46°10'43.5"N 13°44'15.6"E)
 };
 
 // IMEI → tracker name (matches drawing filenames in /zmag/)
