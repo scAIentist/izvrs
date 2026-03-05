@@ -22,7 +22,7 @@ export default function Tips() {
             <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-dark/8">
               {/* Left — Praktični nasveti */}
               <div className="px-8 sm:px-10 py-8">
-                <h3 className="text-lg sm:text-xl font-bold text-deep-navy leading-snug mb-6 md:min-h-[3.5rem] flex items-end">
+                <h3 className="text-lg sm:text-xl font-bold text-deep-navy leading-snug mb-6 md:min-h-[3.25rem]">
                   {t.tips.card1Title}
                 </h3>
                 <ul className="space-y-4">
@@ -37,7 +37,7 @@ export default function Tips() {
 
               {/* Right — Kaj lahko naredim? */}
               <div className="px-8 sm:px-10 py-8">
-                <h3 className="text-lg sm:text-xl font-bold text-deep-navy leading-snug mb-6 md:min-h-[3.5rem] flex items-end">
+                <h3 className="text-lg sm:text-xl font-bold text-deep-navy leading-snug mb-6 md:min-h-[3.25rem]">
                   {t.tips.card2Title}
                 </h3>
                 <ul className="space-y-4">
