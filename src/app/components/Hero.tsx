@@ -96,10 +96,10 @@ export default function Hero() {
       {/* ── Multi-layer background ── */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#061424] via-[#0A2540] to-[#0E3155]" />
 
-      {/* Organic color blobs */}
-      <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-river-blue/8 rounded-full blur-[120px]" />
-      <div className="absolute bottom-[-10%] left-[-15%] w-[500px] h-[500px] bg-forest-green/10 rounded-full blur-[100px]" />
-      <div className="absolute top-[40%] left-[20%] w-[300px] h-[300px] bg-amber/5 rounded-full blur-[80px]" />
+      {/* Organic color blobs — hidden on mobile for performance */}
+      <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-river-blue/8 rounded-full blur-[120px] hidden sm:block" />
+      <div className="absolute bottom-[-10%] left-[-15%] w-[500px] h-[500px] bg-forest-green/10 rounded-full blur-[100px] hidden sm:block" />
+      <div className="absolute top-[40%] left-[20%] w-[300px] h-[300px] bg-amber/5 rounded-full blur-[80px] hidden sm:block" />
 
       {/* Subtle grid texture */}
       <div
@@ -110,11 +110,13 @@ export default function Hero() {
         }}
       />
 
-      {/* Decorative blob shapes */}
-      <div className="absolute top-[10%] left-[-8%] w-[350px] h-[350px] bg-river-blue/6 blob pointer-events-none" />
-      <div className="absolute bottom-[15%] right-[-5%] w-[280px] h-[280px] bg-forest-green/5 blob-2 pointer-events-none" />
+      {/* Decorative blob shapes — hidden on mobile for performance */}
+      <div className="absolute top-[10%] left-[-8%] w-[350px] h-[350px] bg-river-blue/6 blob pointer-events-none hidden sm:block" />
+      <div className="absolute bottom-[15%] right-[-5%] w-[280px] h-[280px] bg-forest-green/5 blob-2 pointer-events-none hidden sm:block" />
 
-      <WaterBubbles />
+      <div className="hidden sm:block">
+        <WaterBubbles />
+      </div>
 
       {/* ── Main content — vertically centered in viewport ── */}
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -122,15 +124,13 @@ export default function Hero() {
           {/* Left: Text */}
           <motion.div
             className="flex-1 text-center lg:text-left"
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 1, x: 0 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
           >
             <motion.h1
               className="text-[1.65rem] sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-8 whitespace-nowrap"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 1, y: 0 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.15 }}
             >
               {t.hero.heading}{" "}
               <span className="relative inline-block">
@@ -150,9 +150,8 @@ export default function Hero() {
 
             <motion.div
               className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 1, y: 0 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.3 }}
             >
               <button
                 onClick={() => scrollTo("odpadki")}
@@ -178,9 +177,8 @@ export default function Hero() {
             </motion.div>
             <motion.div
               className="flex justify-center lg:justify-start mt-3"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 1, y: 0 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.4 }}
             >
               <Link
                 href="/igra"
@@ -195,11 +193,10 @@ export default function Hero() {
           {/* Right: Mascot */}
           <motion.div
             className="flex-shrink-0 relative"
-            initial={{ scale: 0.8, opacity: 0 }}
+            initial={{ scale: 1, opacity: 1 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.05 }}
           >
-            <div className="absolute inset-0 -m-8 bg-river-blue/10 rounded-full blur-3xl animate-pulse" />
+            <div className="absolute inset-0 -m-8 bg-river-blue/10 rounded-full blur-3xl animate-pulse hidden sm:block" />
             <div className="relative animate-float-slow">
               <Image
                 src="/mascot-opt/happy.webp"
