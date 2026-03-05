@@ -37,8 +37,8 @@ const ACTIVATION_TIME = new Date("2026-03-06T10:15:00Z").getTime(); // 11:15 CET
 
 // Seed "drop" positions – left bank at sotočje Tolminke in Soče
 const SEED_POSITIONS: Record<string, { lat: number; lon: number; timestamp: string }> = {
-  "863738070365391": { lat: 46.173639, lon: 13.740167, timestamp: "2026-03-06T10:15:00Z" }, // Medusa  (46°10'25.1"N 13°44'24.6"E)
-  "863738070405031": { lat: 46.173611, lon: 13.740167, timestamp: "2026-03-06T10:15:00Z" }, // Proxima (46°10'25.0"N 13°44'24.6"E)
+  "863738070365391": { lat: 46.173556, lon: 13.740111, timestamp: "2026-03-06T10:15:00Z" }, // Medusa  (46°10'24.8"N 13°44'24.4"E)
+  "863738070405031": { lat: 46.173556, lon: 13.740139, timestamp: "2026-03-06T10:15:00Z" }, // Proxima (46°10'24.8"N 13°44'24.5"E)
 };
 
 // IMEI → tracker name (matches drawing filenames in /zmag/)
