@@ -88,45 +88,98 @@ export default function Gallery() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-          {filtered.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              className="group cursor-pointer text-left"
-              onClick={() => setLightboxItem(item)}
-              aria-label={t.gallery.openDrawing}
-            >
-              <div className="relative aspect-square rounded-xl overflow-hidden bg-white shadow-sm group-hover:shadow-lg transition-shadow">
-                <img
-                  src={
-                    item.thumb
-                      ? item.thumb
-                      : `/gallery-thumbs/${gradeFolders[item.grade]}/${item.id}.webp`
-                  }
-                  alt={item.name ? `${item.name} — ${t.gallery.drawingAlt}` : t.gallery.drawingAlt}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                {/* Winner name badge */}
-                {item.winner && item.name && (
-                  <span className="absolute bottom-2 left-2 right-2 text-center bg-black/50 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-lg truncate">
-                    {item.name}
+        {activeFilter === "winners" ? (
+          /* Winners view: grouped by grade with section headers */
+          <div className="space-y-8">
+            {([3, 4, 5] as const).map((grade) => {
+              const gradeWinners = filtered.filter((item) => item.grade === grade);
+              if (gradeWinners.length === 0) return null;
+              return (
+                <div key={grade}>
+                  <h3 className="text-lg font-bold text-deep-navy mb-3">
+                    🏆 Top {gradeWinners.length}: {grade}. {t.gallery.filterGrade}
+                  </h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                    {gradeWinners.map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        className="group cursor-pointer text-left"
+                        onClick={() => setLightboxItem(item)}
+                        aria-label={t.gallery.openDrawing}
+                      >
+                        <div className="relative aspect-square rounded-xl overflow-hidden bg-white shadow-sm group-hover:shadow-lg transition-shadow">
+                          <img
+                            src={item.thumb ? item.thumb : `/gallery-thumbs/${gradeFolders[item.grade]}/${item.id}.webp`}
+                            alt={item.name ? `${item.name} — ${t.gallery.drawingAlt}` : t.gallery.drawingAlt}
+                            loading="lazy"
+                            decoding="async"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                          {/* Winner name badge */}
+                          {item.winner && item.name && (
+                            <span className="absolute bottom-2 left-2 right-2 text-center bg-black/50 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-lg truncate">
+                              {item.name}
+                            </span>
+                          )}
+                          {/* Grade badge */}
+                          <span
+                            className={`absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold ${gradeColors[item.grade]}`}
+                          >
+                            {item.grade}. {t.gallery.gradeShort}
+                          </span>
+                          {/* Hover overlay */}
+                          <div className="absolute inset-0 bg-deep-navy/0 group-hover:bg-deep-navy/10 transition-colors" />
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          /* Normal grid view */
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+            {filtered.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className="group cursor-pointer text-left"
+                onClick={() => setLightboxItem(item)}
+                aria-label={t.gallery.openDrawing}
+              >
+                <div className="relative aspect-square rounded-xl overflow-hidden bg-white shadow-sm group-hover:shadow-lg transition-shadow">
+                  <img
+                    src={
+                      item.thumb
+                        ? item.thumb
+                        : `/gallery-thumbs/${gradeFolders[item.grade]}/${item.id}.webp`
+                    }
+                    alt={item.name ? `${item.name} — ${t.gallery.drawingAlt}` : t.gallery.drawingAlt}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  {/* Winner name badge */}
+                  {item.winner && item.name && (
+                    <span className="absolute bottom-2 left-2 right-2 text-center bg-black/50 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-lg truncate">
+                      {item.name}
+                    </span>
+                  )}
+                  {/* Grade badge */}
+                  <span
+                    className={`absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold ${gradeColors[item.grade]}`}
+                  >
+                    {item.grade}. {t.gallery.gradeShort}
                   </span>
-                )}
-                {/* Grade badge */}
-                <span
-                  className={`absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold ${gradeColors[item.grade]}`}
-                >
-                  {item.grade}. {t.gallery.gradeShort}
-                </span>
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-deep-navy/0 group-hover:bg-deep-navy/10 transition-colors" />
-              </div>
-            </button>
-          ))}
-        </div>
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-deep-navy/0 group-hover:bg-deep-navy/10 transition-colors" />
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Lightbox */}
