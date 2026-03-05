@@ -230,6 +230,24 @@ export const en: Translations = {
       highScore: ["WOW! 🌟", "Incredible!", "Record?! 🏆"],
     },
   },
+  tips: {
+    card1Title: "Practical tips for reducing waste",
+    card1Tips: [
+      "Drink from reusable bottles.",
+      "Bring your own bag to the store.",
+      "Use your own reusable food containers.",
+      "Don't throw cigarette butts into toilets, drains, or nature.",
+      "Join cleanup actions, contribute to a cleaner environment.",
+    ],
+    card2Title: "What can I do?",
+    card2Tips: [
+      "Refuse plastic bags at the store.",
+      "Think about what you need – less plastic.",
+      "Reduce plastic use (e.g., straws, bottles).",
+      "Reuse packaging and bags.",
+      "Recycle all plastic you no longer need.",
+    ],
+  },
   footer: {
     mascotSubtitle: "TETHYS4ADRION mascot",
     euText: "Co-funded by the EU — Interreg IPA ADRION",

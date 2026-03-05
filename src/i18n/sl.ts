@@ -228,6 +228,24 @@ export const sl = {
       highScore: ["WOW! 🌟", "Neverjetno!", "Rekord?! 🏆"],
     },
   },
+  tips: {
+    card1Title: "Praktični nasveti za zmanjševanje odpadkov",
+    card1Tips: [
+      "Pij iz steklenic za večkratno uporabo.",
+      "V trgovino prinesi svojo vrečko.",
+      "Za hrano uporabljaj svojo embalažo za večkratno uporabo.",
+      "Cigaternih ogorkov ne meči v stranišča, odtoke ali v naravo.",
+      "Udeleži se čistilnih akcij, prispevaj k čiščenju okolja.",
+    ],
+    card2Title: "Kaj lahko naredim?",
+    card2Tips: [
+      "Zavrni plastično vrečko v trgovini.",
+      "Premisli, kaj potrebuješ – manj plastike.",
+      "Zmanjšaj uporabe plastike (npr. slamice, plastenke).",
+      "Ponovno uporabi embalažo in vrečke.",
+      "Recikliraj vso plastiko, ki jo ne potrebuješ več.",
+    ],
+  },
   footer: {
     mascotSubtitle: "TETHYS4ADRION maskota",
     euText: "Sofinancirano s strani EU — Interreg IPA ADRION",
