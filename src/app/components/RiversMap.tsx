@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { rivers } from "../data/rivers";
 import { partners } from "../data/partners";
+import { riverColors } from "../data/riverPaths";
 import { useTranslation } from "@/i18n";
 
 /* Lazy-load the Leaflet map so SSR doesn't break */
@@ -19,12 +20,36 @@ const RiversMapLeaflet = dynamic(() => import("./RiversMapLeaflet"), {
 
 export default function RiversMap() {
   const { t } = useTranslation();
+  const [selectedRiver, setSelectedRiver] = useState<string | null>(null);
 
   return (
     <div className="relative">
+      {/* River selector buttons */}
+      <div className="flex flex-wrap justify-center gap-2 mb-4">
+        {rivers.map((river) => {
+          const isActive = selectedRiver === river.id;
+          const color = riverColors[river.id] || "#2AABE0";
+          const label = river.name.split("/")[0].trim();
+          return (
+            <button
+              key={river.id}
+              onClick={() => setSelectedRiver(isActive ? null : river.id)}
+              className="relative px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 cursor-pointer border-2 hover:scale-105 hover:shadow-md"
+              style={{
+                borderColor: color,
+                background: isActive ? color : "transparent",
+                color: isActive ? "white" : color,
+              }}
+            >
+              {label}
+            </button>
+          );
+        })}
+      </div>
+
       {/* Leaflet map */}
       <div className="max-w-4xl mx-auto">
-        <RiversMapLeaflet />
+        <RiversMapLeaflet selectedRiver={selectedRiver} />
       </div>
 
       {/* Partners — infinite scrolling logo carousel */}

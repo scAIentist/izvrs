@@ -2,9 +2,10 @@
 
 import { useEffect } from "react";
 import L from "leaflet";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { rivers } from "../data/rivers";
+import { riverPaths, riverColors } from "../data/riverPaths";
 import { useTranslation } from "@/i18n";
 
 /* Custom pulsing marker for each river */
@@ -74,7 +75,31 @@ function createRiverIcon(name: string, isActive = false) {
   });
 }
 
-export default function RiversMapLeaflet() {
+/* Fly to river path bounds when selected */
+function FlyToRiver({ riverId }: { riverId: string | null }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!riverId) {
+      // Reset to default view
+      map.flyTo([41.5, 17.0], 5, { duration: 1.2 });
+      return;
+    }
+    const path = riverPaths[riverId];
+    if (path && path.length > 0) {
+      const bounds = L.latLngBounds(path.map(([lat, lng]) => L.latLng(lat, lng)));
+      map.flyToBounds(bounds, { padding: [50, 50], duration: 1.2, maxZoom: 9 });
+    }
+  }, [riverId, map]);
+
+  return null;
+}
+
+interface Props {
+  selectedRiver: string | null;
+}
+
+export default function RiversMapLeaflet({ selectedRiver }: Props) {
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -121,13 +146,32 @@ export default function RiversMapLeaflet() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>'
         url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
       />
+
+      <FlyToRiver riverId={selectedRiver} />
+
+      {/* River flow polylines */}
+      {selectedRiver && riverPaths[selectedRiver] && (
+        <Polyline
+          key={`flow-${selectedRiver}`}
+          positions={riverPaths[selectedRiver]}
+          pathOptions={{
+            color: riverColors[selectedRiver] || "#2AABE0",
+            weight: 4,
+            opacity: 0.8,
+            lineCap: "round",
+            lineJoin: "round",
+          }}
+        />
+      )}
+
       {rivers.map((river) => {
         const rt = t.rivers[river.id as keyof typeof t.rivers];
+        const isActive = selectedRiver === river.id;
         return (
           <Marker
             key={river.id}
             position={[river.lat, river.lng]}
-            icon={createRiverIcon(river.name)}
+            icon={createRiverIcon(river.name, isActive)}
           >
             <Popup>
               <div style={{ minWidth: "220px", fontFamily: "Roboto, sans-serif" }}>
