@@ -183,7 +183,7 @@ export default function MapContent() {
             icon={createIcon(tracker, i)}
           >
             <Popup>
-              <div style={{ minWidth: "200px" }}>
+              <div style={{ minWidth: "220px" }}>
                 <h3
                   style={{
                     margin: "0 0 8px",
@@ -191,28 +191,28 @@ export default function MapContent() {
                     fontWeight: 700,
                   }}
                 >
-                  {t.trackers.tracker} #{i + 1}
+                  {tracker.name}
                 </h3>
-                <p
-                  style={{
-                    margin: "0 0 4px",
-                    fontSize: "12px",
-                    color: "#666",
-                  }}
+
+                {/* Winner's drawing */}
+                <a
+                  href={`/zmag/${tracker.name.toUpperCase()}.webp`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: "block", marginBottom: "8px" }}
                 >
-                  <strong>Lat:</strong> {tracker.latest.lat.toFixed(5)},{" "}
-                  <strong>Lon:</strong> {tracker.latest.lon.toFixed(5)}
-                </p>
-                <p
-                  style={{
-                    margin: "0 0 4px",
-                    fontSize: "12px",
-                    color: "#666",
-                  }}
-                >
-                  <strong>{t.trackers.speed}</strong>{" "}
-                  {tracker.latest.speed.toFixed(1)} km/h
-                </p>
+                  <img
+                    src={`/zmag/${tracker.name.toUpperCase()}.webp`}
+                    alt={`Risba – ${tracker.name}`}
+                    style={{
+                      width: "100%",
+                      borderRadius: "8px",
+                      border: "1px solid #eee",
+                      cursor: "pointer",
+                    }}
+                  />
+                </a>
+
                 <p
                   style={{
                     margin: "0 0 4px",

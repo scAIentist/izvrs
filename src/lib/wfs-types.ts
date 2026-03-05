@@ -37,6 +37,7 @@ export interface TrackerPosition {
 /** Processed tracker with latest position and full path */
 export interface LiveTracker {
   tracker_id: string;
+  name: string;
   latest: TrackerPosition;
   path: TrackerPosition[]; // chronological, oldest first
   status: "active" | "inactive";

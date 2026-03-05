@@ -22,6 +22,22 @@ const SLOVENIA_BOUNDS = {
   minLon: 13.38, maxLon: 16.61,
 };
 
+// IMEI → tracker name (matches drawing filenames in /zmag/)
+const TRACKER_NAMES: Record<string, string> = {
+  "863738070300455": "Rosalind",
+  "863738070353835": "Herse",
+  "863738070357695": "Euporie",
+  "863738070358222": "Helike",
+  "863738070362372": "Orthosie",
+  "863738070362752": "Sunflower",
+  "863738070365391": "Medusa",
+  "863738070403994": "Metone",
+  "863738070405007": "Thyone",
+  "863738070405031": "Proxima",
+  "863738070408605": "Cyllene",
+  "863738070408811": "Chiron",
+};
+
 function buildWFSUrl(): string {
   const params = new URLSearchParams({
     SERVICE: "WFS",
@@ -77,6 +93,7 @@ function processFeatures(fc: WFSFeatureCollection): LiveTracker[] {
 
     trackers.push({
       tracker_id,
+      name: TRACKER_NAMES[tracker_id] || `Tracker ${tracker_id.slice(-4)}`,
       latest,
       path: positions,
       status: age <= ACTIVE_THRESHOLD_MS ? "active" : "inactive",
