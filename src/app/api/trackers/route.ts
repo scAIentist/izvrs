@@ -16,6 +16,12 @@ const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 // Tracker is "active" if latest fix is within this window
 const ACTIVE_THRESHOLD_MS = 48 * 60 * 60 * 1000; // 48 hours (updates once/day)
 
+// Only show trackers within Slovenia
+const SLOVENIA_BOUNDS = {
+  minLat: 45.42, maxLat: 46.88,
+  minLon: 13.38, maxLon: 16.61,
+};
+
 function buildWFSUrl(): string {
   const params = new URLSearchParams({
     SERVICE: "WFS",
@@ -32,6 +38,13 @@ function processFeatures(fc: WFSFeatureCollection): LiveTracker[] {
 
   for (const feature of fc.features) {
     const p = feature.properties;
+
+    // Skip points outside Slovenia
+    if (
+      p.lat < SLOVENIA_BOUNDS.minLat || p.lat > SLOVENIA_BOUNDS.maxLat ||
+      p.lon < SLOVENIA_BOUNDS.minLon || p.lon > SLOVENIA_BOUNDS.maxLon
+    ) continue;
+
     const tid = String(p.tracker_id);
     const pos: TrackerPosition = {
       lat: p.lat,
