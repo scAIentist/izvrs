@@ -122,15 +122,15 @@ export default function Hero() {
           {/* Left: Text */}
           <motion.div
             className="flex-1 text-center lg:text-left"
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
           >
             <motion.h1
               className="text-[1.65rem] sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-8 whitespace-nowrap"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.5 }}
+              transition={{ duration: 0.4, delay: 0.15 }}
             >
               {t.hero.heading}{" "}
               <span className="relative inline-block">
@@ -143,16 +143,16 @@ export default function Hero() {
 
             <SpeechBubble
               text={t.hero.speechBubble}
-              delay={1200}
+              delay={400}
               speed={28}
               className="mb-10 lg:max-w-lg"
             />
 
             <motion.div
               className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.6 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
             >
               <button
                 onClick={() => scrollTo("odpadki")}
@@ -178,9 +178,9 @@ export default function Hero() {
             </motion.div>
             <motion.div
               className="flex justify-center lg:justify-start mt-3"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.8 }}
+              transition={{ duration: 0.4, delay: 0.4 }}
             >
               <Link
                 href="/igra"
@@ -195,9 +195,9 @@ export default function Hero() {
           {/* Right: Mascot */}
           <motion.div
             className="flex-shrink-0 relative"
-            initial={{ scale: 0, rotate: -10 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 180, damping: 18, delay: 0.2 }}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.05 }}
           >
             <div className="absolute inset-0 -m-8 bg-river-blue/10 rounded-full blur-3xl animate-pulse" />
             <div className="relative animate-float-slow">
@@ -231,8 +231,9 @@ export default function Hero() {
       {/* Scroll indicator */}
       <motion.div
         className="absolute bottom-28 left-1/2 -translate-x-1/2 z-10"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 1.5, repeat: Infinity }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, y: [0, 8, 0] }}
+        transition={{ opacity: { delay: 0.5, duration: 0.3 }, y: { duration: 1.5, repeat: Infinity } }}
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-25">
           <path d="M7 13l5 5 5-5" />
