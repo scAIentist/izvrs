@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import type { TrackersAPIResponse, LiveTracker } from "./wfs-types";
 
-const POLL_INTERVAL_MS = 30 * 60 * 1000; // Re-fetch every 30 minutes (data updates once/day)
+const POLL_INTERVAL_MS = 5 * 60 * 1000; // Re-fetch every 5 min (launch day)
 
 interface UseTrackersResult {
   trackers: LiveTracker[];
