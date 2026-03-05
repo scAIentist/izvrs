@@ -15,6 +15,12 @@ import { useTrackers } from "@/lib/useTrackers";
 import { useTranslation } from "@/i18n";
 import type { LiveTracker } from "@/lib/wfs-types";
 
+// Tracker names that have drawing files in /zmag/
+const KNOWN_DRAWINGS = new Set([
+  "Rosalind", "Herse", "Euporie", "Helike", "Orthosie", "Sunflower",
+  "Medusa", "Metone", "Thyone", "Proxima", "Cyllene", "Chiron",
+]);
+
 const statusColors: Record<string, string> = {
   active: "#27AE60",
   inactive: "#888888",
@@ -193,8 +199,8 @@ export default function MapContent() {
             position={[tracker.latest.lat, tracker.latest.lon]}
             icon={createIcon(tracker, i)}
           >
-            <Popup>
-              <div style={{ minWidth: "220px" }}>
+            <Popup autoPan={true} autoPanPadding={[60, 60]} maxWidth={280}>
+              <div style={{ minWidth: "200px", maxWidth: "260px" }}>
                 <h3
                   style={{
                     margin: "0 0 8px",
@@ -205,24 +211,26 @@ export default function MapContent() {
                   {tracker.name}
                 </h3>
 
-                {/* Winner's drawing */}
-                <div
-                  onClick={() => setSelectedDrawing({
-                    name: tracker.name,
-                    src: `/zmag/${tracker.name.toUpperCase()}.webp`,
-                  })}
-                  style={{ display: "block", marginBottom: "8px", cursor: "pointer" }}
-                >
-                  <img
-                    src={`/zmag/${tracker.name.toUpperCase()}.webp`}
-                    alt={`Risba – ${tracker.name}`}
-                    style={{
-                      width: "100%",
-                      borderRadius: "8px",
-                      border: "1px solid #eee",
-                    }}
-                  />
-                </div>
+                {/* Winner's drawing (only for named trackers with files) */}
+                {KNOWN_DRAWINGS.has(tracker.name) && (
+                  <div
+                    onClick={() => setSelectedDrawing({
+                      name: tracker.name,
+                      src: `/zmag/${tracker.name.toUpperCase()}.webp`,
+                    })}
+                    style={{ display: "block", marginBottom: "8px", cursor: "pointer" }}
+                  >
+                    <img
+                      src={`/zmag/${tracker.name.toUpperCase()}.webp`}
+                      alt={`Risba – ${tracker.name}`}
+                      style={{
+                        width: "100%",
+                        borderRadius: "8px",
+                        border: "1px solid #eee",
+                      }}
+                    />
+                  </div>
+                )}
 
                 <p
                   style={{
