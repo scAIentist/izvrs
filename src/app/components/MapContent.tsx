@@ -230,7 +230,13 @@ export default function MapContent() {
                     color: "#666",
                   }}
                 >
-                  <strong>{t.trackers.points}</strong> {tracker.path.length}
+                  <strong>{t.trackers.inWater}</strong>{" "}
+                  {(() => {
+                    const first = new Date(tracker.path[0].timestamp);
+                    const now = new Date();
+                    const days = Math.floor((now.getTime() - first.getTime()) / (1000 * 60 * 60 * 24));
+                    return `${days} ${days === 1 ? t.trackers.day : t.trackers.days}`;
+                  })()}
                 </p>
                 <div
                   style={{
