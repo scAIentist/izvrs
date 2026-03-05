@@ -10,11 +10,8 @@ export interface GalleryItem {
 function generateGalleryItems(): GalleryItem[] {
   const items: GalleryItem[] = [];
 
-  // 3. razred: files 1-47, 49 (no 48)
-  const thirdGradeFiles = [
-    ...Array.from({ length: 47 }, (_, i) => i + 1),
-    49,
-  ];
+  // 3. razred: files 1-49
+  const thirdGradeFiles = Array.from({ length: 49 }, (_, i) => i + 1);
   for (const num of thirdGradeFiles) {
     items.push({
       id: num,
