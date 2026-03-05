@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import L from "leaflet";
 import {
   MapContainer,
@@ -92,6 +92,17 @@ function formatTimestamp(iso: string): string {
 export default function MapContent() {
   const { t } = useTranslation();
   const { trackers, loading, error, fetchedAt, source } = useTrackers();
+  const [selectedDrawing, setSelectedDrawing] = useState<{ name: string; src: string } | null>(null);
+
+  const closeDrawing = useCallback(() => setSelectedDrawing(null), []);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeDrawing();
+    };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [closeDrawing]);
 
   useEffect(() => {
     delete (
@@ -195,11 +206,12 @@ export default function MapContent() {
                 </h3>
 
                 {/* Winner's drawing */}
-                <a
-                  href={`/zmag/${tracker.name.toUpperCase()}.webp`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ display: "block", marginBottom: "8px" }}
+                <div
+                  onClick={() => setSelectedDrawing({
+                    name: tracker.name,
+                    src: `/zmag/${tracker.name.toUpperCase()}.webp`,
+                  })}
+                  style={{ display: "block", marginBottom: "8px", cursor: "pointer" }}
                 >
                   <img
                     src={`/zmag/${tracker.name.toUpperCase()}.webp`}
@@ -208,10 +220,9 @@ export default function MapContent() {
                       width: "100%",
                       borderRadius: "8px",
                       border: "1px solid #eee",
-                      cursor: "pointer",
                     }}
                   />
-                </a>
+                </div>
 
                 <p
                   style={{
@@ -278,6 +289,34 @@ export default function MapContent() {
               : t.trackers.fallbackData}{" "}
           &middot; {formatTimestamp(fetchedAt)}
         </p>
+      )}
+
+      {/* Drawing lightbox overlay */}
+      {selectedDrawing && (
+        <div
+          className="fixed inset-0 z-[100] bg-deep-navy/95 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={closeDrawing}
+        >
+          <button
+            onClick={closeDrawing}
+            className="absolute top-4 right-4 text-white/70 hover:text-white text-3xl z-10 w-10 h-10 flex items-center justify-center"
+          >
+            &times;
+          </button>
+          <div
+            className="relative max-w-3xl max-h-[85vh] w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={selectedDrawing.src}
+              alt={`Risba – ${selectedDrawing.name}`}
+              className="w-full h-full object-contain rounded-xl"
+            />
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-md rounded-full px-5 py-2 text-white text-sm">
+              {selectedDrawing.name}
+            </div>
+          </div>
+        </div>
       )}
     </>
   );
