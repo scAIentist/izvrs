@@ -24,8 +24,10 @@ function RulesSection() {
         <p className="text-xs font-semibold text-success mb-1.5">{t.game.sidebar.collectTrash}</p>
         <div className="flex flex-wrap gap-1.5">
           {[
-            ["🍾", "10"], ["🧴", "10"], ["🔋", "20"], ["🛞", "25"],
-            ["📦", "15"], ["🚬", "5"], ["💊", "15"], ["🥤", "10"],
+            ["🍾", "10"], ["🧴", "10"], ["🛍️", "10"], ["🥪", "10"],
+            ["📦", "10"], ["👟", "10"], ["🚬", "5"], ["🥤", "10"],
+            ["📰", "5"], ["🎈", "10"], ["🪥", "5"], ["🧽", "5"],
+            ["🩹", "5"], ["🔋", "25"], ["💊", "25"], ["🛞", "25"],
           ].map(([e, p]) => (
             <span key={e} className="bg-black/20 px-2 py-0.5 rounded text-xs text-white">
               {e} +{p}

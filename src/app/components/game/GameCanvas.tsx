@@ -26,6 +26,7 @@ export default function GameCanvas({
   const stateRef = useRef<GameState>(createInitialState());
   const keysRef = useRef({ left: false, right: false });
   const rafRef = useRef<number>(0);
+  const lastFrameRef = useRef(0);
   const lastCommentRef = useRef(0);
   const commentsRef = useRef(t.game.mascotComments);
   commentsRef.current = t.game.mascotComments;
@@ -65,6 +66,7 @@ export default function GameCanvas({
     if (!canvas) return;
     const ctx = canvas.getContext("2d")!;
     stateRef.current = createInitialState();
+    lastFrameRef.current = performance.now();
 
     // Start comment
     setTimeout(() => triggerComment("start"), 500);
@@ -76,8 +78,12 @@ export default function GameCanvas({
         return;
       }
 
+      const frameNow = performance.now();
+      const dt = Math.min((frameNow - lastFrameRef.current) / 16.667, 3); // normalize to 60fps, cap at 3x
+      lastFrameRef.current = frameNow;
+
       const now = Date.now();
-      const events = tick(state, keysRef.current, now, topScore);
+      const events = tick(state, keysRef.current, now, topScore, dt);
 
       // Process events for mascot — trigger comments AND temporary emotions
       let hadReaction = false;
@@ -155,6 +161,18 @@ export default function GameCanvas({
     []
   );
 
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent<HTMLCanvasElement>) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const rect = canvasRef.current!.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      keysRef.current.left = x < rect.width / 2;
+      keysRef.current.right = x >= rect.width / 2;
+    },
+    []
+  );
+
   const handleTouchEnd = useCallback(() => {
     keysRef.current.left = false;
     keysRef.current.right = false;
@@ -165,9 +183,10 @@ export default function GameCanvas({
       ref={canvasRef}
       width={CANVAS_W}
       height={CANVAS_H}
-      className="block w-full h-full rounded-2xl"
-      style={{ touchAction: "manipulation" }}
+      className="block w-full h-full rounded-2xl select-none"
+      style={{ touchAction: "none", WebkitUserSelect: "none", userSelect: "none" }}
       onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       aria-label={t.game.canvasAria}
     />

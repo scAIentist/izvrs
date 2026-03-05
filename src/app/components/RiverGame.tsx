@@ -74,7 +74,7 @@ export default function RiverGame() {
           {/* ─── LEFT: Game container ─── */}
           <div>
             <div
-              className="relative mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-black/40"
+              className="relative mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-black/40 select-none"
               style={{ maxWidth: 450, aspectRatio: "450 / 700", maxHeight: "80vh" }}
             >
               {/* Canvas */}

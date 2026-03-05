@@ -12,7 +12,7 @@ export const TRASH_ITEMS: ItemDef[] = [
   { emoji: "\u{1F9F4}", name: "plastenka", points: 10 },
   { emoji: "\u{1F6CD}\uFE0F", name: "vre\u010Dka", points: 10 },
   { emoji: "\u{1F96B}", name: "plo\u010Devinka", points: 10 },
-  { emoji: "\u{1F4E6}", name: "\u0161katla", points: 15 },
+  { emoji: "\u{1F4E6}", name: "\u0161katla", points: 10 },
   { emoji: "\u{1F45F}", name: "\u010Develj", points: 10 },
   { emoji: "\u{1F6AC}", name: "ogorek", points: 5 },
   { emoji: "\u{1F964}", name: "kozarec", points: 10 },
@@ -21,8 +21,8 @@ export const TRASH_ITEMS: ItemDef[] = [
   { emoji: "\u{1FAA5}", name: "\u0161\u010Detka", points: 5 },
   { emoji: "\u{1F9FD}", name: "goba", points: 5 },
   { emoji: "\u{1FA79}", name: "obli\u017E", points: 5 },
-  { emoji: "\u{1F50B}", name: "baterija", points: 20 },
-  { emoji: "\u{1F48A}", name: "zdravila", points: 15 },
+  { emoji: "\u{1F50B}", name: "baterija", points: 25 },
+  { emoji: "\u{1F48A}", name: "zdravila", points: 25 },
   { emoji: "\u{1F6DE}", name: "pnevmatika", points: 25 },
 ];
 

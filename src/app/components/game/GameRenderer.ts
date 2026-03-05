@@ -179,12 +179,12 @@ export function drawKayaker(
   ctx.fillStyle = "#8B4513";
   ctx.fillRect(-40, -5, 80, 6);
 
-  ctx.fillStyle = "#DEB887";
+  ctx.fillStyle = "#8B4513";
   ctx.beginPath();
-  ctx.ellipse(-42, -2, 8, 15, 0.3, 0, Math.PI * 2);
+  ctx.ellipse(-42, -2, 15, 8, 0, 0, Math.PI * 2);
   ctx.fill();
   ctx.beginPath();
-  ctx.ellipse(42, -2, 8, 15, -0.3, 0, Math.PI * 2);
+  ctx.ellipse(42, -2, 15, 8, 0, 0, Math.PI * 2);
   ctx.fill();
 
   ctx.restore();

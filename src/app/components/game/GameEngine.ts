@@ -87,29 +87,32 @@ export function tick(
   state: GameState,
   keys: { left: boolean; right: boolean },
   now: number,
-  topScore: number
+  topScore: number,
+  dt: number = 1
 ): TickEvent[] {
   const events: TickEvent[] = [];
 
-  state.gameTime++;
+  state.gameTime += dt;
 
   // River scroll
-  state.riverOffset += 2;
+  state.riverOffset += 2 * dt;
   if (state.riverOffset > 40) state.riverOffset = 0;
 
   // Spawning
-  state.spawnTimer++;
+  state.spawnTimer += dt;
   const spawnRate = Math.max(30, 60 - state.difficulty * 5);
   if (state.spawnTimer > spawnRate) {
     state.items.push(spawnItem(state));
     state.spawnTimer = 0;
   }
 
-  // Difficulty ramp
-  state.difficulty = Math.min(6, 1 + state.gameTime / 500);
+  // Difficulty ramp — time-based + score-based (whichever is higher)
+  const timeDiff = 1 + state.gameTime / 500;
+  const scoreDiff = state.score / 200;
+  state.difficulty = Math.min(6, Math.max(timeDiff, scoreDiff));
 
   // Kayaker movement
-  const speed = 6;
+  const speed = 6 * dt;
   if (keys.left) state.kayaker.x -= speed;
   if (keys.right) state.kayaker.x += speed;
   state.kayaker.x = Math.max(50, Math.min(CANVAS_W - 100, state.kayaker.x));
@@ -123,9 +126,9 @@ export function tick(
   const k = state.kayaker;
   for (let i = state.items.length - 1; i >= 0; i--) {
     const item = state.items[i];
-    item.y += item.speed;
-    item.wobble += 0.1;
-    item.x += Math.sin(item.wobble) * 0.5;
+    item.y += item.speed * dt;
+    item.wobble += 0.1 * dt;
+    item.x += Math.sin(item.wobble) * 0.5 * dt;
 
     // Collision with kayaker
     if (
@@ -198,8 +201,8 @@ export function tick(
   // Update floating texts
   for (let i = state.floatingTexts.length - 1; i >= 0; i--) {
     const ft = state.floatingTexts[i];
-    ft.y += ft.vy;
-    ft.alpha -= 0.02;
+    ft.y += ft.vy * dt;
+    ft.alpha -= 0.02 * dt;
     if (ft.alpha <= 0) state.floatingTexts.splice(i, 1);
   }
 
