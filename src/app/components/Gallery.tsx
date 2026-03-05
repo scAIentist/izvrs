@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Image from "next/image";
 import { galleryItems, winnerItems, type GalleryItem } from "../data/gallery";
 import Lightbox from "./Lightbox";
 import ScrollReveal from "./ScrollReveal";
@@ -118,12 +119,12 @@ export default function Gallery() {
                         aria-label={t.gallery.openDrawing}
                       >
                         <div className="relative aspect-square rounded-2xl overflow-hidden bg-white shadow-md group-hover:shadow-xl group-hover:-rotate-1 group-hover:scale-[1.03] transition-all duration-300">
-                          <img
+                          <Image
                             src={item.thumb ? item.thumb : `/gallery-thumbs/${gradeFolders[item.grade]}/${item.id}.webp`}
                             alt={item.name ? `${item.name} — ${t.gallery.drawingAlt}` : t.gallery.drawingAlt}
-                            loading="lazy"
-                            decoding="async"
-                            className="w-full h-full object-cover"
+                            fill
+                            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
+                            className="object-cover"
                           />
                           <span
                             className={`absolute top-2 right-2 px-2.5 py-1 rounded-full text-xs font-bold shadow-sm ${gradeColors[item.grade]}`}
@@ -150,16 +151,16 @@ export default function Gallery() {
                 aria-label={t.gallery.openDrawing}
               >
                 <div className="relative aspect-square rounded-2xl overflow-hidden bg-white shadow-md group-hover:shadow-xl group-hover:rotate-1 group-hover:scale-[1.03] transition-all duration-300">
-                  <img
+                  <Image
                     src={
                       item.thumb
                         ? item.thumb
                         : `/gallery-thumbs/${gradeFolders[item.grade]}/${item.id}.webp`
                     }
                     alt={item.name ? `${item.name} — ${t.gallery.drawingAlt}` : t.gallery.drawingAlt}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                    className="object-cover"
                   />
                   <span
                     className={`absolute top-2 right-2 px-2.5 py-1 rounded-full text-xs font-bold shadow-sm ${gradeColors[item.grade]}`}
