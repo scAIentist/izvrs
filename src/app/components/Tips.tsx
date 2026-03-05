@@ -53,7 +53,7 @@ export default function Tips() {
         </ScrollReveal>
 
         {/* 2. Trash composition chart (language-dependent) */}
-        <ScrollReveal playful delay={0.05} className="w-full max-w-3xl mx-auto mb-12">
+        <ScrollReveal playful delay={0.05} className="w-full max-w-5xl mx-auto mb-12">
           <Image
             src={lang === "en" ? "/smeti-chart-en.png" : "/smeti-chart-sl.png"}
             alt={lang === "en" ? "Composition of waste in rivers" : "Sestava odpadkov v rekah"}
