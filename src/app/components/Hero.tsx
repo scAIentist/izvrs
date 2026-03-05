@@ -91,7 +91,7 @@ export default function Hero() {
   return (
     <section
       id="domov"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 lg:pt-0"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-36 sm:pb-0 lg:pt-0"
     >
       {/* ── Multi-layer background ── */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#061424] via-[#0A2540] to-[#0E3155]" />
@@ -118,7 +118,7 @@ export default function Hero() {
 
       {/* ── Main content — vertically centered in viewport ── */}
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col-reverse lg:flex-row items-center gap-10 lg:gap-20">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-6 sm:gap-10 lg:gap-20">
           {/* Left: Text */}
           <motion.div
             className="flex-1 text-center lg:text-left"
