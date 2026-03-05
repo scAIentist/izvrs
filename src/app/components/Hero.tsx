@@ -207,6 +207,7 @@ export default function Hero() {
                 width={380}
                 height={380}
                 priority
+                sizes="(max-width: 640px) 240px, (max-width: 1024px) 300px, 380px"
                 className="drop-shadow-[0_20px_40px_rgba(42,171,224,0.3)] max-w-[240px] sm:max-w-[300px] lg:max-w-none"
               />
             </div>

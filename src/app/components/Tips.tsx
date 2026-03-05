@@ -61,7 +61,6 @@ export default function Tips() {
               width={900}
               height={500}
               className="w-full h-auto"
-              priority
             />
           </div>
         </ScrollReveal>

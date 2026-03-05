@@ -102,7 +102,6 @@ export default function Lightbox({
               fill
               className="object-contain"
               sizes="90vw"
-              priority
             />
           </motion.div>
 
