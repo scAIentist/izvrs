@@ -25,18 +25,20 @@ const SLOVENIA_BOUNDS = {
 // ── Launch-day config (6.3.2026) ──────────────────────────────────────
 // Only show these two trackers for the Soča launch
 const LAUNCH_TRACKERS = new Set([
-  "863738070362752", // Sunflower
+  "863738070365391", // Medusa
   "863738070405031", // Proxima
 ]);
 
 // Ignore all GPS fixes recorded before this moment (test data)
-const DATA_CUTOFF = new Date("2026-03-06T09:00:00Z").getTime(); // 10:00 CET
+const DATA_CUTOFF = new Date("2026-03-06T10:00:00Z").getTime(); // 11:00 CET
 
-// Seed "drop" positions – shown until real WFS data arrives after launch
-// Exact drop location: 46°10'24.4"N 13°44'26.4"E (Soča near Tolmin)
+// Before this time: force inactive (gray). After: normal 48h threshold.
+const ACTIVATION_TIME = new Date("2026-03-06T10:15:00Z").getTime(); // 11:15 CET
+
+// Seed "drop" positions – left bank at sotočje Tolminke in Soče
 const SEED_POSITIONS: Record<string, { lat: number; lon: number; timestamp: string }> = {
-  "863738070362752": { lat: 46.173436, lon: 13.740657, timestamp: "2026-03-06T09:00:00Z" }, // Sunflower
-  "863738070405031": { lat: 46.178750, lon: 13.737667, timestamp: "2026-03-06T09:00:00Z" }, // Proxima (46°10'43.5"N 13°44'15.6"E)
+  "863738070365391": { lat: 46.173639, lon: 13.740167, timestamp: "2026-03-06T10:15:00Z" }, // Medusa  (46°10'25.1"N 13°44'24.6"E)
+  "863738070405031": { lat: 46.173611, lon: 13.740167, timestamp: "2026-03-06T10:15:00Z" }, // Proxima (46°10'25.0"N 13°44'24.6"E)
 };
 
 // IMEI → tracker name (matches drawing filenames in /zmag/)
@@ -83,7 +85,7 @@ function processFeatures(fc: WFSFeatureCollection): LiveTracker[] {
     // Only show known/named trackers
     if (!TRACKER_NAMES[tid]) continue;
 
-    // Launch-day: only Sunflower & Proxima
+    // Launch-day: only Medusa & Proxima
     if (!LAUNCH_TRACKERS.has(tid)) continue;
 
     // Skip test data recorded before launch
@@ -144,7 +146,9 @@ function processFeatures(fc: WFSFeatureCollection): LiveTracker[] {
       name: TRACKER_NAMES[tracker_id] || `Tracker ${tracker_id.slice(-4)}`,
       latest,
       path: positions,
-      status: age <= ACTIVE_THRESHOLD_MS ? "active" : "inactive",
+      status: now < ACTIVATION_TIME
+        ? "inactive"
+        : age <= ACTIVE_THRESHOLD_MS ? "active" : "inactive",
     });
   }
 
