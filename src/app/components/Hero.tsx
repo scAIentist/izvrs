@@ -155,10 +155,10 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 1.6 }}
             >
               <button
-                onClick={() => scrollTo("o-projektu")}
+                onClick={() => scrollTo("odpadki")}
                 className="group relative px-7 py-3.5 bg-river-blue text-white font-semibold rounded-full overflow-hidden transition-all hover:shadow-xl hover:shadow-river-blue/30 hover:-translate-y-0.5"
               >
-                <span className="relative z-10">{t.hero.btnProject}</span>
+                <span className="relative z-10">{t.hero.btnWaste}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
               </button>
               <Link
@@ -173,6 +173,20 @@ export default function Hero() {
                 className="group relative px-7 py-3.5 bg-amber text-white font-semibold rounded-full overflow-hidden transition-all hover:shadow-xl hover:shadow-amber/30 hover:-translate-y-0.5"
               >
                 <span className="relative z-10">{t.hero.btnGallery}</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+              </Link>
+            </motion.div>
+            <motion.div
+              className="flex justify-center lg:justify-start mt-3"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.8 }}
+            >
+              <Link
+                href="/igra"
+                className="group relative px-7 py-3.5 bg-danger text-white font-semibold rounded-full overflow-hidden transition-all hover:shadow-xl hover:shadow-danger/30 hover:-translate-y-0.5"
+              >
+                <span className="relative z-10">🎮 {t.hero.btnGame}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
               </Link>
             </motion.div>

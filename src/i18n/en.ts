@@ -21,9 +21,10 @@ export const en: Translations = {
     headingHighlight: "Izvrstna",
     speechBubble:
       "Hello! I'm Izvrstna, a marble trout. I live in the most beautiful river in the world – the Soča River. Help me explore where waste travels through our rivers!",
-    btnProject: "About the project",
+    btnWaste: "Waste in waters",
     btnTrackers: "GPS trackers",
     btnGallery: "Artwork gallery",
+    btnGame: "Play the game",
     mascotAlt: "Izvrstna — marble trout",
   },
   about: {

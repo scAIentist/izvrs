@@ -19,9 +19,10 @@ export const sl = {
     headingHighlight: "Izvrstno",
     speechBubble:
       "Pozdravljeni! Sem Izvrstna, soška postrv. Živim v najlepši reki na svetu – reki Soči. Pomagajte mi raziskovati, kam potujejo odpadki po naših rekah!",
-    btnProject: "Spoznaj projekt",
+    btnWaste: "Odpadki v vodah",
     btnTrackers: "GPS sledilniki",
     btnGallery: "Galerija slik",
+    btnGame: "Igraj igro",
     mascotAlt: "Izvrstna — soška postrv",
   },
   about: {
