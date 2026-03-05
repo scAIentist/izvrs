@@ -242,6 +242,7 @@ export default function MapContent() {
                   </div>
                 )}
 
+                {tracker.status === "active" && (
                 <p
                   style={{
                     margin: "0 0 4px",
@@ -252,6 +253,7 @@ export default function MapContent() {
                   <strong>{t.trackers.updated}</strong>{" "}
                   {formatTimestamp(tracker.latest.timestamp)}
                 </p>
+                )}
                 <p
                   style={{
                     margin: "0 0 4px",
