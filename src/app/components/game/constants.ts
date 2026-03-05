@@ -10,13 +10,11 @@ export const CANVAS_H = 700;
 export const TRASH_ITEMS: ItemDef[] = [
   { emoji: "\u{1F37E}", name: "steklenica", points: 10 },
   { emoji: "\u{1F9F4}", name: "plastenka", points: 10 },
-  { emoji: "\u{1F6CD}\uFE0F", name: "vre\u010Dka", points: 10 },
   { emoji: "\u{1F96B}", name: "plo\u010Devinka", points: 10 },
   { emoji: "\u{1F4E6}", name: "\u0161katla", points: 10 },
   { emoji: "\u{1F45F}", name: "\u010Develj", points: 10 },
   { emoji: "\u{1F6AC}", name: "ogorek", points: 5 },
   { emoji: "\u{1F964}", name: "kozarec", points: 10 },
-  { emoji: "\u{1F4F0}", name: "\u010Dasopis", points: 5 },
   { emoji: "\u{1F388}", name: "balon", points: 10 },
   { emoji: "\u{1FAA5}", name: "\u0161\u010Detka", points: 5 },
   { emoji: "\u{1F9FD}", name: "goba", points: 5 },
