@@ -80,10 +80,10 @@ export default function Navigation() {
                   key={item.key}
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className={`relative px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                  className={`relative px-5 py-2 rounded-full text-sm font-bold transition-all duration-300 hover:scale-105 ${
                     isActive(item)
                       ? `${item.color} text-white shadow-lg ${item.hoverGlow}`
-                      : "text-white/60 hover:text-white hover:bg-white/8"
+                      : "text-white/60 hover:text-white hover:bg-white/10"
                   }`}
                 >
                   {labels[item.key]}
@@ -143,10 +143,10 @@ export default function Navigation() {
                 key={item.key}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className={`px-4 py-3 rounded-xl text-left font-medium transition-all duration-200 block ${
+                className={`px-5 py-3.5 rounded-xl text-left font-bold transition-all duration-200 block text-base ${
                   isActive(item)
                     ? `${item.color} text-white shadow-md`
-                    : "text-white/60 hover:text-white hover:bg-white/5"
+                    : "text-white/60 hover:text-white hover:bg-white/8"
                 }`}
               >
                 {labels[item.key]}

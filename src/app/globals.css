@@ -25,26 +25,32 @@
 
 @theme inline {
   /* Colors — derived from Izvrstna mascot */
-  --color-river-blue: #2AABE0;
-  --color-river-blue-light: #7DD3F0;
-  --color-river-blue-dark: #1A7BA3;
-  --color-forest-green: #4A7C59;
-  --color-forest-green-light: #6B9E78;
-  --color-sage-green: #8BAA7A;
-  --color-sage-green-light: #B5CEAA;
-  --color-amber: #D4A843;
-  --color-amber-light: #E8C86E;
+  --color-river-blue: #29c3eb;
+  --color-river-blue-light: #6ceaff;
+  --color-river-blue-dark: #0a8fa5;
+  --color-forest-green: #436334;
+  --color-forest-green-light: #7b9e74;
+  --color-sage-green: #afceb0;
+  --color-sage-green-light: #d4e8d4;
+  --color-amber: #d3a218;
+  --color-amber-light: #fcc74f;
   --color-deep-navy: #0D1B2A;
   --color-slate-dark: #1E293B;
-  --color-cream: #F5E6C8;
-  --color-cream-light: #ECFDF5;
+  --color-cream: #fce8a5;
+  --color-cream-light: #c4f5f7;
   --color-danger: #C0392B;
   --color-success: #27AE60;
 
+  /* Section backgrounds */
+  --color-bg-cyan: #c4f5f7;
+  --color-bg-green: #d4e8d4;
+  --color-bg-amber: #fff4dc;
+  --color-bg-amber-mid: #fce8a5;
+
   /* Extra design tokens */
-  --color-river-teal: #1B8EA0;
-  --color-sand: #E6D5B8;
-  --color-warm-white: #FEFCF6;
+  --color-river-teal: #0a8fa5;
+  --color-sand: #fce8a5;
+  --color-warm-white: #fff4dc;
 
   /* Typography */
   --font-sans: var(--font-roboto), "Roboto", system-ui, -apple-system, sans-serif;
@@ -142,6 +148,22 @@ html {
   75% { transform: rotate(3deg); }
 }
 
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes wiggle-slow {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-2deg); }
+  75% { transform: rotate(2deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+  50% { text-shadow: 0 0 25px rgba(255,255,255,0.8), 0 0 50px rgba(255,255,255,0.4); }
+}
+
 /* ─── Animation utilities ─── */
 
 .animate-wave-slow { animation: wave-slow 8s ease-in-out infinite; }
@@ -158,6 +180,9 @@ html {
   background-size: 200% 100%;
 }
 .animate-wiggle { animation: wiggle 2s ease-in-out infinite; }
+.animate-bounce-gentle { animation: bounce-gentle 2s ease-in-out infinite; }
+.animate-wiggle-slow { animation: wiggle-slow 3s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
 .animate-scroll-logos {
   animation: scroll-logos 45s linear infinite;
   will-change: transform;

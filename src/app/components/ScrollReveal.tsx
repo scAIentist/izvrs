@@ -8,6 +8,7 @@ interface ScrollRevealProps {
   className?: string;
   delay?: number;
   direction?: "up" | "down" | "left" | "right";
+  playful?: boolean;
 }
 
 export default function ScrollReveal({
@@ -15,6 +16,7 @@ export default function ScrollReveal({
   className = "",
   delay = 0,
   direction = "up",
+  playful = false,
 }: ScrollRevealProps) {
   const directionOffset = {
     up: { y: 30 },
@@ -26,10 +28,14 @@ export default function ScrollReveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, ...directionOffset[direction] }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      initial={{ opacity: 0, scale: playful ? 0.9 : 1, ...directionOffset[direction] }}
+      whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      transition={
+        playful
+          ? { type: "spring", stiffness: 200, damping: 15, delay }
+          : { duration: 0.6, delay, ease: "easeOut" }
+      }
     >
       {children}
     </motion.div>
