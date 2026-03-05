@@ -219,8 +219,8 @@ export default function MapContent() {
                   {tracker.name}
                 </h3>
 
-                {/* Winner's drawing */}
-                {KNOWN_DRAWINGS.has(tracker.name) && (
+                {/* Winner's drawing — only when tracker is active */}
+                {tracker.status === "active" && KNOWN_DRAWINGS.has(tracker.name) && (
                   <div
                     onClick={() =>
                       setSelectedDrawing({
