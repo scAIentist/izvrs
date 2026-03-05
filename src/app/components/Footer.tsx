@@ -51,7 +51,7 @@ export default function Footer() {
               alt="ScAIentist"
               width={120}
               height={30}
-              className="h-6 w-auto opacity-60 hover:opacity-100 transition-opacity"
+              className="h-4 w-auto opacity-60 hover:opacity-100 transition-opacity"
             />
           </a>
         </div>
