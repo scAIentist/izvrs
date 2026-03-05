@@ -22,7 +22,7 @@ export default function Tips() {
   const { t } = useTranslation();
 
   return (
-    <section className="relative overflow-hidden" style={{ background: "linear-gradient(135deg, #c4f5f7 0%, #d4e8d4 100%)" }}>
+    <section className="relative overflow-hidden" style={{ background: "linear-gradient(180deg, #c4f5f7 0%, #d4e8d4 100%)" }}>
       {/* Decorative blobs — more visible now */}
       <div className="absolute top-10 right-[-150px] w-[400px] h-[400px] bg-river-blue/15 blob pointer-events-none" />
       <div className="absolute bottom-20 left-[-120px] w-[350px] h-[350px] bg-sage-green/15 blob-2 pointer-events-none" />
