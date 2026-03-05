@@ -18,6 +18,14 @@ export default function SpeechBubble({
   const [displayed, setDisplayed] = useState("");
   const [started, setStarted] = useState(false);
 
+  // Reset typewriter when text changes (language switch)
+  useEffect(() => {
+    setDisplayed("");
+    setStarted(false);
+    const timeout = setTimeout(() => setStarted(true), 50);
+    return () => clearTimeout(timeout);
+  }, [text]);
+
   useEffect(() => {
     const timeout = setTimeout(() => setStarted(true), delay);
     return () => clearTimeout(timeout);
