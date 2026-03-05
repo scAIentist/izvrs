@@ -184,7 +184,7 @@ export default function Hero() {
             >
               <Link
                 href="/igra"
-                className="group relative px-7 py-3.5 bg-danger text-white font-semibold rounded-full overflow-hidden transition-all hover:shadow-xl hover:shadow-danger/30 hover:-translate-y-0.5"
+                className="group relative w-full text-center px-7 py-3.5 bg-danger text-white font-semibold rounded-full overflow-hidden transition-all hover:shadow-xl hover:shadow-danger/30 hover:-translate-y-0.5"
               >
                 <span className="relative z-10">🎮 {t.hero.btnGame}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
