@@ -54,15 +54,13 @@ export default function Tips() {
 
         {/* 2. Trash composition chart (language-dependent) */}
         <ScrollReveal playful delay={0.05} className="w-full max-w-3xl mx-auto mb-12">
-          <div className="rounded-2xl overflow-hidden shadow-xl shadow-black/10 bg-white">
-            <Image
-              src={lang === "en" ? "/smeti-chart-en.png" : "/smeti-chart-sl.png"}
-              alt={lang === "en" ? "Composition of waste in rivers" : "Sestava odpadkov v rekah"}
-              width={800}
-              height={450}
-              className="w-full h-auto"
-            />
-          </div>
+          <Image
+            src={lang === "en" ? "/smeti-chart-en.png" : "/smeti-chart-sl.png"}
+            alt={lang === "en" ? "Composition of waste in rivers" : "Sestava odpadkov v rekah"}
+            width={800}
+            height={450}
+            className="w-full h-auto"
+          />
         </ScrollReveal>
 
         {/* 3. Images */}
