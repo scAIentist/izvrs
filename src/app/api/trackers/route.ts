@@ -62,6 +62,9 @@ function processFeatures(fc: WFSFeatureCollection): LiveTracker[] {
     ) continue;
 
     const tid = String(p.tracker_id);
+
+    // Only show known/named trackers
+    if (!TRACKER_NAMES[tid]) continue;
     const pos: TrackerPosition = {
       lat: p.lat,
       lon: p.lon,
