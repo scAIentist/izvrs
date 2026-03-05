@@ -235,7 +235,6 @@ export const sl = {
       "V trgovino prinesi svojo vrečko.",
       "Za hrano uporabljaj svojo embalažo za večkratno uporabo.",
       "Cigaternih ogorkov ne meči v stranišča, odtoke ali v naravo.",
-      "Udeleži se čistilnih akcij, prispevaj k čiščenju okolja.",
     ],
     card2Title: "Kaj lahko naredim?",
     card2Tips: [

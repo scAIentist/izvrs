@@ -237,7 +237,6 @@ export const en: Translations = {
       "Bring your own bag to the store.",
       "Use your own reusable food containers.",
       "Don't throw cigarette butts into toilets, drains, or nature.",
-      "Join cleanup actions, contribute to a cleaner environment.",
     ],
     card2Title: "What can I do?",
     card2Tips: [

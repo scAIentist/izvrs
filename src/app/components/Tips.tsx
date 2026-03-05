@@ -3,7 +3,7 @@
 import ScrollReveal from "./ScrollReveal";
 import { useTranslation } from "@/i18n";
 
-const ICONS_1 = ["🚰", "🛒", "🍱", "🚭", "🧹"];
+const ICONS_1 = ["🚰", "🛒", "🍱", "🚭"];
 const ICONS_2 = ["🛍️", "🤔", "♻️", "📦", "🗑️"];
 
 export default function Tips() {
