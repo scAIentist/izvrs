@@ -19,12 +19,23 @@ export default function Tips() {
           <div className="rounded-2xl overflow-hidden shadow-lg shadow-black/5 border border-slate-dark/5 bg-white">
             <div className="h-1.5 bg-gradient-to-r from-forest-green via-river-blue to-forest-green" />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-dark/8">
-              {/* Left — Praktični nasveti */}
-              <div className="px-8 sm:px-10 py-8">
-                <h3 className="text-lg sm:text-xl font-bold text-deep-navy leading-snug mb-6 md:min-h-[3.25rem]">
+            {/* Title row */}
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="px-8 sm:px-10 pt-8 pb-4 md:border-r border-slate-dark/8">
+                <h3 className="text-lg sm:text-xl font-bold text-deep-navy leading-snug">
                   {t.tips.card1Title}
                 </h3>
+              </div>
+              <div className="px-8 sm:px-10 pt-8 pb-4 hidden md:block">
+                <h3 className="text-lg sm:text-xl font-bold text-deep-navy leading-snug">
+                  {t.tips.card2Title}
+                </h3>
+              </div>
+            </div>
+
+            {/* Content row */}
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="px-8 sm:px-10 pb-8 md:border-r border-slate-dark/8">
                 <ul className="space-y-4">
                   {t.tips.card1Tips.map((tip, i) => (
                     <li key={i} className="flex items-start gap-3">
@@ -35,9 +46,9 @@ export default function Tips() {
                 </ul>
               </div>
 
-              {/* Right — Kaj lahko naredim? */}
-              <div className="px-8 sm:px-10 py-8">
-                <h3 className="text-lg sm:text-xl font-bold text-deep-navy leading-snug mb-6 md:min-h-[3.25rem]">
+              <div className="px-8 sm:px-10 pb-8 border-t md:border-t-0 border-slate-dark/8">
+                {/* Mobile-only title */}
+                <h3 className="text-lg font-bold text-deep-navy leading-snug mb-4 md:hidden pt-6">
                   {t.tips.card2Title}
                 </h3>
                 <ul className="space-y-4">
