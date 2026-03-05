@@ -17,7 +17,7 @@ const BADGE_COLORS = [
 ];
 
 export default function Tips() {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
 
   return (
     <section id="odpadki" className="relative overflow-hidden scroll-mt-20" style={{ background: "linear-gradient(180deg, #c4f5f7 0%, #d4e8d4 100%)" }}>
@@ -52,7 +52,20 @@ export default function Tips() {
           </div>
         </ScrollReveal>
 
-        {/* 2. Images */}
+        {/* 2. Trash composition chart (language-dependent) */}
+        <ScrollReveal playful delay={0.05} className="w-full max-w-3xl mx-auto mb-12">
+          <div className="rounded-2xl overflow-hidden shadow-xl shadow-black/10 bg-white">
+            <Image
+              src={lang === "en" ? "/smeti-chart-en.png" : "/smeti-chart-sl.png"}
+              alt={lang === "en" ? "Composition of waste in rivers" : "Sestava odpadkov v rekah"}
+              width={800}
+              height={450}
+              className="w-full h-auto"
+            />
+          </div>
+        </ScrollReveal>
+
+        {/* 3. Images */}
         <ScrollReveal playful delay={0.1} className="w-full max-w-3xl mx-auto mb-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="rounded-2xl overflow-hidden shadow-xl shadow-black/10">
