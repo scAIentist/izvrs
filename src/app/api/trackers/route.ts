@@ -11,7 +11,7 @@ const WFS_AUTH_TOKEN = process.env.WFS_AUTH_TOKEN!;
 
 // In-memory cache (persists across requests within the same serverless instance)
 let cache: { data: TrackersAPIResponse; expires: number } | null = null;
-const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 min (launch-day – fast updates)
 
 // Tracker is "active" if latest fix is within this window
 const ACTIVE_THRESHOLD_MS = 48 * 60 * 60 * 1000; // 48 hours (updates once/day)
@@ -20,6 +20,23 @@ const ACTIVE_THRESHOLD_MS = 48 * 60 * 60 * 1000; // 48 hours (updates once/day)
 const SLOVENIA_BOUNDS = {
   minLat: 45.42, maxLat: 46.88,
   minLon: 13.38, maxLon: 16.61,
+};
+
+// ── Launch-day config (6.3.2026) ──────────────────────────────────────
+// Only show these two trackers for the Soča launch
+const LAUNCH_TRACKERS = new Set([
+  "863738070362752", // Sunflower
+  "863738070405031", // Proxima
+]);
+
+// Ignore all GPS fixes recorded before this moment (test data)
+const DATA_CUTOFF = new Date("2026-03-06T09:00:00Z").getTime(); // 10:00 CET
+
+// Seed "drop" positions – shown until real WFS data arrives after launch
+// TODO: replace lat/lon with exact drop location on the Soča
+const SEED_POSITIONS: Record<string, { lat: number; lon: number; timestamp: string }> = {
+  "863738070362752": { lat: 46.33, lon: 13.55, timestamp: "2026-03-06T09:00:00Z" }, // Sunflower
+  "863738070405031": { lat: 46.33, lon: 13.55, timestamp: "2026-03-06T09:00:00Z" }, // Proxima
 };
 
 // IMEI → tracker name (matches drawing filenames in /zmag/)
@@ -65,6 +82,13 @@ function processFeatures(fc: WFSFeatureCollection): LiveTracker[] {
 
     // Only show known/named trackers
     if (!TRACKER_NAMES[tid]) continue;
+
+    // Launch-day: only Sunflower & Proxima
+    if (!LAUNCH_TRACKERS.has(tid)) continue;
+
+    // Skip test data recorded before launch
+    if (new Date(p.timestamp).getTime() < DATA_CUTOFF) continue;
+
     const pos: TrackerPosition = {
       lat: p.lat,
       lon: p.lon,
@@ -81,6 +105,13 @@ function processFeatures(fc: WFSFeatureCollection): LiveTracker[] {
     }
   }
 
+  // Ensure launch trackers appear even when WFS has no post-cutoff data yet
+  for (const tid of LAUNCH_TRACKERS) {
+    if (!groups.has(tid)) {
+      groups.set(tid, []);
+    }
+  }
+
   const now = Date.now();
   const trackers: LiveTracker[] = [];
 
@@ -90,6 +121,20 @@ function processFeatures(fc: WFSFeatureCollection): LiveTracker[] {
       (a, b) =>
         new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
     );
+
+    // Prepend seed "drop" position so the starting point is always visible
+    const seed = SEED_POSITIONS[tracker_id];
+    if (seed) {
+      positions.unshift({
+        lat: seed.lat,
+        lon: seed.lon,
+        speed: 0,
+        angle: 0,
+        timestamp: seed.timestamp,
+      });
+    }
+
+    if (positions.length === 0) continue;
 
     const latest = positions[positions.length - 1];
     const age = now - new Date(latest.timestamp).getTime();
@@ -111,7 +156,7 @@ export async function GET() {
   if (cache && Date.now() < cache.expires) {
     return NextResponse.json(cache.data, {
       headers: {
-        "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=3600",
+        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=60",
       },
     });
   }
@@ -145,7 +190,7 @@ export async function GET() {
 
     return NextResponse.json(result, {
       headers: {
-        "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=3600",
+        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=60",
       },
     });
   } catch (error) {
@@ -157,7 +202,7 @@ export async function GET() {
         { ...cache.data, source: "cache" as const },
         {
           status: 200,
-          headers: { "Cache-Control": "public, s-maxage=3600" },
+          headers: { "Cache-Control": "public, s-maxage=300" },
         }
       );
     }
