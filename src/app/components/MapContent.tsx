@@ -253,7 +253,7 @@ export default function MapContent() {
                   {(() => {
                     const first = new Date(tracker.path[0].timestamp);
                     const now = new Date();
-                    const days = Math.floor((now.getTime() - first.getTime()) / (1000 * 60 * 60 * 24));
+                    const days = Math.max(0, Math.floor((now.getTime() - first.getTime()) / (1000 * 60 * 60 * 24)));
                     return `${days} ${days === 1 ? t.trackers.day : t.trackers.days}`;
                   })()}
                 </p>
