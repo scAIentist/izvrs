@@ -41,6 +41,20 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} IzVRS
           </p>
         </div>
+
+        {/* Made by ScAIentist */}
+        <div className="mt-6 flex items-center justify-center gap-1.5">
+          <span className="text-gray-300 text-xs">made by</span>
+          <a href="https://www.linkedin.com/company/scaientist/" target="_blank" rel="noopener noreferrer">
+            <Image
+              src="/scaientist-logo.png"
+              alt="ScAIentist"
+              width={120}
+              height={30}
+              className="h-6 w-auto opacity-60 hover:opacity-100 transition-opacity"
+            />
+          </a>
+        </div>
       </div>
     </footer>
   );
