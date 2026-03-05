@@ -235,15 +235,13 @@ export const en: Translations = {
     alertStat: "80%",
     alertAfter: "of marine waste originates from land. Most waste reaches the sea through rivers.",
     alertSource: "EEA, 2023",
-    card1Title: "Practical tips for reducing waste",
-    card1Tips: [
+    heading: "What can I do?",
+    tipsTitle: "Practical tips for reducing waste",
+    allTips: [
       "Drink from reusable bottles.",
       "Bring your own bag to the store.",
       "Use your own reusable food containers.",
       "Don't throw cigarette butts into toilets, drains, or nature.",
-    ],
-    card2Title: "What can I do?",
-    card2Tips: [
       "Refuse plastic bags at the store.",
       "Think about what you need – less plastic.",
       "Reduce plastic use (e.g., straws, bottles).",

@@ -233,15 +233,13 @@ export const sl = {
     alertStat: "80 %",
     alertAfter: "odpadkov v morju izvira s kopnega. Večina odpadkov pride do morja preko rek.",
     alertSource: "EEA, 2023",
-    card1Title: "Praktični nasveti za zmanjševanje odpadkov",
-    card1Tips: [
+    heading: "Kaj lahko naredim?",
+    tipsTitle: "Praktični nasveti za zmanjševanje odpadkov",
+    allTips: [
       "Pij iz steklenic za večkratno uporabo.",
       "V trgovino prinesi svojo vrečko.",
       "Za hrano uporabljaj svojo embalažo za večkratno uporabo.",
       "Cigaternih ogorkov ne meči v stranišča, odtoke ali v naravo.",
-    ],
-    card2Title: "Kaj lahko naredim?",
-    card2Tips: [
       "Zavrni plastično vrečko v trgovini.",
       "Premisli, kaj potrebuješ – manj plastike.",
       "Zmanjšaj uporabe plastike (npr. slamice, plastenke).",
