@@ -229,6 +229,10 @@ export const sl = {
     },
   },
   tips: {
+    alertBefore: "Odpadki ogrožajo vodne ekosisteme in biotsko raznovrstnost.",
+    alertStat: "80 %",
+    alertAfter: "odpadkov v morju izvira s kopnega. Večina odpadkov pride do morja preko rek.",
+    alertSource: "EEA, 2023",
     card1Title: "Praktični nasveti za zmanjševanje odpadkov",
     card1Tips: [
       "Pij iz steklenic za večkratno uporabo.",
@@ -244,9 +248,6 @@ export const sl = {
       "Ponovno uporabi embalažo in vrečke.",
       "Recikliraj vso plastiko, ki jo ne potrebuješ več.",
     ],
-    tapToReveal: "Klikni za nasvet!",
-    discover: "Odkrij nasvete!",
-    discoveredAll: "Bravo! Vse si odkril/a! 🎉",
   },
   footer: {
     mascotSubtitle: "TETHYS4ADRION maskota",

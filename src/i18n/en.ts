@@ -231,6 +231,10 @@ export const en: Translations = {
     },
   },
   tips: {
+    alertBefore: "Waste threatens aquatic ecosystems and biodiversity.",
+    alertStat: "80%",
+    alertAfter: "of marine waste originates from land. Most waste reaches the sea through rivers.",
+    alertSource: "EEA, 2023",
     card1Title: "Practical tips for reducing waste",
     card1Tips: [
       "Drink from reusable bottles.",
@@ -246,9 +250,6 @@ export const en: Translations = {
       "Reuse packaging and bags.",
       "Recycle all plastic you no longer need.",
     ],
-    tapToReveal: "Tap to reveal!",
-    discover: "Discover tips!",
-    discoveredAll: "Amazing! You found them all! 🎉",
   },
   footer: {
     mascotSubtitle: "TETHYS4ADRION mascot",
