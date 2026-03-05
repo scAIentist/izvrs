@@ -28,7 +28,7 @@ export default function Tips() {
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-24">
         {/* 1. Alert banner */}
-        <ScrollReveal playful className="w-full max-w-4xl mx-auto mb-12">
+        <ScrollReveal playful className="w-full max-w-4xl mx-auto mb-8">
           <div className="relative rounded-2xl overflow-hidden bg-gradient-to-r from-rose-400 via-red-400 to-rose-400 shadow-xl shadow-rose-400/20 px-6 sm:px-10 py-8 text-center">
             <span className="absolute top-3 left-4 text-3xl opacity-40 select-none animate-float-slow">🌊</span>
             <span className="absolute bottom-3 right-4 text-3xl opacity-40 select-none animate-float">🌊</span>
@@ -53,7 +53,7 @@ export default function Tips() {
         </ScrollReveal>
 
         {/* 2. Trash composition chart (language-dependent) */}
-        <ScrollReveal playful delay={0.05} className="w-full max-w-5xl mx-auto mb-12">
+        <ScrollReveal playful delay={0.05} className="w-full max-w-5xl mx-auto mb-8">
           <Image
             src={lang === "en" ? "/smeti-chart-en.png" : "/smeti-chart-sl.png"}
             alt={lang === "en" ? "Composition of waste in rivers" : "Sestava odpadkov v rekah"}
@@ -64,7 +64,7 @@ export default function Tips() {
         </ScrollReveal>
 
         {/* 3. Images */}
-        <ScrollReveal playful delay={0.1} className="w-full max-w-3xl mx-auto mb-12">
+        <ScrollReveal playful delay={0.1} className="w-full max-w-3xl mx-auto mb-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="rounded-2xl overflow-hidden shadow-xl shadow-black/10">
               <Image
@@ -88,7 +88,7 @@ export default function Tips() {
         </ScrollReveal>
 
         {/* 3. "Kaj lahko naredim?" — big section heading */}
-        <ScrollReveal playful delay={0.15} className="text-center mb-10">
+        <ScrollReveal playful delay={0.15} className="text-center mb-8">
           <h2 className="text-3xl sm:text-4xl font-bold text-forest-green">
             {t.tips.heading}
           </h2>
