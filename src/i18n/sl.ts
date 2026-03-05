@@ -245,6 +245,9 @@ export const sl = {
       "Ponovno uporabi embalažo in vrečke.",
       "Recikliraj vso plastiko, ki jo ne potrebuješ več.",
     ],
+    tapToReveal: "Klikni za nasvet!",
+    discover: "Odkrij nasvete!",
+    discoveredAll: "Bravo! Vse si odkril/a! 🎉",
   },
   footer: {
     mascotSubtitle: "TETHYS4ADRION maskota",

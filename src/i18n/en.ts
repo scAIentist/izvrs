@@ -247,6 +247,9 @@ export const en: Translations = {
       "Reuse packaging and bags.",
       "Recycle all plastic you no longer need.",
     ],
+    tapToReveal: "Tap to reveal!",
+    discover: "Discover tips!",
+    discoveredAll: "Amazing! You found them all! 🎉",
   },
   footer: {
     mascotSubtitle: "TETHYS4ADRION mascot",
