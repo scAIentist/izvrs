@@ -11,7 +11,7 @@ const WFS_AUTH_TOKEN = process.env.WFS_AUTH_TOKEN!;
 
 // In-memory cache (persists across requests within the same serverless instance)
 let cache: { data: TrackersAPIResponse; expires: number } | null = null;
-const CACHE_TTL_MS = 5 * 60 * 1000; // 5 min (launch-day – fast updates)
+const CACHE_TTL_MS = 30 * 1000; // 30s – quick activation switch
 
 // Tracker is "active" if latest fix is within this window
 const ACTIVE_THRESHOLD_MS = 48 * 60 * 60 * 1000; // 48 hours (updates once/day)
@@ -33,7 +33,7 @@ const LAUNCH_TRACKERS = new Set([
 const DATA_CUTOFF = new Date("2026-03-06T10:00:00Z").getTime(); // 11:00 CET
 
 // Before this time: force inactive (gray). After: normal 48h threshold.
-const ACTIVATION_TIME = new Date("2026-03-05T19:32:00Z").getTime(); // TEST: 20:32 CET today
+const ACTIVATION_TIME = new Date("2026-03-05T19:42:00Z").getTime(); // TEST: 20:42 CET today
 
 // Seed "drop" positions – left bank at sotočje Tolminke in Soče
 const SEED_POSITIONS: Record<string, { lat: number; lon: number; timestamp: string }> = {
@@ -160,7 +160,7 @@ export async function GET() {
   if (cache && Date.now() < cache.expires) {
     return NextResponse.json(cache.data, {
       headers: {
-        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=60",
+        "Cache-Control": "public, s-maxage=30, stale-while-revalidate=10",
       },
     });
   }
@@ -194,7 +194,7 @@ export async function GET() {
 
     return NextResponse.json(result, {
       headers: {
-        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=60",
+        "Cache-Control": "public, s-maxage=30, stale-while-revalidate=10",
       },
     });
   } catch (error) {
@@ -206,7 +206,7 @@ export async function GET() {
         { ...cache.data, source: "cache" as const },
         {
           status: 200,
-          headers: { "Cache-Control": "public, s-maxage=300" },
+          headers: { "Cache-Control": "public, s-maxage=30" },
         }
       );
     }
