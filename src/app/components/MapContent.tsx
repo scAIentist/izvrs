@@ -11,9 +11,6 @@ import {
   useMap,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "leaflet.markercluster/dist/MarkerCluster.css";
-import "leaflet.markercluster/dist/MarkerCluster.Default.css";
-import MarkerClusterGroup from "react-leaflet-cluster";
 import { useTrackers } from "@/lib/useTrackers";
 import { useTranslation } from "@/i18n";
 import type { LiveTracker } from "@/lib/wfs-types";
@@ -60,6 +57,68 @@ function createIcon(tracker: LiveTracker, index: number) {
     iconAnchor: [16, 16],
     popupAnchor: [0, -20],
   });
+}
+
+function createGroupIcon(count: number) {
+  return L.divIcon({
+    className: "custom-tracker-marker",
+    html: `<div style="
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #2AABE0;
+      border: 3px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+    ">${count}</div>`,
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [0, -24],
+  });
+}
+
+/** Haversine distance in metres (good enough for short ranges) */
+function distanceMetres(
+  a: { lat: number; lon: number },
+  b: { lat: number; lon: number }
+) {
+  const R = 6_371_000;
+  const dLat = ((b.lat - a.lat) * Math.PI) / 180;
+  const dLon = ((b.lon - a.lon) * Math.PI) / 180;
+  const lat1 = (a.lat * Math.PI) / 180;
+  const lat2 = (b.lat * Math.PI) / 180;
+  const s =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(s), Math.sqrt(1 - s));
+}
+
+/** Group trackers whose latest positions are within `threshold` metres */
+function groupNearby(trackers: LiveTracker[], threshold = 500) {
+  const used = new Set<number>();
+  const groups: LiveTracker[][] = [];
+
+  for (let i = 0; i < trackers.length; i++) {
+    if (used.has(i)) continue;
+    const group = [trackers[i]];
+    used.add(i);
+    for (let j = i + 1; j < trackers.length; j++) {
+      if (used.has(j)) continue;
+      if (
+        distanceMetres(trackers[i].latest, trackers[j].latest) < threshold
+      ) {
+        group.push(trackers[j]);
+        used.add(j);
+      }
+    }
+    groups.push(group);
+  }
+  return groups;
 }
 
 /** Auto-fit map bounds to all tracker path points */
@@ -134,6 +193,9 @@ export default function MapContent() {
     );
   }, [trackers]);
 
+  // Group nearby trackers so overlapping ones get a combined popup
+  const trackerGroups = useMemo(() => groupNearby(trackers), [trackers]);
+
   const statusLabels: Record<string, string> = {
     active: t.trackers.active,
     inactive: t.trackers.inactive,
@@ -157,6 +219,90 @@ export default function MapContent() {
 
   // Default center: Soča river area
   const defaultCenter: [number, number] = [46.2, 13.65];
+
+  /** Render popup content for a single tracker */
+  const renderTrackerCard = (tracker: LiveTracker, compact = false) => (
+    <div
+      key={tracker.tracker_id}
+      style={compact ? { marginBottom: "10px", paddingBottom: "10px", borderBottom: "1px solid #eee" } : {}}
+    >
+      <h3
+        style={{
+          margin: "0 0 8px",
+          fontSize: compact ? "14px" : "16px",
+          fontWeight: 700,
+        }}
+      >
+        {tracker.name}
+      </h3>
+
+      {/* Winner's drawing */}
+      {KNOWN_DRAWINGS.has(tracker.name) && (
+        <div
+          onClick={() =>
+            setSelectedDrawing({
+              name: tracker.name,
+              src: `/zmag/${tracker.name.toUpperCase()}.webp`,
+            })
+          }
+          style={{ display: "block", marginBottom: "8px", cursor: "pointer" }}
+        >
+          <img
+            src={`/zmag/${tracker.name.toUpperCase()}.webp`}
+            alt={`Risba – ${tracker.name}`}
+            style={{
+              width: "100%",
+              borderRadius: "8px",
+              border: "1px solid #eee",
+            }}
+          />
+        </div>
+      )}
+
+      <p style={{ margin: "0 0 4px", fontSize: "12px", color: "#666" }}>
+        <strong>{t.trackers.updated}</strong>{" "}
+        {formatTimestamp(tracker.latest.timestamp)}
+      </p>
+      <p style={{ margin: "0 0 4px", fontSize: "12px", color: "#666" }}>
+        <strong>{t.trackers.inWater}</strong>{" "}
+        {(() => {
+          const first = new Date(tracker.path[0].timestamp);
+          const now = new Date();
+          const days = Math.max(
+            0,
+            Math.floor(
+              (now.getTime() - first.getTime()) / (1000 * 60 * 60 * 24)
+            )
+          );
+          return `${days} ${days === 1 ? t.trackers.day : t.trackers.days}`;
+        })()}
+      </p>
+      <div
+        style={{
+          marginTop: "6px",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "6px",
+          padding: "2px 8px",
+          borderRadius: "12px",
+          fontSize: "11px",
+          fontWeight: 600,
+          background: statusColors[tracker.status] + "20",
+          color: statusColors[tracker.status],
+        }}
+      >
+        <span
+          style={{
+            width: "6px",
+            height: "6px",
+            borderRadius: "50%",
+            background: statusColors[tracker.status],
+          }}
+        />
+        {statusLabels[tracker.status]}
+      </div>
+    </div>
+  );
 
   return (
     <>
@@ -195,128 +341,45 @@ export default function MapContent() {
             )
         )}
 
-        {/* Markers at latest positions – clustered when overlapping */}
-        <MarkerClusterGroup
-          chunkedLoading
-          spiderfyOnMaxZoom
-          showCoverageOnHover={false}
-          maxClusterRadius={40}
-          iconCreateFunction={(cluster: L.MarkerCluster) => {
-            const count = cluster.getChildCount();
-            return L.divIcon({
-              className: "custom-cluster-icon",
-              html: `<div style="
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                background: #2AABE0;
-                border: 3px solid white;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: white;
-                font-size: 14px;
-                font-weight: 700;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.35);
-              ">${count}</div>`,
-              iconSize: [40, 40],
-              iconAnchor: [20, 20],
-            });
-          }}
-        >
-          {trackers.map((tracker, i) => (
-            <Marker
-              key={tracker.tracker_id}
-              position={[tracker.latest.lat, tracker.latest.lon]}
-              icon={createIcon(tracker, i)}
-            >
-              <Popup autoPan={true} autoPanPadding={[60, 60]} maxWidth={280}>
-                <div style={{ minWidth: "200px", maxWidth: "260px" }}>
-                  <h3
-                    style={{
-                      margin: "0 0 8px",
-                      fontSize: "16px",
-                      fontWeight: 700,
-                    }}
-                  >
-                    {tracker.name}
-                  </h3>
-
-                  {/* Winner's drawing (only for named trackers with files) */}
-                  {KNOWN_DRAWINGS.has(tracker.name) && (
-                    <div
-                      onClick={() => setSelectedDrawing({
-                        name: tracker.name,
-                        src: `/zmag/${tracker.name.toUpperCase()}.webp`,
-                      })}
-                      style={{ display: "block", marginBottom: "8px", cursor: "pointer" }}
-                    >
-                      <img
-                        src={`/zmag/${tracker.name.toUpperCase()}.webp`}
-                        alt={`Risba – ${tracker.name}`}
-                        style={{
-                          width: "100%",
-                          borderRadius: "8px",
-                          border: "1px solid #eee",
-                        }}
-                      />
-                    </div>
-                  )}
-
-                  <p
-                    style={{
-                      margin: "0 0 4px",
-                      fontSize: "12px",
-                      color: "#666",
-                    }}
-                  >
-                    <strong>{t.trackers.updated}</strong>{" "}
-                    {formatTimestamp(tracker.latest.timestamp)}
-                  </p>
-                  <p
-                    style={{
-                      margin: "0 0 4px",
-                      fontSize: "12px",
-                      color: "#666",
-                    }}
-                  >
-                    <strong>{t.trackers.inWater}</strong>{" "}
-                    {(() => {
-                      const first = new Date(tracker.path[0].timestamp);
-                      const now = new Date();
-                      const days = Math.max(0, Math.floor((now.getTime() - first.getTime()) / (1000 * 60 * 60 * 24)));
-                      return `${days} ${days === 1 ? t.trackers.day : t.trackers.days}`;
-                    })()}
-                  </p>
-                  <div
-                    style={{
-                      marginTop: "8px",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "6px",
-                      padding: "2px 8px",
-                      borderRadius: "12px",
-                      fontSize: "11px",
-                      fontWeight: 600,
-                      background: statusColors[tracker.status] + "20",
-                      color: statusColors[tracker.status],
-                    }}
-                  >
-                    <span
-                      style={{
-                        width: "6px",
-                        height: "6px",
-                        borderRadius: "50%",
-                        background: statusColors[tracker.status],
-                      }}
-                    />
-                    {statusLabels[tracker.status]}
+        {/* Markers — grouped when nearby, individual when far apart */}
+        {trackerGroups.map((group) => {
+          if (group.length === 1) {
+            // ── Single tracker → normal marker ──
+            const tracker = group[0];
+            const globalIdx = trackers.indexOf(tracker);
+            return (
+              <Marker
+                key={tracker.tracker_id}
+                position={[tracker.latest.lat, tracker.latest.lon]}
+                icon={createIcon(tracker, globalIdx)}
+              >
+                <Popup autoPan autoPanPadding={[60, 60]} maxWidth={280}>
+                  <div style={{ minWidth: "200px", maxWidth: "260px" }}>
+                    {renderTrackerCard(tracker)}
                   </div>
+                </Popup>
+              </Marker>
+            );
+          }
+
+          // ── Multiple trackers at ~same location → combined marker ──
+          const center = group[0].latest;
+          return (
+            <Marker
+              key={`group-${group[0].tracker_id}`}
+              position={[center.lat, center.lon]}
+              icon={createGroupIcon(group.length)}
+            >
+              <Popup autoPan autoPanPadding={[60, 60]} maxWidth={300}>
+                <div style={{ minWidth: "220px", maxWidth: "280px" }}>
+                  {group.map((tracker, idx) =>
+                    renderTrackerCard(tracker, idx < group.length - 1)
+                  )}
                 </div>
               </Popup>
             </Marker>
-          ))}
-        </MarkerClusterGroup>
+          );
+        })}
       </MapContainer>
 
       {/* Data freshness indicator */}
