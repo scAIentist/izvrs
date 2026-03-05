@@ -8,9 +8,11 @@ import { rivers } from "../data/rivers";
 import { riverPaths, riverColors } from "../data/riverPaths";
 import { useTranslation } from "@/i18n";
 
-/* Custom pulsing marker for each river */
-function createRiverIcon(name: string, isActive = false) {
+/* ── Marker icon factory ── */
+function createRiverIcon(name: string, isActive = false, showLabel = true) {
   const label = name.split("/")[0].trim();
+  const color = isActive ? "#D4A843" : "#2AABE0";
+
   return L.divIcon({
     className: "river-marker",
     html: `
@@ -19,6 +21,7 @@ function createRiverIcon(name: string, isActive = false) {
         flex-direction: column;
         align-items: center;
       ">
+        ${showLabel ? `
         <div style="
           background: ${isActive ? "#D4A843" : "#0D1B2A"};
           color: white;
@@ -31,6 +34,7 @@ function createRiverIcon(name: string, isActive = false) {
           box-shadow: 0 2px 8px rgba(0,0,0,0.3);
           margin-bottom: 4px;
         ">${label}</div>
+        ` : ""}
         <div style="
           position: relative;
           display: flex;
@@ -44,7 +48,7 @@ function createRiverIcon(name: string, isActive = false) {
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: ${isActive ? "#D4A843" : "#2AABE0"};
+            background: ${color};
             opacity: 0.2;
             animation: pulse-marker 2.5s ease-out infinite;
           "></div>
@@ -53,7 +57,7 @@ function createRiverIcon(name: string, isActive = false) {
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: ${isActive ? "#D4A843" : "#2AABE0"};
+            background: ${color};
             opacity: 0.15;
             animation: pulse-marker 2.5s ease-out 0.8s infinite;
           "></div>
@@ -62,26 +66,25 @@ function createRiverIcon(name: string, isActive = false) {
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            background: ${isActive ? "#D4A843" : "#2AABE0"};
+            background: ${color};
             border: 3px solid white;
-            box-shadow: 0 2px 10px rgba(42,171,224,0.5);
+            box-shadow: 0 2px 10px ${isActive ? "rgba(212,168,67,0.5)" : "rgba(42,171,224,0.5)"};
           "></div>
         </div>
       </div>
     `,
-    iconSize: [80, 66],
-    iconAnchor: [40, 56],
-    popupAnchor: [0, -55],
+    iconSize: showLabel ? [80, 66] : [40, 40],
+    iconAnchor: showLabel ? [40, 56] : [20, 20],
+    popupAnchor: showLabel ? [0, -55] : [0, -20],
   });
 }
 
-/* Fly to river path bounds when selected */
+/* ── Fly to river path bounds ── */
 function FlyToRiver({ riverId }: { riverId: string | null }) {
   const map = useMap();
 
   useEffect(() => {
     if (!riverId) {
-      // Reset to default view
       map.flyTo([41.5, 17.0], 5, { duration: 1.2 });
       return;
     }
@@ -95,26 +98,32 @@ function FlyToRiver({ riverId }: { riverId: string | null }) {
   return null;
 }
 
-interface Props {
-  selectedRiver: string | null;
+/* ── Compute marker positions at the midpoint of each river path ── */
+function getMarkerPosition(riverId: string, fallbackLat: number, fallbackLng: number): [number, number] {
+  const path = riverPaths[riverId];
+  if (path && path.length > 0) {
+    const mid = Math.floor(path.length / 2);
+    return path[mid];
+  }
+  return [fallbackLat, fallbackLng];
 }
 
-export default function RiversMapLeaflet({ selectedRiver }: Props) {
+interface Props {
+  selectedRiver: string | null;
+  onSelectRiver: (id: string | null) => void;
+}
+
+export default function RiversMapLeaflet({ selectedRiver, onSelectRiver }: Props) {
   const { t } = useTranslation();
 
   useEffect(() => {
-    /* Fix Leaflet default icon paths */
     delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
     L.Icon.Default.mergeOptions({
-      iconRetinaUrl:
-        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
-      iconUrl:
-        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
-      shadowUrl:
-        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+      iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
+      iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
+      shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
     });
 
-    /* Inject pulse animation for markers */
     if (!document.getElementById("river-marker-style")) {
       const style = document.createElement("style");
       style.id = "river-marker-style";
@@ -129,7 +138,6 @@ export default function RiversMapLeaflet({ selectedRiver }: Props) {
     }
   }, []);
 
-  /* Center of the Adriatic/Ionian region */
   const center: [number, number] = [41.5, 17.0];
 
   return (
@@ -149,7 +157,7 @@ export default function RiversMapLeaflet({ selectedRiver }: Props) {
 
       <FlyToRiver riverId={selectedRiver} />
 
-      {/* River flow polylines */}
+      {/* River flow polyline */}
       {selectedRiver && riverPaths[selectedRiver] && (
         <Polyline
           key={`flow-${selectedRiver}`}
@@ -164,48 +172,63 @@ export default function RiversMapLeaflet({ selectedRiver }: Props) {
         />
       )}
 
+      {/* River markers */}
       {rivers.map((river) => {
         const rt = t.rivers[river.id as keyof typeof t.rivers];
         const isActive = selectedRiver === river.id;
+        const position = getMarkerPosition(river.id, river.lat, river.lng);
+
         return (
           <Marker
             key={river.id}
-            position={[river.lat, river.lng]}
-            icon={createRiverIcon(river.name, isActive)}
+            position={position}
+            icon={createRiverIcon(river.name, isActive, !isActive)}
+            eventHandlers={{
+              click: () => {
+                if (selectedRiver !== river.id) {
+                  // First click: select river (line shows, no popup yet)
+                  onSelectRiver(river.id);
+                }
+                // If already selected: do nothing here, popup opens naturally
+              },
+            }}
           >
-            <Popup>
-              <div style={{ minWidth: "220px", fontFamily: "Roboto, sans-serif" }}>
-                <h3 style={{
-                  margin: "0 0 6px",
-                  fontSize: "15px",
-                  fontWeight: 700,
-                  color: "#0D1B2A",
-                  fontFamily: "'Cascadia Code', monospace",
-                }}>
-                  {river.name}
-                </h3>
-                {rt && (
-                  <>
-                    <p style={{
-                      margin: "0 0 6px",
-                      fontSize: "12px",
-                      fontWeight: 600,
-                      color: "#2AABE0",
-                    }}>
-                      {rt.countries.join(" / ")}
-                    </p>
-                    <p style={{
-                      margin: "0",
-                      fontSize: "12px",
-                      color: "#666",
-                      lineHeight: "1.5",
-                    }}>
-                      {rt.description}
-                    </p>
-                  </>
-                )}
-              </div>
-            </Popup>
+            {/* Popup only rendered when river is selected — so second click opens it */}
+            {isActive && (
+              <Popup>
+                <div style={{ minWidth: "220px", fontFamily: "Roboto, sans-serif" }}>
+                  <h3 style={{
+                    margin: "0 0 6px",
+                    fontSize: "15px",
+                    fontWeight: 700,
+                    color: "#0D1B2A",
+                    fontFamily: "'Cascadia Code', monospace",
+                  }}>
+                    {river.name}
+                  </h3>
+                  {rt && (
+                    <>
+                      <p style={{
+                        margin: "0 0 6px",
+                        fontSize: "12px",
+                        fontWeight: 600,
+                        color: "#2AABE0",
+                      }}>
+                        {rt.countries.join(" / ")}
+                      </p>
+                      <p style={{
+                        margin: "0",
+                        fontSize: "12px",
+                        color: "#666",
+                        lineHeight: "1.5",
+                      }}>
+                        {rt.description}
+                      </p>
+                    </>
+                  )}
+                </div>
+              </Popup>
+            )}
           </Marker>
         );
       })}

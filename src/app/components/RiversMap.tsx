@@ -49,7 +49,7 @@ export default function RiversMap() {
 
       {/* Leaflet map */}
       <div className="max-w-4xl mx-auto">
-        <RiversMapLeaflet selectedRiver={selectedRiver} />
+        <RiversMapLeaflet selectedRiver={selectedRiver} onSelectRiver={setSelectedRiver} />
       </div>
 
       {/* Partners — infinite scrolling logo carousel */}
