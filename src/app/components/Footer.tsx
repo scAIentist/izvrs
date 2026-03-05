@@ -26,7 +26,7 @@ export default function Footer() {
               className="h-16 w-auto opacity-80 hover:opacity-100 transition-opacity"
             />
           </a>
-          <a href="https://www.izvrs.si/" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.izvrs.si/" target="_blank" rel="noopener noreferrer" className="mt-2 sm:mt-4">
             <Image
               src="/izvrs-logo.png"
               alt="IzVRS — Inštitut za vode Republike Slovenije"
