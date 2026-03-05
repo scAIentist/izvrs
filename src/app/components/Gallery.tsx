@@ -1,11 +1,14 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import { galleryItems, winnerItems, type GalleryItem } from "../data/gallery";
 import Lightbox from "./Lightbox";
 import ScrollReveal from "./ScrollReveal";
 import { useTranslation } from "@/i18n";
+
+// Winners revealed at 12:00 CET on 6.3.2026
+const WINNERS_REVEAL = new Date("2026-03-06T11:00:00Z").getTime();
 
 const gradeColors: Record<number, string> = {
   3: "bg-river-blue text-white",
@@ -33,12 +36,21 @@ export default function Gallery() {
   const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState<FilterValue>(null);
   const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null);
+  const [showWinners, setShowWinners] = useState(false);
+
+  useEffect(() => {
+    const check = () => setShowWinners(Date.now() >= WINNERS_REVEAL);
+    check();
+    const id = setInterval(check, 30_000);
+    return () => clearInterval(id);
+  }, []);
 
   const filtered = useMemo(() => {
-    if (activeFilter === "winners") return winnerItems;
+    if (activeFilter === "winners" && showWinners) return winnerItems;
+    if (activeFilter === "winners") return galleryItems; // fallback if not revealed yet
     if (activeFilter) return galleryItems.filter((item) => item.grade === activeFilter);
     return galleryItems;
-  }, [activeFilter]);
+  }, [activeFilter, showWinners]);
 
   const navigateLightbox = (direction: 1 | -1) => {
     if (!lightboxItem) return;
@@ -67,7 +79,7 @@ export default function Gallery() {
         {/* Filters */}
         <div className="flex justify-center gap-3 mb-10 flex-wrap">
           {([
-            { label: `🏆 ${t.gallery.filterWinners}`, value: "winners" as FilterValue },
+            ...(showWinners ? [{ label: `🏆 ${t.gallery.filterWinners}`, value: "winners" as FilterValue }] : []),
             { label: t.gallery.filterAll, value: null },
             { label: `3. ${t.gallery.filterGrade}`, value: 3 as FilterValue },
             { label: `4. ${t.gallery.filterGrade}`, value: 4 as FilterValue },
@@ -99,7 +111,7 @@ export default function Gallery() {
         </div>
 
         {/* Grid */}
-        {activeFilter === "winners" ? (
+        {activeFilter === "winners" && showWinners ? (
           <div className="space-y-8">
             {([3, 4, 5] as const).map((grade) => {
               const gradeWinners = filtered.filter((item) => item.grade === grade);
