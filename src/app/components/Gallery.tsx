@@ -116,12 +116,6 @@ export default function Gallery() {
                             decoding="async"
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
-                          {/* Winner name badge */}
-                          {item.winner && item.name && (
-                            <span className="absolute bottom-2 left-2 right-2 text-center bg-black/50 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-lg truncate">
-                              {item.name}
-                            </span>
-                          )}
                           {/* Grade badge */}
                           <span
                             className={`absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold ${gradeColors[item.grade]}`}
@@ -161,12 +155,6 @@ export default function Gallery() {
                     decoding="async"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  {/* Winner name badge */}
-                  {item.winner && item.name && (
-                    <span className="absolute bottom-2 left-2 right-2 text-center bg-black/50 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded-lg truncate">
-                      {item.name}
-                    </span>
-                  )}
                   {/* Grade badge */}
                   <span
                     className={`absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold ${gradeColors[item.grade]}`}
