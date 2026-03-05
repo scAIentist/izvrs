@@ -247,7 +247,6 @@ export const en: Translations = {
       "Think about what you need – less plastic.",
       "Reduce plastic use (e.g., straws, bottles).",
       "Reuse packaging and bags.",
-      "Recycle all plastic you no longer need.",
     ],
   },
   footer: {

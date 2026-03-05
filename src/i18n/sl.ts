@@ -245,7 +245,6 @@ export const sl = {
       "Premisli, kaj potrebuješ – manj plastike.",
       "Zmanjšaj uporabe plastike (npr. slamice, plastenke).",
       "Ponovno uporabi embalažo in vrečke.",
-      "Recikliraj vso plastiko, ki jo ne potrebuješ več.",
     ],
   },
   footer: {
