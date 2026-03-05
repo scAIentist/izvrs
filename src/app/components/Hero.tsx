@@ -206,10 +206,10 @@ export default function Hero() {
           <path d="M0 80 C240 40 480 120 720 80 C960 40 1200 120 1440 80 V180 H0Z" fill="#2AABE0" fillOpacity="0.08" />
         </svg>
         <svg viewBox="0 0 1440 140" fill="none" className="absolute bottom-0 w-[200%] animate-wave-slow-reverse" preserveAspectRatio="none">
-          <path d="M0 60 C360 100 720 20 1080 60 C1260 80 1380 50 1440 60 V140 H0Z" fill="#1A3A5C" fillOpacity="0.7" />
+          <path d="M0 60 C360 100 720 20 1080 60 C1260 80 1380 50 1440 60 V140 H0Z" fill="#112840" fillOpacity="0.75" />
         </svg>
         <svg viewBox="0 0 1440 80" fill="none" className="absolute bottom-0 w-full" preserveAspectRatio="none">
-          <path d="M0 30 Q360 60 720 30 T1440 30 V80 H0Z" fill="#132E4A" />
+          <path d="M0 30 Q360 60 720 30 T1440 30 V80 H0Z" fill="#0F2438" />
         </svg>
       </div>
 
