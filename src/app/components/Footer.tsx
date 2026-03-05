@@ -19,7 +19,7 @@ export default function Footer() {
               alt="Interreg IPA ADRION — Co-funded by the European Union — TETHYS4ADRION"
               width={500}
               height={80}
-              className="h-16 w-auto opacity-80 hover:opacity-100 transition-opacity"
+              className="h-24 sm:h-28 w-auto opacity-80 hover:opacity-100 transition-opacity"
             />
           </a>
           <a href="https://www.izvrs.si/" target="_blank" rel="noopener noreferrer" className="mt-3 sm:mt-6">
