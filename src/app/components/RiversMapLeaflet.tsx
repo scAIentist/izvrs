@@ -97,11 +97,15 @@ function FlyToRiver({ riverId }: { riverId: string | null }) {
   return null;
 }
 
-/* ── Marker at the source (first point) of each river path ── */
+/* ── Marker position: source by default, with overrides to avoid overlap ── */
+const MARKER_INDEX: Record<string, number> = {
+  neretva: 16, // Jablanica area — source overlaps with Buna at zoom 5
+};
 function getMarkerPosition(riverId: string, fallbackLat: number, fallbackLng: number): [number, number] {
   const path = riverPaths[riverId];
   if (path && path.length > 0) {
-    return path[0];
+    const idx = MARKER_INDEX[riverId] ?? 0;
+    return path[Math.min(idx, path.length - 1)];
   }
   return [fallbackLat, fallbackLng];
 }
