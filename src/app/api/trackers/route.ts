@@ -160,7 +160,7 @@ export async function GET() {
   if (cache && Date.now() < cache.expires) {
     return NextResponse.json(cache.data, {
       headers: {
-        "Cache-Control": "public, s-maxage=30, stale-while-revalidate=10",
+        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=60",
       },
     });
   }
@@ -194,7 +194,7 @@ export async function GET() {
 
     return NextResponse.json(result, {
       headers: {
-        "Cache-Control": "public, s-maxage=30, stale-while-revalidate=10",
+        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=60",
       },
     });
   } catch (error) {
@@ -206,7 +206,7 @@ export async function GET() {
         { ...cache.data, source: "cache" as const },
         {
           status: 200,
-          headers: { "Cache-Control": "public, s-maxage=30" },
+          headers: { "Cache-Control": "public, s-maxage=300" },
         }
       );
     }
