@@ -5,6 +5,7 @@ import Providers from "./Providers";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import { Analytics } from "@vercel/analytics/next";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -48,6 +49,7 @@ export default function RootLayout({
           <Footer />
           <ScrollToTop />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
