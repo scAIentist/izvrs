@@ -11,6 +11,7 @@ import {
   useMap,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import "./popup-right.css";
 import { useTrackers } from "@/lib/useTrackers";
 import { useTranslation } from "@/i18n";
 import type { LiveTracker } from "@/lib/wfs-types";
@@ -55,7 +56,7 @@ function createIcon(tracker: LiveTracker, index: number) {
     ">${index + 1}</div>`,
     iconSize: [32, 32],
     iconAnchor: [16, 16],
-    popupAnchor: [20, -20],
+    popupAnchor: [160, 0],
   });
 }
 
@@ -211,7 +212,7 @@ export default function MapContent() {
               popupclose: () => setSelectedTracker(null),
             }}
           >
-            <Popup autoPan autoPanPadding={[60, 60]} maxWidth={280}>
+            <Popup autoPan autoPanPadding={[60, 60]} maxWidth={280} className="popup-right">
               <div style={{ minWidth: "200px", maxWidth: "260px" }}>
                 <h3
                   style={{
