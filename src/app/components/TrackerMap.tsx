@@ -25,7 +25,7 @@ export default function TrackerMap() {
           <div className="w-16 h-1 bg-forest-green mx-auto rounded-full mt-3" />
           <p className="text-white/60 text-base max-w-2xl mx-auto mt-4">
             {t.trackers.subtitleBefore}
-            <a href="/#galerija" className="underline hover:text-white/80 transition-colors">
+            <a href="/galerija" className="underline hover:text-white/80 transition-colors">
               {t.trackers.subtitleLink}
             </a>
             {t.trackers.subtitleAfter}

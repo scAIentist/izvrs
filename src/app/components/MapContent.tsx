@@ -55,7 +55,7 @@ function createIcon(tracker: LiveTracker, index: number) {
     ">${index + 1}</div>`,
     iconSize: [32, 32],
     iconAnchor: [16, 16],
-    popupAnchor: [0, -20],
+    popupAnchor: [150, -20],
   });
 }
 
