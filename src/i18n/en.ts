@@ -107,8 +107,11 @@ export const en: Translations = {
   },
   trackers: {
     title: "GPS trackers in the Soča",
-    subtitle:
-      "Live tracking of GPS trackers along the Soča River. Each tracker carries a selected drawing by one of the students participating in the project.",
+    subtitleBefore:
+      "Live tracking of GPS trackers along the Soča River. Each tracker carries a drawing by a student from the France Bevk Tolmin Primary School, selected at the ",
+    subtitleLink: "art competition",
+    subtitleAfter:
+      " \"For clean waters: drop the habit, not the waste\".",
     active: "Active",
     inactive: "Inactive",
     stopped: "Stopped",
@@ -120,7 +123,7 @@ export const en: Translations = {
     inWater: "In water:",
     days: "days",
     day: "day",
-    path: "Tracker path",
+    path: "Previous positions",
     noData: "No tracker data available",
     liveData: "Live",
     cachedData: "Cached data",

@@ -105,8 +105,11 @@ export const sl = {
   },
   trackers: {
     title: "GPS sledilniki v Soči",
-    subtitle:
-      "V živo spremljanje potovanja GPS sledilnikov po reki Soči. Vsak sledilnik nosi izbrano risbo enega od učencev, ki sodelujejo v projektu.",
+    subtitleBefore:
+      "V živo spremljanje poti GPS sledilnikov po reki Soči. Vsak sledilnik nosi risbo enega izmed učencev Osnovne šole Franceta Bevka Tolmin, ki je bila izbrana na ",
+    subtitleLink: "likovnem natečaju",
+    subtitleAfter:
+      " \"Za čiste vode: odvrzi navado, ne odpadka\".",
     active: "Aktiven",
     inactive: "Neaktiven",
     stopped: "Ustavljen",
@@ -118,7 +121,7 @@ export const sl = {
     inWater: "V vodi:",
     days: "dni",
     day: "dan",
-    path: "Pot sledilnika",
+    path: "Prejšnje pozicije",
     noData: "Ni podatkov o sledilnikih",
     liveData: "V živo",
     cachedData: "Predpomnjeni podatki",

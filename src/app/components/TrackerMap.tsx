@@ -24,7 +24,11 @@ export default function TrackerMap() {
           </h2>
           <div className="w-16 h-1 bg-forest-green mx-auto rounded-full mt-3" />
           <p className="text-white/60 text-base max-w-2xl mx-auto mt-4">
-            {t.trackers.subtitle}
+            {t.trackers.subtitleBefore}
+            <a href="/#galerija" className="underline hover:text-white/80 transition-colors">
+              {t.trackers.subtitleLink}
+            </a>
+            {t.trackers.subtitleAfter}
           </p>
         </ScrollReveal>
 
@@ -40,7 +44,7 @@ export default function TrackerMap() {
               <span className="text-white/60 text-sm">{t.trackers.inactive}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-4 border-t-2 border-dashed border-[#2AABE0]" />
+              <span className="w-3 h-3 rounded-full bg-[#2AABE0] opacity-50" />
               <span className="text-white/60 text-sm">{t.trackers.path}</span>
             </div>
           </div>

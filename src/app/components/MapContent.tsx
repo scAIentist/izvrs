@@ -7,7 +7,7 @@ import {
   TileLayer,
   Marker,
   Popup,
-  Polyline,
+  CircleMarker,
   useMap,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -176,24 +176,28 @@ export default function MapContent() {
 
         <FitBounds trackers={trackers} />
 
-        {/* Polyline for selected tracker path (shown on marker click) */}
+        {/* Historical position dots for selected tracker (shown on marker click) */}
         {selectedTracker && (() => {
           const idx = trackers.findIndex(t => t.tracker_id === selectedTracker);
           if (idx === -1) return null;
           const positions = trackerPaths[idx];
           if (!positions || positions.length <= 1) return null;
-          return (
-            <Polyline
-              key={`path-${selectedTracker}`}
-              positions={positions}
+          const color = PATH_COLORS[idx % PATH_COLORS.length];
+          // Show all points except the last (latest) which already has a marker
+          return positions.slice(0, -1).map((pos, i) => (
+            <CircleMarker
+              key={`dot-${selectedTracker}-${i}`}
+              center={pos}
+              radius={i === 0 ? 7 : 5}
               pathOptions={{
-                color: PATH_COLORS[idx % PATH_COLORS.length],
-                weight: 3,
-                opacity: 0.6,
-                dashArray: "8 4",
+                color: color,
+                fillColor: color,
+                fillOpacity: i === 0 ? 0.7 : 0.45,
+                opacity: i === 0 ? 0.9 : 0.6,
+                weight: i === 0 ? 2 : 1,
               }}
             />
-          );
+          ));
         })()}
 
         {/* Markers at latest positions */}
