@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { readFile, writeFile, mkdir } from "fs/promises";
+import { join } from "path";
 import type {
   WFSFeatureCollection,
   LiveTracker,
@@ -12,6 +14,28 @@ const WFS_AUTH_TOKEN = process.env.WFS_AUTH_TOKEN!;
 // In-memory cache (persists across requests within the same serverless instance)
 let cache: { data: TrackersAPIResponse; expires: number } | null = null;
 const CACHE_TTL_MS = 30 * 1000; // 30s
+
+// Persistent file cache in /tmp (survives across cold starts on Vercel)
+const CACHE_DIR = join("/tmp", "tracker-cache");
+const CACHE_FILE = join(CACHE_DIR, "last-good.json");
+
+async function saveToDisk(data: TrackersAPIResponse): Promise<void> {
+  try {
+    await mkdir(CACHE_DIR, { recursive: true });
+    await writeFile(CACHE_FILE, JSON.stringify(data));
+  } catch {
+    // Non-critical — ignore write failures
+  }
+}
+
+async function loadFromDisk(): Promise<TrackersAPIResponse | null> {
+  try {
+    const raw = await readFile(CACHE_FILE, "utf-8");
+    return JSON.parse(raw) as TrackersAPIResponse;
+  } catch {
+    return null;
+  }
+}
 
 // Tracker is "active" if latest fix is within this window
 const ACTIVE_THRESHOLD_MS = 48 * 60 * 60 * 1000; // 48 hours (updates once/day)
@@ -192,6 +216,9 @@ export async function GET() {
     // Update in-memory cache
     cache = { data: result, expires: Date.now() + CACHE_TTL_MS };
 
+    // Persist to disk so we survive cold starts
+    await saveToDisk(result);
+
     return NextResponse.json(result, {
       headers: {
         "Cache-Control": "public, s-maxage=300, stale-while-revalidate=60",
@@ -200,7 +227,7 @@ export async function GET() {
   } catch (error) {
     console.error("[WFS Proxy] Fetch failed:", error);
 
-    // Return stale cache if available
+    // Return stale in-memory cache if available
     if (cache) {
       return NextResponse.json(
         { ...cache.data, source: "cache" as const },
@@ -211,7 +238,19 @@ export async function GET() {
       );
     }
 
-    // No cache: return error
+    // Try persistent disk cache (last successful fetch)
+    const diskData = await loadFromDisk();
+    if (diskData) {
+      return NextResponse.json(
+        { ...diskData, source: "cache" as const },
+        {
+          status: 200,
+          headers: { "Cache-Control": "public, s-maxage=300" },
+        }
+      );
+    }
+
+    // No cache at all: return error
     return NextResponse.json(
       {
         error: "WFS service unavailable",
