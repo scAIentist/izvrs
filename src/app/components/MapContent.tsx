@@ -345,10 +345,10 @@ export default function MapContent() {
         ))}
       </MapContainer>
 
-      {/* Dots-active indicator — overlaid on bottom of map, no layout shift */}
-      {dotsTrackerId && !selectedTracker && (
-        <div className="flex items-center justify-center gap-2 -mt-8 relative z-[1000] pointer-events-auto">
-          <span className="bg-deep-navy/80 backdrop-blur-sm rounded-full px-3 py-1 text-white/60 text-xs flex items-center gap-2">
+      {/* Fixed-height container for indicators below map — prevents layout shift */}
+      <div className="h-8 flex flex-col items-center justify-center">
+        {dotsTrackerId && !selectedTracker ? (
+          <span className="bg-white/10 rounded-full px-3 py-1 text-white/50 text-[11px] flex items-center gap-2">
             {t.trackers.dotsShowing}: {trackers.find(tr => tr.tracker_id === dotsTrackerId)?.name}
             <button
               onClick={() => { setDotsTrackerId(null); }}
@@ -357,20 +357,17 @@ export default function MapContent() {
               &times;
             </button>
           </span>
-        </div>
-      )}
-
-      {/* Data freshness indicator */}
-      {fetchedAt && (
-        <p className="text-center mt-2 text-[11px] text-white/35">
-          {source === "live"
-            ? t.trackers.liveData
-            : source === "cache"
-              ? t.trackers.cachedData
-              : t.trackers.fallbackData}{" "}
-          &middot; {formatTimestamp(fetchedAt)}
-        </p>
-      )}
+        ) : fetchedAt ? (
+          <p className="text-[11px] text-white/35">
+            {source === "live"
+              ? t.trackers.liveData
+              : source === "cache"
+                ? t.trackers.cachedData
+                : t.trackers.fallbackData}{" "}
+            &middot; {formatTimestamp(fetchedAt)}
+          </p>
+        ) : null}
+      </div>
 
       {/* Drawing lightbox overlay */}
       {selectedDrawing && (
