@@ -1,12 +1,6 @@
 /* Popup opens to the right of the marker instead of above */
 .popup-right .leaflet-popup-tip-container {
-  position: absolute;
-  left: -10px;
-  top: 50%;
-  transform: translateY(-50%) rotate(90deg);
-  width: 20px;
-  height: 20px;
-  margin: 0;
+  display: none;
 }
 
 .popup-right .leaflet-popup-content-wrapper {
