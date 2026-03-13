@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import L from "leaflet";
 import {
   MapContainer,
@@ -82,6 +82,13 @@ function FitBounds({ trackers }: { trackers: LiveTracker[] }) {
   return null;
 }
 
+/** Expose map instance to parent via callback */
+function MapController({ onMapReady }: { onMapReady: (map: L.Map) => void }) {
+  const map = useMap();
+  useEffect(() => { onMapReady(map); }, [map, onMapReady]);
+  return null;
+}
+
 function formatTimestamp(iso: string): string {
   try {
     return new Date(iso).toLocaleString("sl-SI", {
@@ -101,6 +108,14 @@ export default function MapContent() {
   const { trackers, loading, error, fetchedAt, source } = useTrackers();
   const [selectedDrawing, setSelectedDrawing] = useState<{ name: string; src: string } | null>(null);
   const [selectedTracker, setSelectedTracker] = useState<string | null>(null);
+  const [dotsTrackerId, setDotsTrackerId] = useState<string | null>(null);
+  const popupMinimizedRef = useRef(false);
+  const [mapRef, setMapRef] = useState<L.Map | null>(null);
+
+  const handleMinimize = useCallback(() => {
+    popupMinimizedRef.current = true;
+    if (mapRef) mapRef.closePopup();
+  }, [mapRef]);
 
   const closeDrawing = useCallback(() => setSelectedDrawing(null), []);
 
@@ -176,10 +191,11 @@ export default function MapContent() {
         />
 
         <FitBounds trackers={trackers} />
+        <MapController onMapReady={setMapRef} />
 
-        {/* Historical position dots for selected tracker (shown on marker click) */}
-        {selectedTracker && (() => {
-          const idx = trackers.findIndex(t => t.tracker_id === selectedTracker);
+        {/* Historical position dots — persist after popup minimize */}
+        {dotsTrackerId && (() => {
+          const idx = trackers.findIndex(t => t.tracker_id === dotsTrackerId);
           if (idx === -1) return null;
           const positions = trackerPaths[idx];
           if (!positions || positions.length <= 1) return null;
@@ -187,7 +203,7 @@ export default function MapContent() {
           // Show all points except the last (latest) which already has a marker
           return positions.slice(0, -1).map((pos, i) => (
             <CircleMarker
-              key={`dot-${selectedTracker}-${i}`}
+              key={`dot-${dotsTrackerId}-${i}`}
               center={pos}
               radius={i === 0 ? 7 : 5}
               pathOptions={{
@@ -208,17 +224,53 @@ export default function MapContent() {
             position={[tracker.latest.lat, tracker.latest.lon]}
             icon={createIcon(tracker, i)}
             eventHandlers={{
-              popupopen: () => setSelectedTracker(tracker.tracker_id),
-              popupclose: () => setSelectedTracker(null),
+              popupopen: () => {
+                setSelectedTracker(tracker.tracker_id);
+                setDotsTrackerId(tracker.tracker_id);
+                popupMinimizedRef.current = false;
+              },
+              popupclose: () => {
+                setSelectedTracker(null);
+                // Only clear dots if user did NOT click minimize
+                if (!popupMinimizedRef.current) {
+                  setDotsTrackerId(null);
+                }
+                popupMinimizedRef.current = false;
+              },
             }}
           >
             <Popup autoPan autoPanPadding={[60, 60]} maxWidth={280} className="popup-right">
-              <div style={{ minWidth: "200px", maxWidth: "260px" }}>
+              <div style={{ minWidth: "200px", maxWidth: "260px", position: "relative" }}>
+                {/* Minimize button — hides popup but keeps dots */}
+                <button
+                  onClick={(e) => { e.stopPropagation(); handleMinimize(); }}
+                  style={{
+                    position: "absolute",
+                    top: "-2px",
+                    right: "-2px",
+                    width: "22px",
+                    height: "22px",
+                    border: "none",
+                    background: "rgba(0,0,0,0.08)",
+                    borderRadius: "50%",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "16px",
+                    color: "#999",
+                    lineHeight: 1,
+                  }}
+                  title={t.trackers.hidePopup}
+                >
+                  &#8722;
+                </button>
                 <h3
                   style={{
                     margin: "0 0 8px",
                     fontSize: "16px",
                     fontWeight: 700,
+                    paddingRight: "24px",
                   }}
                 >
                   {tracker.name}
@@ -308,6 +360,21 @@ export default function MapContent() {
           </Marker>
         ))}
       </MapContainer>
+
+      {/* Dots-active indicator when popup is minimized */}
+      {dotsTrackerId && !selectedTracker && (
+        <div className="flex items-center justify-center gap-2 mt-3">
+          <span className="text-white/40 text-xs">
+            {t.trackers.dotsShowing}: {trackers.find(tr => tr.tracker_id === dotsTrackerId)?.name}
+          </span>
+          <button
+            onClick={() => { setDotsTrackerId(null); }}
+            className="text-xs text-white/30 hover:text-white/60 underline cursor-pointer"
+          >
+            {t.trackers.hideDots}
+          </button>
+        </div>
+      )}
 
       {/* Data freshness indicator */}
       {fetchedAt && (

@@ -10,6 +10,7 @@ const navItems = [
   { href: "/", key: "domov", color: "bg-river-blue", hoverGlow: "hover:shadow-river-blue/30" },
   { href: "/sledilniki", key: "sledilci", color: "bg-forest-green", hoverGlow: "hover:shadow-forest-green/30" },
   { href: "/galerija", key: "galerija", color: "bg-amber", hoverGlow: "hover:shadow-amber/30" },
+  { href: "/izpust", key: "izpust", color: "bg-river-teal", hoverGlow: "hover:shadow-river-teal/30" },
   { href: "/igra", key: "igra", color: "bg-danger", hoverGlow: "hover:shadow-danger/30" },
 ];
 
@@ -23,6 +24,7 @@ export default function Navigation() {
     domov: t.nav.home,
     sledilci: t.nav.trackers,
     galerija: t.nav.gallery,
+    izpust: t.nav.events,
     igra: t.nav.game,
   };
 
