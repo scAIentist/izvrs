@@ -131,7 +131,7 @@ export const en: Translations = {
     fallbackData: "Fallback data",
     tracker: "Tracker",
     hidePopup: "Hide info",
-    dotsShowing: "Showing positions",
+    dotsShowing: "Showing position",
     hideDots: "Hide",
   },
   gallery: {

@@ -129,7 +129,7 @@ export const sl = {
     fallbackData: "Nadomestni podatki",
     tracker: "Sledilec",
     hidePopup: "Skrij info",
-    dotsShowing: "Prikazane pozicije",
+    dotsShowing: "Prikazana pozicija",
     hideDots: "Skrij",
   },
   gallery: {

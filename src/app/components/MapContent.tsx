@@ -173,6 +173,7 @@ export default function MapContent() {
 
   return (
     <>
+      <div className="relative">
       <MapContainer
         center={
           trackers.length > 0
@@ -344,19 +345,25 @@ export default function MapContent() {
         ))}
       </MapContainer>
 
-      {/* Fixed-height container for indicators below map — prevents layout shift */}
-      <div className="h-8 flex flex-col items-center justify-center">
-        {dotsTrackerId && !selectedTracker ? (
-          <span className="bg-white/10 rounded-full px-3 py-1 text-white/50 text-[11px] flex items-center gap-2">
+      {/* Dots indicator — centered at bottom of map */}
+      {dotsTrackerId && !selectedTracker && (
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-[1000] pointer-events-auto">
+          <span className="bg-black/60 backdrop-blur-sm rounded-full px-3 py-1 text-white/90 text-[11px] flex items-center gap-2 shadow-lg">
             {t.trackers.dotsShowing}: {trackers.find(tr => tr.tracker_id === dotsTrackerId)?.name}
             <button
               onClick={() => { setDotsTrackerId(null); }}
-              className="text-white/40 hover:text-white cursor-pointer"
+              className="text-white/60 hover:text-white cursor-pointer"
             >
               &times;
             </button>
           </span>
-        ) : fetchedAt ? (
+        </div>
+      )}
+      </div>
+
+      {/* Data freshness indicator */}
+      <div className="h-8 flex items-center justify-center">
+        {fetchedAt && (
           <p className="text-[11px] text-white/35">
             {source === "live"
               ? t.trackers.liveData
@@ -365,7 +372,7 @@ export default function MapContent() {
                 : t.trackers.fallbackData}{" "}
             &middot; {formatTimestamp(fetchedAt)}
           </p>
-        ) : null}
+        )}
       </div>
 
       {/* Drawing lightbox overlay */}
