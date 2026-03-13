@@ -16,3 +16,8 @@
 .popup-right.leaflet-popup {
   margin-bottom: 0;
 }
+
+/* Hide default Leaflet marker shadows (we use custom divIcon markers) */
+.leaflet-shadow-pane {
+  display: none;
+}
