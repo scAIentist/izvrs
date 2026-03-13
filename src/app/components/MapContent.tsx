@@ -239,42 +239,26 @@ export default function MapContent() {
               },
             }}
           >
-            <Popup autoPan autoPanPadding={[60, 60]} maxWidth={280} className="popup-right">
-              <div style={{ minWidth: "200px", maxWidth: "260px", position: "relative" }}>
-                {/* Minimize button — hides popup but keeps dots */}
-                <button
-                  onClick={(e) => { e.stopPropagation(); handleMinimize(); }}
-                  style={{
-                    position: "absolute",
-                    top: "-2px",
-                    right: "-2px",
-                    width: "22px",
-                    height: "22px",
-                    border: "none",
-                    background: "rgba(0,0,0,0.08)",
-                    borderRadius: "50%",
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "16px",
-                    color: "#999",
-                    lineHeight: 1,
-                  }}
-                  title={t.trackers.hidePopup}
-                >
-                  &#8722;
-                </button>
-                <h3
-                  style={{
-                    margin: "0 0 8px",
-                    fontSize: "16px",
-                    fontWeight: 700,
-                    paddingRight: "24px",
-                  }}
-                >
-                  {tracker.name}
-                </h3>
+            <Popup autoPan autoPanPadding={[60, 60]} maxWidth={280} className="popup-right" closeButton={false}>
+              <div style={{ minWidth: "200px", maxWidth: "260px" }}>
+                {/* Top bar: title + minimize + close */}
+                <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "8px", marginBottom: "8px" }}>
+                  <h3 style={{ margin: 0, fontSize: "16px", fontWeight: 700, flex: 1 }}>
+                    {tracker.name}
+                  </h3>
+                  <div style={{ display: "flex", gap: "2px", flexShrink: 0 }}>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); handleMinimize(); }}
+                      style={{ width: "20px", height: "20px", border: "none", background: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", color: "#999", lineHeight: 1, padding: 0 }}
+                      title={t.trackers.hidePopup}
+                    >&#8722;</button>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); if (mapRef) mapRef.closePopup(); }}
+                      style={{ width: "20px", height: "20px", border: "none", background: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px", color: "#999", lineHeight: 1, padding: 0 }}
+                      title={t.lightbox?.close || "Close"}
+                    >&times;</button>
+                  </div>
+                </div>
 
                 {/* Winner's drawing — only when tracker is active */}
                 {tracker.status === "active" && KNOWN_DRAWINGS.has(tracker.name) && (
@@ -361,18 +345,18 @@ export default function MapContent() {
         ))}
       </MapContainer>
 
-      {/* Dots-active indicator when popup is minimized */}
+      {/* Dots-active indicator — overlaid on bottom of map, no layout shift */}
       {dotsTrackerId && !selectedTracker && (
-        <div className="flex items-center justify-center gap-2 mt-3">
-          <span className="text-white/40 text-xs">
+        <div className="flex items-center justify-center gap-2 -mt-8 relative z-[1000] pointer-events-auto">
+          <span className="bg-deep-navy/80 backdrop-blur-sm rounded-full px-3 py-1 text-white/60 text-xs flex items-center gap-2">
             {t.trackers.dotsShowing}: {trackers.find(tr => tr.tracker_id === dotsTrackerId)?.name}
+            <button
+              onClick={() => { setDotsTrackerId(null); }}
+              className="text-white/40 hover:text-white cursor-pointer"
+            >
+              &times;
+            </button>
           </span>
-          <button
-            onClick={() => { setDotsTrackerId(null); }}
-            className="text-xs text-white/30 hover:text-white/60 underline cursor-pointer"
-          >
-            {t.trackers.hideDots}
-          </button>
         </div>
       )}
 
